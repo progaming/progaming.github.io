@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html ng-app="testloginsite">
+	<head>
+		<meta charset="utf-8">
+		<title>ภารกิจประจำวัน</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/my-style.css">
+ 		<script src="http://code.jquery.com/jquery.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+        <script src="./js/ui-bootstrap-tpls-0.9.0.min.js"></script>
+        <script src="./js/core.js"></script>
+        
+        <style>
+        a.disabled {
+		   pointer-events: none;
+		   cursor: default;
+		}
+		a.button{
+			cursor:pointer;	
+		}
+		</style>
+        
+	</head>
+
+	<body ng-controller="mainController">
+        <div class="navbar navbar-default">
+            <div class="container">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand text-muted" href="#">MobiPier</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a ng-click="gotoNews()" href="#">ข่าว</a></li>
+                        <li><a ng-click="gotouserpage()" href="#">ค้นหา</a></li>
+                        <li><a ng-click="gotoTopPage()" href="#">ผู้เล่นยอดเยี่ยม</a></li>
+                        <li><a ng-click="gotoPurchasedHistoryPage()" href="#">ประวัติการซื้อเพชร</a></li>
+                        <li class="active"><a href="#">ภารกิจประจำวัน</a></li>
+                        <li><a ng-click="gotoPeriodMissionPage()" href="#">ภารกิจ</a></li>
+                        <li><a ng-click="logout()" href="#">ออกจากระบบ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    	<div class="container">
+            
+            <div class="page-header"><h1>ภารกิจประจำวัน</h1></div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <form>
+                        <div class="form-group">
+                            <div>
+                                <label for="textNewsArea">หัวข้อ</label>
+                                <select ng-model="dmc1" id="dmc1" class="form-control" ng-change="UpdateDM()">
+                                    <option value="">None</option>
+                                    <option value="ScoreTarget">Score Target</option>
+                                    <option value="LevelUp">Level Up</option>
+                                    <option value="UseSkill">Use Skill</option>
+                                    <option value="Overtake">OverTake</option>
+                                </select>
+                            </div>
+                            <div>
+                                เป้าหมาย: <input type="number" id="dmt1" class="form-control input-normal" size="1" ng-disabled="dmt1"/>
+                            </div>
+                            <div>
+                                <label for"textNewsArea">ของรางวัล</label>
+                                <select id="dmr1" class="form-control">
+                                    <option value="coin">Coin</option>
+                                    <option value="ruby">Ruby</option>
+                                    <option value="heart">Heart</option>
+                                </select>
+                            </div>
+                            <div>
+                                จำนวน: <input type="number" id="dma1" class="form-control input-normal" size="1" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-4">
+                    <form>
+                        <div class="form-group">
+                            <div>
+                                <label for="textNewsArea">หัวข้อ</label>
+                                <select ng-model="dmc2" id="dmc2" class="form-control" ng-change="UpdateDM()">
+                                    <option value="">None</option>
+                                    <option value="ScoreTarget">Score Target</option>
+                                    <option value="LevelUp">Level Up</option>
+                                    <option value="UseSkill">Use Skill</option>
+                                    <option value="Overtake">OverTake</option>
+                                </select>
+                            </div>
+                            <div>
+                                เป้าหมาย: <input type="number" id="dmt2" class="form-control input-normal" size="1" ng-disabled="dmt2"/>
+                            </div>
+                            <div>
+                                <label for"textNewsArea">ของรางวัล</label>
+                                <select id="dmr2" class="form-control">
+                                    <option value="coin">Coin</option>
+                                    <option value="ruby">Ruby</option>
+                                    <option value="heart">Heart</option>
+                                </select>
+                            </div>
+                            <div>
+                                จำนวน: <input type="number" id="dma2" class="form-control input-normal" size="1" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-4">
+                    <form>
+                        <div class="form-group">
+                            <div>
+                                <label for="textNewsArea">หัวข้อ</label>
+                                <select ng-model="dmc3" id="dmc3" class="form-control" ng-change="UpdateDM()">
+                                    <option value="">None</option>
+                                    <option value="ScoreTarget">Score Target</option>
+                                    <option value="LevelUp">Level Up</option>
+                                    <option value="UseSkill">Use Skill</option>
+                                    <option value="Overtake">OverTake</option>
+                                </select>
+                            </div>
+                            <div>
+                                เป้าหมาย: <input type="number" id="dmt3" class="form-control input-normal" size="1" ng-disabled="dmt3" />
+                            </div>
+                            <div>
+                                <label for"textNewsArea">ของรางวัล</label>
+                                <select id="dmr3" class="form-control">
+                                    <option value="coin">Coin</option>
+                                    <option value="ruby">Ruby</option>
+                                    <option value="heart">Heart</option>
+                                </select>
+                            </div>
+                            <div>
+                                จำนวน: <input type="number" id="dma3" class="form-control input-normal" size="1" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-4">
+                    <form>
+                        <div class="form-group">
+                            <div>
+                                <label for="textNewsArea">หัวข้อ</label>
+                                <select ng-model="dmc4" id="dmc4" class="form-control" ng-change="UpdateDM()">
+                                    <option value="">None</option>
+                                    <option value="ScoreTarget">Score Target</option>
+                                    <option value="LevelUp">Level Up</option>
+                                    <option value="UseSkill">Use Skill</option>
+                                    <option value="Overtake">OverTake</option>
+                                </select>
+                            </div>
+                            <div>
+                                เป้าหมาย: <input type="number" id="dmt4" class="form-control input-normal" size="1" ng-disabled="dmt4" />
+                            </div>
+                            <div>
+                                <label for"textNewsArea">ของรางวัล</label>
+                                <select id="dmr4" class="form-control">
+                                    <option value="coin">Coin</option>
+                                    <option value="ruby">Ruby</option>
+                                    <option value="heart">Heart</option>
+                                </select>
+                            </div>
+                            <div>
+                                จำนวน: <input type="number" id="dma4" class="form-control input-normal" size="1" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-4">
+                    <form>
+                        <div class="form-group">
+                            <div>
+                                <label for="textNewsArea">หัวข้อ</label>
+                                <select ng-model="dmc5" id="dmc5" class="form-control" ng-change="UpdateDM()">
+                                    <option value="">None</option>
+                                    <option value="ScoreTarget">Score Target</option>
+                                    <option value="LevelUp">Level Up</option>
+                                    <option value="UseSkill">Use Skill</option>
+                                    <option value="Overtake">OverTake</option>
+                                </select>
+                            </div>
+                            <div>
+                                เป้าหมาย: <input type="number" id="dmt5" class="form-control input-normal" size="1" ng-disabled="dmt5" />
+                            </div>
+                            <div>
+                                <label for"textNewsArea">ของรางวัล</label>
+                                <select id="dmr5" class="form-control">
+                                    <option value="coin">Coin</option>
+                                    <option value="ruby">Ruby</option>
+                                    <option value="heart">Heart</option>
+                                </select>
+                            </div>
+                            <div>
+                                จำนวน: <input type="number" id="dma5" class="form-control input-normal" size="1" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-4">
+                    <form>
+                        <div class="form-group">
+                            <div>
+                                <label for="textNewsArea">หัวข้อ</label>
+                                <select ng-model="dmc6" id="dmc6" class="form-control" ng-change="UpdateDM()">
+                                    <option value="">None</option>
+                                    <option value="ScoreTarget">Score Target</option>
+                                    <option value="LevelUp">Level Up</option>
+                                    <option value="UseSkill">Use Skill</option>
+                                    <option value="Overtake">OverTake</option>
+                                </select>
+                            </div>
+                            <div>
+                                เป้าหมาย: <input type="number" id="dmt6" class="form-control input-normal" size="1" ng-disabled="dmt6" />
+                            </div>
+                            <div>
+                                <label for"textNewsArea">ของรางวัล</label>
+                                <select id="dmr6" class="form-control">
+                                    <option value="coin">Coin</option>
+                                    <option value="ruby">Ruby</option>
+                                    <option value="heart">Heart</option>
+                                </select>
+                            </div>
+                            <div>
+                                จำนวน: <input type="number" id="dma6" class="form-control input-normal" size="1" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-offset-10">
+                    <div><button class="btn btn-default" ng-disabled="buttonDMSaveDisabled" ng-click="uploaddmbutton()">บันทึก</button></div>
+                    <div ng-show="buttonDMSaveDisabled == true">กำลังอัพโหลดข้อมูล กรุณารอสักครู่...</div>
+                </div>
+            </div>
+            <hr/>
+
+        </div>
+        
+	</body>
+</html>
