@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="testloginsite">
+	<head>
+		<meta charset="utf-8">
+		<title>ล็อกอิน</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/my-style.css">
+ 		<script src="http://code.jquery.com/jquery.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+        <script src="./js/core.js"></script>
+        
+        <style>
+			table, th , td {
+				margin: 20px auto;
+			  	border: 1px solid grey;
+			  	border-collapse: collapse;
+			  	padding: 5px;
+			}
+			table tr:nth-child(odd) {
+			  background-color: #f1f1f1;
+			}
+			table tr:nth-child(even) {
+			  background-color: #ffffff;
+			}
+			table div{
+				padding: 5px;	
+			}
+		</style>
+	</head>
+
+	<body ng-controller="mainController">
+    	<div class="container">
+            <form ng-show="isLoggedIn == false">
+            <table>
+              <th><div>ล็อกอินเข้าสู่ระบบ</div></th>
+              <tr>
+              	<td>
+                 <div>Username: <br /> <input type="text" ng-model="user.username" /></div>
+                 <div>Password: <br /> <input type="password" ng-model="user.password" /></div>
+                 <div><button class="btn btn-default" ng-click="login(user)">ล็อกอิน</button></div>
+              	</td>
+              </tr>
+            </table>
+            </form>
+            <div ng-show="isLoggedIn == true">
+            	<p>Loading....</p>
+            </div>
+            
+            
+        </div>
+	</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html ng-app="testloginsite">
+	<head>
+		<meta charset="utf-8">
+		<title>จำนวนผู้เล่นรวม</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/my-style.css">
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+        <script src="./js/ui-bootstrap-tpls-0.9.0.min.js"></script>
+        <script src="./js/core.js"></script>
+        
+        <style>
+			/*table, th , td {
+			  border: 1px solid grey;
+			  border-collapse: collapse;
+			  padding: 5px;
+			}
+			table tr:nth-child(odd) {
+			  background-color: #f1f1f1;
+			}
+			table tr:nth-child(even) {
+			  background-color: #ffffff;
+			}*/
+			 a.disabled {
+			   pointer-events: none;
+			   cursor: default;
+			}
+			a.button{
+				cursor:pointer;	
+			}
+			
+		</style>
+
+	</head>
+
+	<body ng-controller="mainController">
+        <div class="navbar navbar-default">
+            <div class="container">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand text-muted" href="#">สับ ขา ซิ่ง</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                         <li><a ng-click="gotouserpage()" href="#">ข้อมูลบุคคล</a></li>
+                        <li class="active"><a href="#">จำนวนผู้เล่นรวม</a></li>
+                        <li><a ng-click="gotoTopPage()" href="#">ผู้เล่นยอดเยี่ยม</a></li>
+                        <li><a ng-click="logout()" href="#">ออกจากระบบ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    	<div class="container">
+            <div class="page-header"><h1>จำนวนผู้เล่นรวม</h1></div>
+            <div style="padding: 5px;"> </div>
+            <div ng-show="isShow == false">
+                <span class="label label-info">Loading....</span>
+            </div>
+            <div ng-show="isShow == true">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">จำนวนผู้เล่นทั้งหมดแบบ unique</h3>
+                    </div>
+                    <div class="panel-body">จำนวน {{alluniqueplayer}} คน</div>
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">จำนวนผู้เล่นทั้งหมดแบบไม่ unique</h3>
+                    </div>
+                    <div class="panel-body">จำนวน {{allplayer}} คน</div>
+                </div>
+            </div>
+        </div>
+	</body>
+</html>

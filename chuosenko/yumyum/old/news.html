@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="testloginsite">
+	<head>
+		<meta charset="utf-8">
+		<title>ข่าว</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/my-style.css">
+ 		<script src="http://code.jquery.com/jquery.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+        <script src="./js/core.js"></script>
+        <style>
+        a.disabled {
+		   pointer-events: none;
+		   cursor: default;
+		}
+		a.button{
+			cursor:pointer;	
+		}
+		</style>
+        
+	</head>
+
+	<body ng-controller="mainController">
+        <div class="navbar navbar-default">
+            <div class="container">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand text-muted" href="#">MobiPier</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="#">ข่าว</a></li>
+                        <li><a ng-click="gotouserpage()" href="#">ค้นหา</a></li>
+                        <li><a ng-click="gotoTopPage()" href="#">ผู้เล่นยอดเยี่ยม</a></li>
+                        <li><a ng-click="logout()" href="#">ออกจากระบบ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    	<div class="container">
+            
+            <div class="page-header"><h1>ข่าว</h1></div>
+            <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
+                <div class="form-group">
+                    <label for="textNewsArea">รูปภาพ (300 x 196)</label>
+                    <div style="margin-bottom:2px;"><img ng-src="{{imgurl}}" alt="News Image" width="300" height="196"></div>
+                    <div style="margin-bottom:10px;"><input type="file" name="fileselect" id="fileselect"></input></div>
+                    <label for="textNewsArea">ข้อความ</div>
+                    <div><TextArea cols="40" rows="5" id="textNewsArea">{{newstext}}</TextArea></div>
+                    <div><button class="btn btn-default" ng-disabled="buttonSaveDisabled" ng-click="uploadbutton()">บันทึก</button></div>
+                    <div ng-show="buttonSaveDisabled == true">กำลังอัพโหลดข้อมูล กรุณารอสักครู่...</div>
+                </div>
+               
+            </form>
+        </div>
+        
+	</body>
+</html>
