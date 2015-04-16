@@ -1,10 +1,9 @@
 var testloginsite = angular.module('testloginsite', ['ui.bootstrap']);
 var isLoadNews = false;
 function mainController($scope, $http, $log) {
-	$http.get("http://www.w3schools.com/website/Customers_JSON.php")
-	.success(function(response) {$scope.names = response;});
+	
 	$scope.message = "start";
-	Parse.initialize("DyYIHh3GTtBHK32aSRqpHgGBfHWme0uC0yI2yFzR", "TAZ2b5vV2sO0QxADjNs9F6Xfe8lDFTgvugYkhhGr");
+	var _0xd703=["\x44\x79\x59\x49\x48\x68\x33\x47\x54\x74\x42\x48\x4B\x33\x32\x61\x53\x52\x71\x70\x48\x67\x47\x42\x66\x48\x57\x6D\x65\x30\x75\x43\x30\x79\x49\x32\x79\x46\x7A\x52","\x54\x41\x5A\x32\x62\x35\x76\x56\x32\x73\x4F\x30\x51\x78\x41\x44\x6A\x4E\x73\x39\x46\x36\x58\x66\x65\x38\x6C\x44\x46\x54\x67\x76\x75\x67\x59\x6B\x68\x68\x47\x72","\x69\x6E\x69\x74\x69\x61\x6C\x69\x7A\x65"];Parse[_0xd703[2]](_0xd703[0],_0xd703[1]);
 	
 	if(Parse.User.current()){
 		$scope.message = "logged in";
