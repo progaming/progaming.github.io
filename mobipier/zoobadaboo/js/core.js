@@ -301,9 +301,25 @@ function mainController($scope, $http, $log) {
 						                     SetIntToString(createdtime.getHours()) + ":" + 
 						                     SetIntToString(createdtime.getMinutes()) + ":" + 
 						                     SetIntToString(createdtime.getSeconds());
+						var updatetime = objects[i].updatedAt;
+						var updatetimeStr = updatetime.getDate() + "/" + 
+						                     (updatetime.getMonth()+1) + "/" + 
+						                     updatetime.getFullYear() +" " + 
+						                     SetIntToString(updatetime.getHours()) + ":" + 
+						                     SetIntToString(updatetime.getMinutes()) + ":" + 
+						                     SetIntToString(updatetime.getSeconds());
 						allUserInfoArr.push({firstname:objects[i].get("first_name"), 
 						lastname:objects[i].get("last_name"), 
-						email:objects[i].get("email"), createdAt:createdtimeStr});
+						email:objects[i].get("email"), 
+						createdAt:createdtimeStr,
+						updateAt:updatetimeStr,
+						highscore: objects[i].get("highscore"),
+						highscoreChar: objects[i].get("highscoreCharacter"),
+						score: objects[i].get("score"),
+						scoreChar: objects[i].get("scoreCharacter"),
+						count: objects[i].get("count"),
+						android: objects[i].get("Android"),
+						ios: objects[i].get("iOS")});
 
 						userInfoArr.push(allUserInfoArr[allUserCnt]);
 						if(allUserCnt < userShowPerPage)
@@ -385,9 +401,24 @@ function mainController($scope, $http, $log) {
 						                     SetIntToString(createdtime.getHours()) + ":" + 
 						                     SetIntToString(createdtime.getMinutes()) + ":" + 
 						                     SetIntToString(createdtime.getSeconds());
+						var updatetime = objects[i].updatedAt;
+						var updatetimeStr = updatetime.getDate() + "/" + 
+						                     (updatetime.getMonth()+1) + "/" + 
+						                     updatetime.getFullYear() +" " + 
+						                     SetIntToString(updatetime.getHours()) + ":" + 
+						                     SetIntToString(updatetime.getMinutes()) + ":" + 
+						                     SetIntToString(updatetime.getSeconds());
 						userInfoArr.push({firstname:objects[i].get("first_name"), 
 						lastname:objects[i].get("last_name"), 
-						email:objects[i].get("email"), createdAt:createdtimeStr});
+						email:objects[i].get("email"), 
+						createdAt:createdtimeStr,
+						highscore: objects[i].get("highscore"),
+						highscoreChar: objects[i].get("highscoreCharacter"),
+						score: objects[i].get("score"),
+						scoreChar: objects[i].get("scoreCharacter"),
+						count: objects[i].get("count"),
+						android: objects[i].get("Android"),
+						ios: objects[i].get("iOS")});
 						if(i < userShowPerPage)
 						{
 							$scope.searchInfo.push({firstname:objects[i].get("first_name"), 
