@@ -20,7 +20,7 @@ function mainController($scope, $http, $log) {
 		if(location.pathname.indexOf("search.html") != -1)
 		{
 			allUserInfoArr = new Array();
-			greaterThen = "";
+			lessThan = null;
 			allUserCnt = 0;
 			$scope.searchInfo = new Array();
 			userInfoArr = new Array();
@@ -278,15 +278,15 @@ function mainController($scope, $http, $log) {
 	var topCurrentPage = 1;
 	var topMaxPage = 1;
 	var userShowPerPage = 100;
-	var greaterThen = "";
+	var lessThan = null;
 	var allUserCnt = 0;
 	function FindAllUser()
 	{
 		$log.log("FindAllUser");
 		 var query = new Parse.Query("UserInfo");
-		 query.ascending("uid");
-		 if(greaterThen != "")
-		 	query.greaterThan("uid", greaterThen);
+		 query.descending("updatedAt");
+		 if(lessThan != null)
+		 	query.lessThan("updatedAt", lessThan);
 		 query.limit(1000);
 		 query.find({
 				  success: function(objects) {
@@ -328,7 +328,7 @@ function mainController($scope, $http, $log) {
 						}
 						allUserCnt++;
 
-						greaterThen = objects[i].get("uid");
+						lessThan = objects[i].updatedAt;
 					}
 					
 					if(objects.length == 0)
