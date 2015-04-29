@@ -111,6 +111,7 @@ function mainController($scope, $http, $log) {
 						if(document.getElementById("checkbox" + (i+1)) != null)
 						{
 							document.getElementById("checkbox" + (i+1)).checked = objects[i].get("on");
+							$scope.isOn[i] = objects[i].get("on");
 							$scope.priority.push(objects[i].get("priority"));
 							document.getElementById("priority" + (i+1)).value = objects[i].get("priority");
 							globalDatepickerData['sdt'+ (i+1)] = objects[i].get("startDay");
