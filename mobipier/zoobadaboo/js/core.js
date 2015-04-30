@@ -112,7 +112,8 @@ function mainController($scope, $http, $log) {
 						{
 							document.getElementById("checkbox" + (i+1)).checked = objects[i].get("on");
 							$scope.isOn[i] = objects[i].get("on");
-							$scope.priority.push(objects[i].get("priority"));
+							//$scope.priority.push(objects[i].get("priority"));
+							$scope.priority[i] = objects[i].get("priority");
 							document.getElementById("priority" + (i+1)).value = objects[i].get("priority");
 							globalDatepickerData['sdt'+ (i+1)] = objects[i].get("startDay");
 							globalDatepickerData['edt' + (i+1)] = objects[i].get("endDay");
@@ -161,6 +162,24 @@ function mainController($scope, $http, $log) {
       var _files = e.target.files || e.dataTransfer.files;
       // Our file var now holds the selected file
       files[3] = _files[0];
+    });
+	
+	$('#fileselect5').bind("change", function(e) {
+      var _files = e.target.files || e.dataTransfer.files;
+      // Our file var now holds the selected file
+      files[4] = _files[0];
+    });
+	
+	$('#fileselect6').bind("change", function(e) {
+      var _files = e.target.files || e.dataTransfer.files;
+      // Our file var now holds the selected file
+      files[5] = _files[0];
+    });
+	
+	$('#fileselect7').bind("change", function(e) {
+      var _files = e.target.files || e.dataTransfer.files;
+      // Our file var now holds the selected file
+      files[6] = _files[0];
     });
 	
     $scope.uploadbutton = function() {
