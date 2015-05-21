@@ -79,12 +79,6 @@ function mainController($scope, $http, $log) {
 						}
 						
 						var active = objects[i].get("active");
-						dataArray.push({ count: cnt,
-										title:_title,
-										url:_url,
-										imgurl:imgurl,
-										active:active,
-										file: null});
 						columArr.push({ count: cnt,
 										title:_title,
 										url:_url,
@@ -225,7 +219,8 @@ function mainController($scope, $http, $log) {
 										url:"",
 										imgurl:"",
 										active:false,
-										file: null});
+										file: null,
+										dataobject: objects[i]});
 			$scope.rowArr.push({columArr: lastColumArr});
 		}
 		else
@@ -235,7 +230,8 @@ function mainController($scope, $http, $log) {
 										url:"",
 										imgurl:"",
 										active:false,
-										file: null});
+										file: null,
+										dataobject: objects[i]});
 		}
 		$scope.uploadbutton(lastColumArr[lastColumArr.length-1]);
 		//location.reload();
