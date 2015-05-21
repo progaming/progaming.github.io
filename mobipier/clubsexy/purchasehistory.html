@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html ng-app="testloginsite">
+	<head>
+		<meta charset="utf-8">
+		<title>ประวัติการซื้อเพชร</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/my-style.css">
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+        <script src="./js/ui-bootstrap-tpls-0.9.0.min.js"></script>
+        <script src="./js/core.js"></script>
+        
+        <style>
+			table, th , td {
+			  border: 1px solid grey;
+			  border-collapse: collapse;
+			  padding: 5px;
+			}
+			table tr:nth-child(odd) {
+			  background-color: #f1f1f1;
+			}
+			table tr:nth-child(even) {
+			  background-color: #ffffff;
+			}
+			a.disabled {
+			   pointer-events: none;
+			   cursor: default;
+			}
+			a.button{
+				cursor:pointer;	
+			}
+		</style>
+        
+	</head>
+
+	<body ng-controller="mainController">
+        <div class="navbar navbar-default">
+            <div class="container">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand text-muted" href="#">ZooBaDaBoo</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a ng-click="gotoNews()" href="#">ข่าว</a></li>
+                        <li><a ng-click="gotouserpage()" href="#">ค้นหา</a></li>
+                        <li><a ng-click="gotoTopPage()" href="#">ผู้เล่นยอดเยี่ยม</a></li>
+                        <li class="active"><a href="#">ประวัติการซื้อเพชร</a></li>
+                        <li><a ng-click="gotoDailyMissionPage()" href="#">ภารกิจประจำวัน</a></li>
+                        <li><a ng-click="gotoPeriodMissionPage()" href="#">ภารกิจ</a></li>
+                        <li><a ng-click="logout()" href="#">ออกจากระบบ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    	<div class="container">
+            <div class="page-header"><h1>ประวัติการซื้อเพชร</h1></div>
+            
+            <form ng-show="isShowPurchasedInfo == true">
+            	<table>
+                	<tr>
+                    	<th>uid</th>
+                        <th>จำนวนเพชรก่อนซื้อ</th>
+                        <th>เพชรที่ซื้อไป</th>
+                        <th>เวลา</th>
+                    </tr>
+                    <tr ng-repeat="x in purchasedHistoryInfo">
+                        <td>{{ x.uid }}</td>
+                        <td>{{ x.lastruby }}</td>
+                        <td>{{ x.buyruby }}</td>
+                        <td>{{ x.time }}</td>
+                    </tr>
+                </table>
+                <br />
+            </form>
+            <br />
+            <div ng-show="needMorePage == true">
+                <div>หน้าที่ :</div> 
+                <ul class="pagination">
+                    <li ng-repeat="x in userdataPageNum">
+                        <a href="#" ng-click="gotoPHPage(x)">{{ x }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+	</body>
+</html>
