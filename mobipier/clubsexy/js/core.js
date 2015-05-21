@@ -140,11 +140,6 @@ function mainController($scope, $http, $log) {
     $scope.uploadbutton = function(y) {
 		$scope.buttonSaveDisabled = true;
 		$log.log("dataObjects.length = " + dataObjects.length)
-		if(y.count >= dataObjects.length)
-		{
-			var Gallery = Parse.Object.extend("Gallery");
-			dataObjects.push(new Gallery());
-		}
 		SaveNewsData(y);
 		
     }
@@ -211,6 +206,9 @@ function mainController($scope, $http, $log) {
 	$scope.addnewcolum = function() {
 		var lastColumArr = $scope.rowArr[$scope.rowArr.length-1].columArr;
 		var cnt = lastColumArr[lastColumArr.length-1].count + 1;
+		var Gallery = Parse.Object.extend("Gallery");
+		var galleryObj = new Gallery();
+		dataObjects.push(galleryObj);
 		if(lastColumArr.length == 3)
 		{
 			lastColumArr = new Array();
@@ -220,7 +218,7 @@ function mainController($scope, $http, $log) {
 										imgurl:"",
 										active:false,
 										file: null,
-										dataobject: objects[i]});
+										dataobject: galleryObj});
 			$scope.rowArr.push({columArr: lastColumArr});
 		}
 		else
@@ -231,7 +229,7 @@ function mainController($scope, $http, $log) {
 										imgurl:"",
 										active:false,
 										file: null,
-										dataobject: objects[i]});
+										dataobject: galleryObj});
 		}
 		$scope.uploadbutton(lastColumArr[lastColumArr.length-1]);
 		//location.reload();
