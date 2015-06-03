@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app="testloginsite">
+	<head>
+		<meta charset="utf-8">
+		<title>ข่าว</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/my-style.css">
+ 		<script src="http://code.jquery.com/jquery.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+        <script src="./js/ui-bootstrap-tpls-0.9.0.min.js"></script>
+        <script src="./js/core.js"></script>
+        <style>
+        a.disabled {
+		   pointer-events: none;
+		   cursor: default;
+		}
+		a.button{
+			cursor:pointer;	
+		}
+		</style>
+        
+	</head>
+
+	<body ng-controller="mainController">
+        <div class="navbar navbar-default">
+            <div class="container">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand text-muted" href="#">Virgin Style</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a ng-click="gotoUserInfo()" href="#">ข้อมูลผู้เล่น</a></li>
+                        <li class="active"><a href="#">ข้อมูลหัวข้อ</a></li>
+                        <!--<li><a ng-click="gotoTopPage()" href="#">ผู้เล่นยอดเยี่ยม</a></li>
+                        <li><a ng-click="gotoPurchasedHistoryPage()" href="#">ประวัติการซื้อเพชร</a></li>
+                        <li><a ng-click="gotoDailyMissionPage()" href="#">ภารกิจประจำวัน</a></li>
+                        <li><a ng-click="gotoPeriodMissionPage()" href="#">ภารกิจ</a></li>-->
+                        <li><a ng-click="logout()" href="#">ออกจากระบบ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    	<div class="container">
+            
+            <div class="page-header"><h1>หัวข้อ</h1></div>
+            <div style="padding: 5px;"> </div>
+            <div>
+                <form ng-show="isSearch == true">
+            	   <table class="table table-bordered">
+                        <tr>
+                        	<th class="text-center">หัวข้อ</th>
+                            <th class="text-center">จำนวนผู้ใช้</th>
+                        </tr>
+                        <tr ng-repeat="x in topicInfo">
+                            <td class="text-center">{{ x.topic }}</td>
+                            <td class="text-center">{{ x.count }}</td>
+                        </tr>
+                    </table>
+                    <br />
+                </form>
+            </div>
+            <hr/>
+
+        </div>
+        
+        
+	</body>
+</html>
