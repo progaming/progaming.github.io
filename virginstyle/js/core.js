@@ -28,8 +28,15 @@ function mainController($scope, $http, $log) {
 	{
 		lessThan = null;
 		ageArr = new Array();
-		userCnt = 0;
 		$scope.userInfo = new Array();
+		userCnt = 0;
+		for(var i = 10; i <= 30; i++)
+		{
+			ageArr[i] = userCnt;
+			$scope.userInfo.push({age:i, female:0, male:0});
+			userCnt++;
+		}
+		userCnt = 0;
 		FindAllUserInfo();
 	}
 	
@@ -80,7 +87,11 @@ function mainController($scope, $http, $log) {
 						var gender = objects[i].get("gender");
 						var _cnt = 0;
 						console.log("gender: " + gender + " age: " + age);
-						if(ageArr[age] == undefined)
+						if(ageArr[age] != undefined)
+						{
+							_cnt = ageArr[age];
+						}
+						/*if(ageArr[age] == undefined)
 						{
 							ageArr[age] = userCnt;
 							_cnt = userCnt;
@@ -90,7 +101,7 @@ function mainController($scope, $http, $log) {
 						else
 						{
 							_cnt = ageArr[age];
-						}
+						}*/
 						
 						if(gender == "female")
 						{
