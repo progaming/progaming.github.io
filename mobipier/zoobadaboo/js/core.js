@@ -66,6 +66,10 @@ function mainController($scope, $http, $log) {
 	{
 		loadPeriodMission();
 	}
+	else if(location.pathname.indexOf("setting.html") != -1)
+	{
+		loadShowBTVIP();
+	}
 	
 	var newsObjects;
 	var newsImg;
@@ -291,6 +295,10 @@ function mainController($scope, $http, $log) {
 	$scope.gotoPeriodMissionPage = function()
 	{
 		location.replace("periodmission.html");
+	}
+	$scope.gotoSettingPage = function()
+	{
+		location.replace("setting.html");
 	}
 	
 	var allUserInfoArr;
@@ -851,6 +859,44 @@ function mainController($scope, $http, $log) {
 	            $log.log(error)
 	        }
     	});
+	}
+
+	//-----------------------------
+	//------- Setting --------
+	var appObject;
+	function loadShowBTVIP() {
+		$log.log("loadShowBTVIP");
+		$scope.isShowBT = false;
+		var query = new Parse.Query("App");
+			  query.find({
+				  success: function(objects) {
+				  	if(objects.length > 0)
+					{
+						appObject = objects[0];
+						$scope.showVIPBT = objects[0].get("showVIPTelBT");
+					}
+					$scope.isShowBT = true;
+					$scope.$apply()
+				  },
+				  error: function(error) {
+					$scope.message = "Can't Load ShowBTVIP";
+				  }
+			  });
+
+	}
+
+	$scope.UpdateBTVIP = function()
+	{
+		$scope.settingDisabledSaveBT = true;
+		appObject.set("showVIPTelBT", $scope.showVIPBT);
+		appObject.save().then(function(newsObj) {	
+					$scope.settingDisabledSaveBT = false;
+					alert("ข้อมูลถูกบันทึกเรียบร้อยแล้ว");
+		            location.reload();
+				  }, function(error) {
+				  		$log.log("error: " + error);
+						$scope.meesage = "UpdateBTVIP could not be saved to parse";
+				  });
 	}
 
 	//-----------------------------
