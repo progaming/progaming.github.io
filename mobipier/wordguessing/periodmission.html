@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html ng-app="testloginsite">
+	<head>
+		<meta charset="utf-8">
+		<title>ภารกิจ</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/my-style.css">
+ 		<script src="http://code.jquery.com/jquery.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+        <script src="./js/ui-bootstrap-tpls-0.9.0.min.js"></script>
+        <script src="./js/core.js"></script>
+        
+        <style>
+        a.disabled {
+		   pointer-events: none;
+		   cursor: default;
+		}
+		a.button{
+			cursor:pointer;	
+		}
+		</style>
+        
+	</head>
+
+	<body ng-controller="mainController">
+        <div class="navbar navbar-default">
+            <div class="container">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand text-muted" href="#">ZooBaDaBoo</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a ng-click="gotoNews()" href="#">ข่าว</a></li>
+                        <li><a ng-click="gotouserpage()" href="#">ค้นหา</a></li>
+                        <li><a ng-click="gotoTopPage()" href="#">ผู้เล่นยอดเยี่ยม</a></li>
+                        <li><a ng-click="gotoPurchasedHistoryPage()" href="#">ประวัติการซื้อเพชร</a></li>
+                        <li><a ng-click="gotoDailyMissionPage()" href="#">ภารกิจประจำวัน</a></li>
+                        <li class="active"><a href="#">ภารกิจ</a></li>
+                        <li><a ng-click="gotoSettingPage()" href="#">ตั้งค่า</a></li>
+                        <li><a ng-click="logout()" href="#">ออกจากระบบ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    	<div class="container">
+            
+            <div class="page-header"><h1>ภารกิจ</h1></div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <form>
+                        <div class="form-group">
+                            <div>
+                                <label for="textNewsArea">หัวข้อ</label>
+                                <select ng-model="pmc1" id="pmc1" class="form-control" ng-change="UpdatePM()">
+                                    <option value="">None</option>
+                                    <option value="ScoreTarget">Score Target</option>
+                                    <option value="LevelUp">Level Up</option>
+                                    <option value="UseSkill">Use Skill</option>
+                                    <option value="Overtake">OverTake</option>
+                                </select>
+                            </div>
+                            <div>
+                                เป้าหมาย: <input type="number" id="pmt1" class="form-control input-normal" size="1" ng-disabled="pmt1"/>
+                            </div>
+                            <div>
+                                <label for"textNewsArea">ของรางวัล</label>
+                                <select id="pmr1" class="form-control">
+                                    <option value="coin">Coin</option>
+                                    <option value="ruby">Ruby</option>
+                                    <option value="heart">Heart</option>
+                                </select>
+                            </div>
+                            <div>
+                                จำนวน: <input type="number" id="pma1" class="form-control input-normal" size="1" />
+                            </div>
+
+                           <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                                <div class="row">
+                                    <!-- StartDate -->
+                                    <div class="col-sm-12">
+                                        Start Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="datepickerData.sdt2" is-open="datepickerBool.opened3" min-date="minDateData.sdt2" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="changeDatePick('sdt2')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened3')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                    <!-- EndDate -->
+                                    <div class="col-sm-12">
+                                        End Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="datepickerData.edt2" is-open="datepickerBool.opened4" min-date="minDateData.edt2" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="changeDatePick('edt2')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened4')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-4">
+                    <form>
+                        <div class="form-group">
+                            <div>
+                                <label for="textNewsArea">หัวข้อ</label>
+                                <select ng-model="pmc2" id="pmc2" class="form-control" ng-change="UpdatePM()">
+                                    <option value="">None</option>
+                                    <option value="ScoreTarget">Score Target</option>
+                                    <option value="LevelUp">Level Up</option>
+                                    <option value="UseSkill">Use Skill</option>
+                                    <option value="Overtake">OverTake</option>
+                                </select>
+                            </div>
+                            <div>
+                                เป้าหมาย: <input type="number" id="pmt2" class="form-control input-normal" size="1" ng-disabled="pmt2"/>
+                            </div>
+                            <div>
+                                <label for"textNewsArea">ของรางวัล</label>
+                                <select id="pmr2" class="form-control">
+                                    <option value="coin">Coin</option>
+                                    <option value="ruby">Ruby</option>
+                                    <option value="heart">Heart</option>
+                                </select>
+                            </div>
+                            <div>
+                                จำนวน: <input type="number" id="pma2" class="form-control input-normal" size="1" />
+                            </div>
+
+                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                                <div class="row">
+                                    <!-- StartDate -->
+                                    <div class="col-sm-12">
+                                        Start Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="datepickerData.sdt3" is-open="datepickerBool.opened5" min-date="minDateData.sdt3" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="changeDatePick('sdt3')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened5')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                    <!-- EndDate -->
+                                    <div class="col-sm-12">
+                                        End Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="datepickerData.edt3" is-open="datepickerBool.opened6" min-date="minDateData.edt3" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="changeDatePick('edt3')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened6')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-4">
+                    <form>
+                        <div class="form-group">
+                            <div>
+                                <label for="textNewsArea">หัวข้อ</label>
+                                <select ng-model="pmc3" id="pmc3" class="form-control" ng-change="UpdatePM()">
+                                    <option value="">None</option>
+                                    <option value="ScoreTarget">Score Target</option>
+                                    <option value="LevelUp">Level Up</option>
+                                    <option value="UseSkill">Use Skill</option>
+                                    <option value="Overtake">OverTake</option>
+                                </select>
+                            </div>
+                            <div>
+                                เป้าหมาย: <input type="number" id="pmt3" class="form-control input-normal" size="1" ng-disabled="pmt3" />
+                            </div>
+                            <div>
+                                <label for"textNewsArea">ของรางวัล</label>
+                                <select id="pmr3" class="form-control">
+                                    <option value="coin">Coin</option>
+                                    <option value="ruby">Ruby</option>
+                                    <option value="heart">Heart</option>
+                                </select>
+                            </div>
+                            <div>
+                                จำนวน: <input type="number" id="pma3" class="form-control input-normal" size="1" />
+                            </div>
+
+                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                                <div class="row">
+                                    <!-- StartDate -->
+                                    <div class="col-sm-12">
+                                        Start Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="datepickerData.sdt4" is-open="datepickerBool.opened7" min-date="minDateData.sdt4" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="changeDatePick('sdt4')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened7')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                    <!-- EndDate -->
+                                    <div class="col-sm-12">
+                                        End Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="datepickerData.edt4" is-open="datepickerBool.opened8" min-date="minDateData.edt4" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="changeDatePick('edt4')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened8')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-4">
+                    <form>
+                        <div class="form-group">
+                            <div>
+                                <label for="textNewsArea">หัวข้อ</label>
+                                <select ng-model="pmc4" id="pmc4" class="form-control" ng-change="UpdatePM()">
+                                    <option value="">None</option>
+                                    <option value="ScoreTarget">Score Target</option>
+                                    <option value="LevelUp">Level Up</option>
+                                    <option value="UseSkill">Use Skill</option>
+                                    <option value="Overtake">OverTake</option>
+                                </select>
+                            </div>
+                            <div>
+                                เป้าหมาย: <input type="number" id="pmt4" class="form-control input-normal" size="1" ng-disabled="pmt4" />
+                            </div>
+                            <div>
+                                <label for"textNewsArea">ของรางวัล</label>
+                                <select id="pmr4" class="form-control">
+                                    <option value="coin">Coin</option>
+                                    <option value="ruby">Ruby</option>
+                                    <option value="heart">Heart</option>
+                                </select>
+                            </div>
+                            <div>
+                                จำนวน: <input type="number" id="pma4" class="form-control input-normal" size="1" />
+                            </div>
+
+                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                                <div class="row">
+                                    <!-- StartDate -->
+                                    <div class="col-sm-12">
+                                        Start Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="datepickerData.sdt5" is-open="datepickerBool.opened9" min-date="minDateData.sdt5" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="changeDatePick('sdt5')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened9')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                    <!-- EndDate -->
+                                    <div class="col-sm-12">
+                                        End Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="datepickerData.edt5" is-open="datepickerBool.opened10" min-date="minDateData.edt5" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="changeDatePick('edt5')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened10')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-4">
+                    <form>
+                        <div class="form-group">
+                            <div>
+                                <label for="textNewsArea">หัวข้อ</label>
+                                <select ng-model="pmc5" id="pmc5" class="form-control" ng-change="UpdatePM()">
+                                    <option value="">None</option>
+                                    <option value="ScoreTarget">Score Target</option>
+                                    <option value="LevelUp">Level Up</option>
+                                    <option value="UseSkill">Use Skill</option>
+                                    <option value="Overtake">OverTake</option>
+                                </select>
+                            </div>
+                            <div>
+                                เป้าหมาย: <input type="number" id="pmt5" class="form-control input-normal" size="1" ng-disabled="pmt5" />
+                            </div>
+                            <div>
+                                <label for"textNewsArea">ของรางวัล</label>
+                                <select id="pmr5" class="form-control">
+                                    <option value="coin">Coin</option>
+                                    <option value="ruby">Ruby</option>
+                                    <option value="heart">Heart</option>
+                                </select>
+                            </div>
+                            <div>
+                                จำนวน: <input type="number" id="pma5" class="form-control input-normal" size="1" />
+                            </div>
+
+                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                                <div class="row">
+                                    <!-- StartDate -->
+                                    <div class="col-sm-12">
+                                        Start Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="datepickerData.sdt6" is-open="datepickerBool.opened11" min-date="minDateData.sdt6" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="changeDatePick('sdt6')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened11')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                    <!-- EndDate -->
+                                    <div class="col-sm-12">
+                                        End Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="datepickerData.edt6" is-open="datepickerBool.opened12" min-date="minDateData.edt6" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="changeDatePick('edt6')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened12')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-4">
+                    <form>
+                        <div class="form-group">
+                            <div>
+                                <label for="textNewsArea">หัวข้อ</label>
+                                <select ng-model="pmc6" id="pmc6" class="form-control" ng-change="UpdatePM()">
+                                    <option value="">None</option>
+                                    <option value="ScoreTarget">Score Target</option>
+                                    <option value="LevelUp">Level Up</option>
+                                    <option value="UseSkill">Use Skill</option>
+                                    <option value="Overtake">OverTake</option>
+                                </select>
+                            </div>
+                            <div>
+                                เป้าหมาย: <input type="number" id="pmt6" class="form-control input-normal" size="1" ng-disabled="pmt6" />
+                            </div>
+                            <div>
+                                <label for"textNewsArea">ของรางวัล</label>
+                                <select id="pmr6" class="form-control">
+                                    <option value="coin">Coin</option>
+                                    <option value="ruby">Ruby</option>
+                                    <option value="heart">Heart</option>
+                                </select>
+                            </div>
+                            <div>
+                                จำนวน: <input type="number" id="pma6" class="form-control input-normal" size="1" />
+                            </div>
+
+                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                                <div class="row">
+                                    <!-- StartDate -->
+                                    <div class="col-sm-12">
+                                        Start Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="datepickerData.sdt7" is-open="datepickerBool.opened13" min-date="minDateData.sdt7" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="changeDatePick('sdt7')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened13')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                    <!-- EndDate -->
+                                    <div class="col-sm-12">
+                                        End Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="datepickerData.edt7" is-open="datepickerBool.opened14" min-date="minDateData.edt7" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="changeDatePick('edt7')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened14')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-offset-10">
+                    <div><button class="btn btn-default" ng-disabled="buttonPMSaveDisabled" ng-click="uploadpmbutton()">บันทึก</button></div>
+                    <div ng-show="buttonPMSaveDisabled == true">กำลังอัพโหลดข้อมูล กรุณารอสักครู่...</div>
+                </div>
+            </div>
+            <hr/>
+
+        </div>
+        
+	</body>
+</html>

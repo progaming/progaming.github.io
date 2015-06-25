@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html ng-app="testloginsite">
+	<head>
+		<meta charset="utf-8">
+		<title>ข่าว</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/my-style.css">
+ 		<script src="http://code.jquery.com/jquery.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+        <script src="./js/ui-bootstrap-tpls-0.9.0.min.js"></script>
+        <script src="./js/core.js"></script>
+        <style>
+        a.disabled {
+		   pointer-events: none;
+		   cursor: default;
+		}
+		a.button{
+			cursor:pointer;	
+		}
+		</style>
+        
+	</head>
+
+	<body ng-controller="mainController">
+        <div class="navbar navbar-default">
+            <div class="container">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand text-muted" href="#">ลุ้นแหลก Online</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="#">ข่าว</a></li>
+                        <li><a ng-click="gotouserpage()" href="#">ค้นหา</a></li>
+                        <li><a ng-click="gotoTopPage()" href="#">ผู้เล่นยอดเยี่ยม</a></li>
+                       <!-- <li><a ng-click="gotoPurchasedHistoryPage()" href="#">ประวัติการซื้อเพชร</a></li>
+                        <li><a ng-click="gotoDailyMissionPage()" href="#">ภารกิจประจำวัน</a></li>
+                        <li><a ng-click="gotoPeriodMissionPage()" href="#">ภารกิจ</a></li>
+                        <li><a ng-click="gotoSettingPage()" href="#">ตั้งค่า</a></li> -->
+                        <li><a ng-click="logout()" href="#">ออกจากระบบ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    	<div class="container">
+            
+            <div class="page-header"><h1>ข่าว</h1></div>
+            <div class="row">
+                <!-- News1 -->
+                <div class="col-sm-4">
+                    <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
+                        <div class="form-group">
+                            <label for="textNewsArea">รูปภาพ (300 x 196)</label>
+                            <div style="margin-bottom:2px;"><img ng-src="{{imgurls[0]}}" alt="News Image" width="300" height="196"></div>
+                            <div style="margin-bottom:10px;"><input type="file" name="fileselect" id="fileselect"></input></div>
+                            <label for="textNewsArea">ข้อความ</label>
+                            <div><TextArea cols="40" rows="5" id="textNewsArea0">{{newstext[0]}}</TextArea></div>
+
+                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                                <div class="row">
+                                    <!-- StartDate -->
+                                    <div class="col-sm-12">
+                                        Start Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" 
+                                                 ng-model="datepickerData.sdt1" is-open="datepickerBool.opened1" 
+                                                 min-date="minDateData.sdt1" max-date="'2015-06-22'" datepicker-options="dateOptions" 
+                                                 date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" 
+                                                 ng-change="changeDatePick('sdt1')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened1')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                    <!-- EndDate -->
+                                    <div class="col-sm-12">
+                                        End Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" 
+                                                 ng-model="datepickerData.edt1" is-open="datepickerBool.opened2" 
+                                                 min-date="minDateData.edt1" max-date="'2015-06-22'" datepicker-options="dateOptions" 
+                                                 date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" 
+                                                 ng-change="changeDatePick('edt1')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened2')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                Priority: <input id="priority1" type="number" maxlength="1" size="1" ng-model="priority[0]"/>
+                            </div>
+                            <div class="checkbox-inline">
+                                <label><input id="checkbox1" type="checkbox" value="" ng-model="isOn[0]">On?</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- News2 -->
+                <div class="col-sm-4">
+                    <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
+                        <div class="form-group">
+                            <label for="textNewsArea">รูปภาพ (300 x 196)</label>
+                            <div style="margin-bottom:2px;"><img ng-src="{{imgurls[1]}}" alt="News Image" width="300" height="196"></div>
+                            <div style="margin-bottom:10px;"><input type="file" name="fileselect2" id="fileselect2"></input></div>
+                            <label for="textNewsArea">ข้อความ</label>
+                            <div><TextArea cols="40" rows="5" id="textNewsArea1">{{newstext[1]}}</TextArea></div>
+
+                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                                <div class="row">
+                                    <!-- StartDate -->
+                                    <div class="col-sm-12">
+                                        Start Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="datepickerData.sdt2" is-open="datepickerBool.opened3" min-date="minDateData.sdt2" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="changeDatePick('sdt2')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened3')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                    <!-- EndDate -->
+                                    <div class="col-sm-12">
+                                        End Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="datepickerData.edt2" is-open="datepickerBool.opened4" min-date="minDateData.edt2" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-change="changeDatePick('edt2')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened4')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                Priority: <input id="priority2" type="number" maxlength="1" size="1" ng-model="priority[1]"/>
+                            </div>
+                            <div class="checkbox-inline">
+                                <label><input id="checkbox2" type="checkbox" value="" ng-model="isOn[1]">On?</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- News3 -->
+                <div class="col-sm-4">
+                    <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
+                        <div class="form-group">
+                            <label for="textNewsArea">รูปภาพ (300 x 196)</label>
+                            <div style="margin-bottom:2px;"><img ng-src="{{imgurls[2]}}" alt="News Image" width="300" height="196"></div>
+                            <div style="margin-bottom:10px;"><input type="file" name="fileselect3" id="fileselect3"></input></div>
+                            <label for="textNewsArea">ข้อความ</label>
+                            <div><TextArea cols="40" rows="5" id="textNewsArea2">{{newstext[2]}}</TextArea></div>
+
+                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                                <div class="row">
+                                    <!-- StartDate -->
+                                    <div class="col-sm-12">
+                                        Start Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" 
+                                                 ng-model="datepickerData.sdt3" is-open="datepickerBool.opened5" 
+                                                 min-date="minDateData.sdt3" max-date="'2015-06-22'" datepicker-options="dateOptions" 
+                                                 date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" 
+                                                 ng-change="changeDatePick('sdt3')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened5')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                    <!-- EndDate -->
+                                    <div class="col-sm-12">
+                                        End Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" 
+                                                 ng-model="datepickerData.edt3" is-open="datepickerBool.opened6" 
+                                                 min-date="minDateData.edt3" max-date="'2015-06-22'" datepicker-options="dateOptions" 
+                                                 date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" 
+                                                 ng-change="changeDatePick('edt3')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened6')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                Priority: <input id="priority3" type="number" maxlength="1" size="1" ng-model="priority[2]"/>
+                            </div>
+                            <div class="checkbox-inline">
+                                <label><input id="checkbox3" type="checkbox" value="" ng-model="isOn[2]">On?</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <!-- News4 -->
+                <div class="col-sm-4">
+                    <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
+                        <div class="form-group">
+                            <label for="textNewsArea">รูปภาพ (300 x 196)</label>
+                            <div style="margin-bottom:2px;"><img ng-src="{{imgurls[3]}}" alt="News Image" width="300" height="196"></div>
+                            <div style="margin-bottom:10px;"><input type="file" name="fileselect4" id="fileselect4"></input></div>
+                            <label for="textNewsArea">ข้อความ</label>
+                            <div><TextArea cols="40" rows="5" id="textNewsArea3">{{newstext[3]}}</TextArea></div>
+
+                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                                <div class="row">
+                                    <!-- StartDate -->
+                                    <div class="col-sm-12">
+                                        Start Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" 
+                                                 ng-model="datepickerData.sdt4" is-open="datepickerBool.opened7" 
+                                                 min-date="minDateData.sdt4" max-date="'2015-06-22'" datepicker-options="dateOptions" 
+                                                 date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" 
+                                                 ng-change="changeDatePick('sdt4')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened7')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                    <!-- EndDate -->
+                                    <div class="col-sm-12">
+                                        End Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" 
+                                                 ng-model="datepickerData.edt4" is-open="datepickerBool.opened8" 
+                                                 min-date="minDateData.edt4" max-date="'2015-06-22'" datepicker-options="dateOptions" 
+                                                 date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" 
+                                                 ng-change="changeDatePick('edt4')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened8')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                Priority: <input id="priority4" type="number" maxlength="1" size="1" ng-model="priority[3]"/>
+                            </div>
+                            <div class="checkbox-inline">
+                                <label><input id="checkbox4" type="checkbox" value="" ng-model="isOn[3]">On?</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- News5 -->
+                <div class="col-sm-4">
+                    <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
+                        <div class="form-group">
+                            <label for="textNewsArea">รูปภาพ (300 x 196)</label>
+                            <div style="margin-bottom:2px;"><img ng-src="{{imgurls[4]}}" alt="News Image" width="300" height="196"></div>
+                            <div style="margin-bottom:10px;"><input type="file" name="fileselect5" id="fileselect5"></input></div>
+                            <label for="textNewsArea">ข้อความ</label>
+                            <div><TextArea cols="40" rows="5" id="textNewsArea4">{{newstext[4]}}</TextArea></div>
+
+                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                                <div class="row">
+                                    <!-- StartDate -->
+                                    <div class="col-sm-12">
+                                        Start Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" 
+                                                 ng-model="datepickerData.sdt5" is-open="datepickerBool.opened9" 
+                                                 min-date="minDateData.sdt5" max-date="'2015-06-22'" datepicker-options="dateOptions" 
+                                                 date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" 
+                                                 ng-change="changeDatePick('sdt5')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened9')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                    <!-- EndDate -->
+                                    <div class="col-sm-12">
+                                        End Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" 
+                                                 ng-model="datepickerData.edt5" is-open="datepickerBool.opened10" 
+                                                 min-date="minDateData.edt5" max-date="'2015-06-22'" datepicker-options="dateOptions" 
+                                                 date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" 
+                                                 ng-change="changeDatePick('edt5')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened10')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                Priority: <input id="priority5" type="number" maxlength="1" size="1" ng-model="priority[4]"/>
+                            </div>
+                            <div class="checkbox-inline">
+                                <label><input id="checkbox5" type="checkbox" value="" ng-model="isOn[4]">On?</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- News6 -->
+                <div class="col-sm-4">
+                    <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
+                        <div class="form-group">
+                            <label for="textNewsArea">รูปภาพ (300 x 196)</label>
+                            <div style="margin-bottom:2px;"><img ng-src="{{imgurls[5]}}" alt="News Image" width="300" height="196"></div>
+                            <div style="margin-bottom:10px;"><input type="file" name="fileselect6" id="fileselect6"></input></div>
+                            <label for="textNewsArea">ข้อความ</label>
+                            <div><TextArea cols="40" rows="5" id="textNewsArea5">{{newstext[5]}}</TextArea></div>
+
+                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                                <div class="row">
+                                    <!-- StartDate -->
+                                    <div class="col-sm-12">
+                                        Start Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" 
+                                                 ng-model="datepickerData.sdt6" is-open="datepickerBool.opened11" 
+                                                 min-date="minDateData.sdt6" max-date="'2015-06-22'" datepicker-options="dateOptions" 
+                                                 date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" 
+                                                 ng-change="changeDatePick('sdt6')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened11')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                    <!-- EndDate -->
+                                    <div class="col-sm-12">
+                                        End Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" 
+                                                 ng-model="datepickerData.edt6" is-open="datepickerBool.opened12" 
+                                                 min-date="minDateData.edt6" max-date="'2015-06-22'" datepicker-options="dateOptions" 
+                                                 date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" 
+                                                 ng-change="changeDatePick('edt6')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened12')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                Priority: <input id="priority6" type="number" maxlength="1" size="1" ng-model="priority[5]"/>
+                            </div>
+                            <div class="checkbox-inline">
+                                <label><input id="checkbox6" type="checkbox" value="" ng-model="isOn[5]">On?</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+            <div class="row">
+                <!-- News7 -->
+                <div class="col-sm-4">
+                    <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
+                        <div class="form-group">
+                            <label for="textNewsArea">รูปภาพ (300 x 196)</label>
+                            <div style="margin-bottom:2px;"><img ng-src="{{imgurls[6]}}" alt="News Image" width="300" height="196"></div>
+                            <div style="margin-bottom:10px;"><input type="file" name="fileselect4" id="fileselect7"></input></div>
+                            <label for="textNewsArea">ข้อความ</label>
+                            <div><TextArea cols="40" rows="5" id="textNewsArea6">{{newstext[6]}}</TextArea></div>
+
+                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                                <div class="row">
+                                    <!-- StartDate -->
+                                    <div class="col-sm-12">
+                                        Start Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" 
+                                                 ng-model="datepickerData.sdt7" is-open="datepickerBool.opened13" 
+                                                 min-date="minDateData.sdt7" max-date="'2015-06-22'" datepicker-options="dateOptions" 
+                                                 date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" 
+                                                 ng-change="changeDatePick('sdt7')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened13')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                    <!-- EndDate -->
+                                    <div class="col-sm-12">
+                                        End Date: <p class="input-group">
+                                          <input type="text" class="form-control" datepicker-popup="{{format}}" 
+                                                 ng-model="datepickerData.edt7" is-open="datepickerBool.opened14" 
+                                                 min-date="minDateData.edt7" max-date="'2015-06-22'" datepicker-options="dateOptions" 
+                                                 date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" 
+                                                 ng-change="changeDatePick('edt7')" />
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event, 'opened14')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                Priority: <input id="priority7" type="number" maxlength="1" size="1" ng-model="priority[6]"/>
+                            </div>
+                            <div class="checkbox-inline">
+                                <label><input id="checkbox7" type="checkbox" value="" ng-model="isOn[6]">On?</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+        </div>
+        
+        
+        
+
+            <div class="row">
+                <div class="col-sm-offset-10">
+                    <div><button class="btn btn-default" ng-disabled="buttonSaveDisabled" ng-click="uploadbutton()">บันทึก</button></div>
+                    <div ng-show="buttonSaveDisabled == true">กำลังอัพโหลดข้อมูล กรุณารอสักครู่...</div>
+                </div>
+            </div>
+            <hr/>
+
+        </div>
+        
+        
+	</body>
+</html>
