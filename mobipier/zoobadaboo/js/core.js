@@ -17,14 +17,31 @@ function mainController($scope, $http, $log) {
 		{
 			//loadnews();
 		}
-		if(location.pathname.indexOf("search.html") != -1)
+		if(location.pathname.indexOf("search.html") != -1 )//|| location.pathname.indexOf("duplicate.html") != -1)
 		{
+			uidArr = new Array();
+			dupUIdArr = new Array();
+			$scope.dupUIdArr = new Array();
 			allUserInfoArr = new Array();
 			lessThan = null;
 			allUserCnt = 0;
 			$scope.searchInfo = new Array();
 			userInfoArr = new Array();
 			FindAllUser();
+		}
+		if( location.pathname.indexOf("duplicate.html") != -1 )
+		{
+			//-- FindAllSave --
+			uidArr = new Array();
+			dupUIdArr = new Array();
+			$scope.dupUIdArr = new Array();
+			allUserInfoArr = new Array();
+			lessThan = null;
+			allUserCnt = 0;
+			$scope.searchInfo = new Array();
+			userInfoArr = new Array();
+			FindAllSave();
+			//-----------------
 		}
 		$log.log("buttonSaveDisabled = " + $scope.buttonSaveDisabled);
 	}else{
@@ -301,6 +318,7 @@ function mainController($scope, $http, $log) {
 		location.replace("setting.html");
 	}
 	
+	var uidArr;
 	var allUserInfoArr;
 	var userInfoArr;
 	var topCurrentPage = 1;
@@ -321,6 +339,17 @@ function mainController($scope, $http, $log) {
 					$log.log("object = " + objects.length);
 					for(var i = 0; i < objects.length; i++)
 					{
+						var _uid = objects[i].get("uid");
+						if(uidArr.indexOf(_uid) != -1)
+						{
+							$scope.dupUIdArr.push(_uid);
+							console.log(_uid);
+						}
+						else
+						{
+							uidArr.push(_uid);
+							//console.log("uid: " + _uid);
+						}
 						//$log.log(""+objects[i].get("first_name"));
 						var createdtime = objects[i].createdAt;
 						var createdtimeStr = createdtime.getDate() + "/" + 
@@ -355,7 +384,7 @@ function mainController($scope, $http, $log) {
 							$scope.searchInfo.push(userInfoArr[allUserCnt]);
 						}
 						allUserCnt++;
-
+						
 						lessThan = objects[i].updatedAt;
 					}
 					
@@ -365,6 +394,16 @@ function mainController($scope, $http, $log) {
 						$scope.isSearch = true;
 						$scope.$apply();
 						$log.log("searchInfo = " + allUserInfoArr.length);
+						/*//-- FindAllSave --
+						uidArr = new Array();
+						allUserInfoArr = new Array();
+						lessThan = null;
+						allUserCnt = 0;
+						$scope.searchInfo = new Array();
+						userInfoArr = new Array();
+						FindAllSave();
+						//-----------------
+						*/
 					}else
 					{
 						FindAllUser();
@@ -1060,9 +1099,61 @@ function mainController($scope, $http, $log) {
 		});
 		 
 	}
-
-	 
-	
+//----- Duplicate -----
+	var dupUIdArr;
+	 function FindAllSave()
+	{
+		$log.log("FindAllSave");
+		 var query = new Parse.Query("Save");
+		 query.descending("updatedAt");
+		 if(lessThan != null)
+		 	query.lessThan("updatedAt", lessThan);
+		 query.limit(1000);
+		 query.find({
+				  success: function(objects) {
+					$log.log("object = " + objects.length);
+					for(var i = 0; i < objects.length; i++)
+					{
+						var _uid = objects[i].get("uid");
+						if(uidArr.indexOf(_uid) != -1)
+						{
+							if(dupUIdArr.indexOf(_uid) == -1)
+							{
+								dupUIdArr.push(_uid);
+								$scope.dupUIdArr.push({id:_uid});
+								//console.log(_uid);
+							}
+							
+						}
+						else
+						{
+							uidArr.push(_uid);
+							//console.log("uid: " + _uid);
+						}
+						
+						allUserCnt++;
+						
+						lessThan = objects[i].updatedAt;
+					}
+					
+					if(objects.length == 0)
+					{
+						console.log("DupID: " + $scope.dupUIdArr.length)
+						$scope.isSearch = true;
+						$scope.$apply();
+						$log.log("searchInfo = " + uidArr.length);
+					}else
+					{
+						FindAllSave();
+					}
+					
+				  },
+				  error: function(error) {
+					$scope.message = "Can't search Save.";
+				  }
+			  });
+	}
+// -----------------------------------
 }
 
 var globalDatepickerData = [{'sdt1':null}, {'edt1':null}, 
