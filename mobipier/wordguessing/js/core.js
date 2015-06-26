@@ -622,7 +622,7 @@ function mainController($scope, $http, $log) {
 						if(arr.length < maxLv/10)
 						{
 							//console.log(wordClassStr + " Before: " + arr.length);
-							for(var i = wCnt-1; i < maxLv; i++)
+							for(var i = wCnt-1; i < maxLv-10; i++)
 							{
 								if(subArr.length == 10)
 								{
@@ -631,7 +631,7 @@ function mainController($scope, $http, $log) {
 								}
 								
 								subArr.push({word:"-"});
-								console.log(arr[arr.length-1]);
+								//console.log(arr[arr.length-1]);
 							}
 							//console.log(wordClassStr + " After: " + arr.length);
 						}
@@ -800,7 +800,7 @@ function mainController($scope, $http, $log) {
 		if(_lv == 1)
 		{
 			$scope.lvOneBT = new Array();
-			_cnt = lvOneArr.length;
+			_cnt = lvOneArr.length/10;
 			for(var i = 1; i <= _cnt; i++)
 			{
 				$scope.lvOneBT.push(i);
@@ -809,7 +809,7 @@ function mainController($scope, $http, $log) {
 		else if(_lv == 2)
 		{
 			$scope.lvTwoBT = new Array();
-			_cnt = lvTwoArr.length;
+			_cnt = lvTwoArr.length/10;
 			for(var i = 1; i <= _cnt; i++)
 			{
 				$scope.lvTwoBT.push(i);
@@ -818,7 +818,7 @@ function mainController($scope, $http, $log) {
 		else if(_lv == 3)
 		{
 			$scope.lvThreeBT = new Array();
-			_cnt = lvThreeArr.length;
+			_cnt = lvThreeArr.length/10;
 			for(var i = 1; i <= _cnt; i++)
 			{
 				$scope.lvThreeBT.push(i);
@@ -827,7 +827,7 @@ function mainController($scope, $http, $log) {
 		else if(_lv == 4)
 		{
 			$scope.lvFourBT = new Array();
-			_cnt = lvFourArr.length;
+			_cnt = lvFourArr.length/10;
 			for(var i = 1; i <= _cnt; i++)
 			{
 				$scope.lvFourBT.push(i);
@@ -836,7 +836,7 @@ function mainController($scope, $http, $log) {
 		else if(_lv == 5)
 		{
 			$scope.lvFiveBT = new Array();
-			_cnt = lvFiveArr.length;
+			_cnt = lvFiveArr.length/10;
 			for(var i = 1; i <= _cnt; i++)
 			{
 				$scope.lvFiveBT.push(i);
@@ -845,7 +845,7 @@ function mainController($scope, $http, $log) {
 		else if(_lv == 6)
 		{
 			$scope.lvSixBT = new Array();
-			_cnt = lvSixArr.length;
+			_cnt = lvSixArr.length/10;
 			for(var i = 1; i <= _cnt; i++)
 			{
 				$scope.lvSixBT.push(i);
@@ -873,7 +873,7 @@ function mainController($scope, $http, $log) {
 		{
 			currentLevelArr = lvFourArr;
 		}
-		else if(_lvi == 5)
+		else if(_lv == 5)
 		{
 			currentLevelArr = lvFiveArr;
 		}

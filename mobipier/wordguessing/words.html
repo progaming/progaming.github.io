@@ -79,7 +79,7 @@
                 <div role="tabpanel" class="tab-pane active" id="lv1">
                     <form >
                         <table class="table table-bordered">
-                            <tr ng-repeat="word in wordsLvOne" class="info">
+                            <tr ng-repeat="word in wordsLvOne" >
                                 <td ng-repeat="y in word" >
                                     {{ y.word }}
                                 </td>
@@ -102,7 +102,7 @@
                 <div role="tabpanel" class="tab-pane" id="lv2">
                      <form>
                         <table class="table table-bordered">
-                            <tr ng-repeat="word in wordsLvTwo" class="info">
+                            <tr ng-repeat="word in wordsLvTwo" >
                                 <td ng-repeat="y in word" >
                                     {{ y.word }}
                                 </td>
@@ -110,8 +110,13 @@
                         </table>
                         <br />
                         <div class="row">
-                            <div class="col-sm-offset-10">
-                                <div> <button type="button" class="btn btn-primary" ng-click="ExportData(topPlayInfo, 'TopPlayInfo')">Export</button></div>
+                            <div>
+                                <div>หน้าที่ :</div>  
+                                <ul class="pagination">
+                                    <li ng-repeat="x in lvTwoBT">
+                                        <a href="#" ng-click="gotoWordsLvPage(x, '2')">{{ x }}</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <br />
@@ -120,7 +125,7 @@
                 <div role="tabpanel" class="tab-pane" id="lv3">
                      <form>
                         <table class="table table-bordered">
-                            <tr ng-repeat="word in wordsLvThree" class="info">
+                            <tr ng-repeat="word in wordsLvThree" >
                                 <td ng-repeat="y in word" >
                                     {{ y.word }}
                                 </td>
@@ -128,8 +133,13 @@
                         </table>
                         <br />
                         <div class="row">
-                            <div class="col-sm-offset-10">
-                                <div> <button type="button" class="btn btn-primary" ng-click="ExportData(topShareInfo, 'TopShareInfo')">Export</button></div>
+                            <div>
+                                <div>หน้าที่ :</div>  
+                                <ul class="pagination">
+                                    <li ng-repeat="x in lvThreeBT">
+                                        <a href="#" ng-click="gotoWordsLvPage(x, '3')">{{ x }}</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <br />
@@ -138,7 +148,7 @@
                 <div role="tabpanel" class="tab-pane" id="lv4">
                      <form>
                         <table class="table table-bordered">
-                            <tr ng-repeat="word in wordsLvFour" class="info">
+                            <tr ng-repeat="word in wordsLvFour" >
                                 <td ng-repeat="y in word" >
                                     {{ y.word }}
                                 </td>
@@ -146,8 +156,13 @@
                         </table>
                         <br />
                         <div class="row">
-                            <div class="col-sm-offset-10">
-                                <div> <button type="button" class="btn btn-primary" ng-click="ExportData(topShareInfo, 'TopShareInfo')">Export</button></div>
+                            <div>
+                                <div>หน้าที่ :</div>  
+                                <ul class="pagination">
+                                    <li ng-repeat="x in lvFourBT">
+                                        <a href="#" ng-click="gotoWordsLvPage(x, '4')">{{ x }}</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <br />
@@ -156,7 +171,7 @@
                 <div role="tabpanel" class="tab-pane" id="lv5">
                      <form>
                         <table class="table table-bordered">
-                            <tr ng-repeat="word in wordsLvFive" class="info">
+                            <tr ng-repeat="word in wordsLvFive" >
                                 <td ng-repeat="y in word" >
                                     {{ y.word }}
                                 </td>
@@ -164,8 +179,13 @@
                         </table>
                         <br />
                         <div class="row">
-                            <div class="col-sm-offset-10">
-                                <div> <button type="button" class="btn btn-primary" ng-click="ExportData(topShareInfo, 'TopShareInfo')">Export</button></div>
+                            <div>
+                                <div>หน้าที่ :</div>  
+                                <ul class="pagination">
+                                    <li ng-repeat="x in lvFiveBT">
+                                        <a href="#" ng-click="gotoWordsLvPage(x, '5')">{{ x }}</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <br />
@@ -174,7 +194,7 @@
                 <div role="tabpanel" class="tab-pane" id="lv6">
                      <form>
                         <table class="table table-bordered">
-                            <tr ng-repeat="word in wordsLvSix" class="info">
+                            <tr ng-repeat="word in wordsLvSix" >
                                 <td ng-repeat="y in word" >
                                     {{ y.word }}
                                 </td>
@@ -182,8 +202,13 @@
                         </table>
                         <br />
                         <div class="row">
-                            <div class="col-sm-offset-10">
-                                <div> <button type="button" class="btn btn-primary" ng-click="ExportData(topShareInfo, 'TopShareInfo')">Export</button></div>
+                            <div>
+                                <div>หน้าที่ :</div>  
+                                <ul class="pagination">
+                                    <li ng-repeat="x in lvSixBT">
+                                        <a href="#" ng-click="gotoWordsLvPage(x, '6')">{{ x }}</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <br />
