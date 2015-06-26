@@ -67,6 +67,26 @@ function mainController($scope, $http, $log) {
 	{
 		loadShowBTVIP();
 	}
+	else if(location.pathname.indexOf("words.html") != -1)
+	{
+		$scope.isShow = false;
+		wordClassStr = "LevelOne";
+		lvOneArr = new Array();
+		lvTwoArr = new Array();
+		lvThreeArr = new Array();
+		lvFourArr = new Array();
+		lvFiveArr = new Array();
+		lvSixArr = new Array();
+		currentLvPageArr = new Array();
+		for(var i = 0; i<6; i++)
+		{
+			currentLvPageArr.push(1);
+		}
+		console.log("currentLvPageArr: " + currentLvPageArr.length);
+		wCnt = 0;
+		lessThan = null;
+		FindAllWords();
+	}
 	
 	var newsObjects;
 	var newsImg;
@@ -297,6 +317,10 @@ function mainController($scope, $http, $log) {
 	{
 		location.replace("setting.html");
 	}
+	$scope.gotoWordsPage= function()
+	{
+		location.replace("words.html");
+	}
 	
 	var allUserInfoArr;
 	var userInfoArr;
@@ -494,6 +518,372 @@ function mainController($scope, $http, $log) {
    		}
 		
 	}
+	
+	//--------------- Find All Words -----------------
+	var currentMaxLevel = 0;
+	var currentLevelArr;
+	var wordClassStr;
+	var lvOneArr = new Array();
+	var lvTwoArr = new Array();
+	var lvThreeArr = new Array();
+	var lvFourArr = new Array();
+	var lvFiveArr = new Array();
+	var lvSixArr = new Array();
+	var wCnt = 0;
+	var maxLvOneWords = 3000;
+	var maxLvTwoWords = 2500;
+	var maxLvThreeWords = 2000;
+	var maxLvFourWords = 1000;
+	var maxLvFiveWords = 1000;
+	var maxLvSixWords = 500;
+	var currentLvPageArr = new Array();
+	
+	function FindAllWords()
+	{
+		$log.log("FindAllWords class: " + wordClassStr);
+		 var query = new Parse.Query(wordClassStr);
+		 query.descending("updatedAt");
+		 if(lessThan != null)
+		 	query.lessThan("updatedAt", lessThan);
+		 query.limit(1000);
+		 
+		 var maxLv = 0;
+		 var arr = new Array();
+		 var subArr = new Array();
+		 if(wordClassStr == "LevelOne")
+		 {
+			 arr = lvOneArr;
+			 maxLv = maxLvOneWords;
+		 }
+		 else if(wordClassStr == "LevelTwo")
+		 {
+			 arr = lvTwoArr;
+			 maxLv = maxLvTwoWords;
+		 }
+		 else if(wordClassStr == "LevelThree")
+		 {
+			 arr = lvThreeArr;
+			 maxLv = maxLvThreeWords;
+		 }
+		 else if(wordClassStr == "LevelFour")
+		 {
+			 arr = lvFourArr;
+			 maxLv = maxLvFourWords;
+		 }
+		 else if(wordClassStr == "LevelFive")
+		 {
+			 arr = lvFiveArr;
+			 maxLv = maxLvFiveWords;
+		 }
+		 else if(wordClassStr == "LevelSix")
+		 {
+			 arr = lvSixArr;
+			 maxLv = maxLvSixWords;
+		 }
+		 else
+		 {
+			console.log("NoArray");
+		 }
+		 
+		 if(arr.length > 0)
+		 {
+			 subArr = arr[arr.length-1];
+		 }
+		 else
+		 {
+			 arr.push(subArr);
+		 }
+		 
+		 query.find({
+				  success: function(objects) {
+					//$log.log("object = " + objects.length);
+					for(var i = 0; i < objects.length; i++)
+					{
+						if(subArr.length == 10)
+						{
+							subArr = new Array();
+							arr.push(subArr);
+							
+						}
+						
+						//console.log("Words: " +  objects[i].get("words"));
+						subArr.push({word:objects[i].get("words")});
+						//console.log("SubArrWord: " + subArr[subArr.length-1]);
+						lessThan = objects[i].updatedAt;
+						wCnt++;
+					}
+					
+					SetArray(arr);
+					
+					if(objects.length == 0)
+					{
+						lessThan = null;
+						//console.log(wordClassStr + " arrLength: " + arr.length + " maxLv: " + (maxLv/10))
+						if(arr.length < maxLv/10)
+						{
+							//console.log(wordClassStr + " Before: " + arr.length);
+							for(var i = wCnt-1; i < maxLv; i++)
+							{
+								if(subArr.length == 10)
+								{
+									subArr = new Array();
+									arr.push(subArr);
+								}
+								
+								subArr.push({word:"-"});
+								console.log(arr[arr.length-1]);
+							}
+							//console.log(wordClassStr + " After: " + arr.length);
+						}
+						wCnt = 0;
+						SetArray(arr);
+						if(wordClassStr == "LevelSix")
+						{
+							
+							SetShowByLevel();
+							$scope.isShow = true;
+							$scope.$apply();
+						}
+						else
+						{
+							if(wordClassStr == "LevelOne")
+							{
+								wordClassStr = "LevelTwo";
+							}
+							else if(wordClassStr == "LevelTwo")
+							{
+								wordClassStr = "LevelThree";
+							}
+							else if(wordClassStr == "LevelThree")
+							{
+								wordClassStr = "LevelFour";
+							}
+							else if(wordClassStr == "LevelFour")
+							{
+								wordClassStr = "LevelFive";
+							}
+							else if(wordClassStr == "LevelFive")
+							{
+								wordClassStr = "LevelSix";
+							}
+							
+							FindAllWords();
+						}
+						
+					}else
+					{
+						FindAllWords();
+					}
+					
+				  },
+				  error: function(error) {
+					$scope.message = "Can't search User.";
+				  }
+			  });
+	}
+	
+	function SetArray(arr)
+	{
+		if(wordClassStr == "LevelOne")
+		{
+			lvOneArr = arr;
+		}
+		else if(wordClassStr == "LevelTwo")
+		{
+			lvTwoArr = arr;
+		}
+		else if(wordClassStr == "LevelThree")
+		{
+			lvThreeArr = arr;
+		}
+		else if(wordClassStr == "LevelFour")
+		{
+			lvFourArr = arr;
+		}
+		else if(wordClassStr == "LevelFive")
+		{
+			lvFiveArr = arr;
+		}
+	}
+	
+	function SetShowByLevel ()
+	{
+		currentLvPageArr = new Array();
+		for(var i = 0; i<6; i++)
+		{
+			currentLvPageArr.push(1);
+		}
+		for(var i = 1; i <= 6; i++)
+		{
+			if(i == 1)
+			{
+				currentLevelArr = lvOneArr;
+				currentMaxLevel = maxLvOneWords;
+			}
+			else if(i == 2)
+			{
+				currentLevelArr = lvTwoArr;
+				currentMaxLevel = maxLvTwoWords;
+			}
+			else if(i == 3)
+			{
+				currentLevelArr = lvThreeArr;
+				currentMaxLevel = maxLvThreeWords;
+			}
+			else if(i == 4)
+			{
+				currentLevelArr = lvFourArr;
+				currentMaxLevel = maxLvFourWords;
+			}
+			else if(i == 5)
+			{
+				currentLevelArr = lvFiveArr;
+				currentMaxLevel = maxLvFiveWords;
+			}
+			else if(i == 6)
+			{
+				currentLevelArr = lvSixArr;
+				currentMaxLevel = maxLvSixWords;
+			}
+			
+			ShowWordByLevel(currentLevelArr, i);
+			SetWordsPageArray(i);
+		}
+		$scope.$apply();
+	}
+	
+	function ShowWordByLevel(arr, _lv)
+	{
+		console.log("Words Length: " + arr.length); 
+		console.log("PageLength: " + currentLvPageArr.length);
+		var _wordsArr = new Array();
+		console.log("Level: " + _lv + " CurrentPage: " + currentLvPageArr[_lv-1]);
+		console.log("Level: " + _lv + " From: " + (10*(currentLvPageArr[_lv-1]-1)) + " To: " + (10*(currentLvPageArr[_lv-1])));
+		for(var i = 10*(currentLvPageArr[_lv-1]-1); i < 10*(currentLvPageArr[_lv-1]); i++)
+		{
+			_wordsArr.push(arr[i]);
+			//console.log(arr[i]);
+		}
+		console.log("WordLength: " + _wordsArr.length);
+		if(_lv == 1)
+		{
+			$scope.wordsLvOne = _wordsArr;
+		}
+		else if(_lv == 2)
+		{
+			$scope.wordsLvTwo = _wordsArr;
+		}
+		else if(_lv == 3)
+		{
+			$scope.wordsLvThree = _wordsArr;
+		}
+		else if(_lv == 4)
+		{
+			$scope.wordsLvFour = _wordsArr;
+		}
+		else if(_lv == 5)
+		{
+			$scope.wordsLvFive = _wordsArr;
+		}
+		else if(_lv == 6)
+		{
+			$scope.wordsLvSix = _wordsArr;
+		}
+		//console.log("Apply");
+		//if (!$scope.$$phase) $scope.$apply()
+		//$scope.$apply();
+	}
+	
+	function SetWordsPageArray(_lv)
+	{
+		var _cnt = 0;
+		if(_lv == 1)
+		{
+			$scope.lvOneBT = new Array();
+			_cnt = lvOneArr.length;
+			for(var i = 1; i <= _cnt; i++)
+			{
+				$scope.lvOneBT.push(i);
+			}
+		}
+		else if(_lv == 2)
+		{
+			$scope.lvTwoBT = new Array();
+			_cnt = lvTwoArr.length;
+			for(var i = 1; i <= _cnt; i++)
+			{
+				$scope.lvTwoBT.push(i);
+			}
+		}
+		else if(_lv == 3)
+		{
+			$scope.lvThreeBT = new Array();
+			_cnt = lvThreeArr.length;
+			for(var i = 1; i <= _cnt; i++)
+			{
+				$scope.lvThreeBT.push(i);
+			}
+		}
+		else if(_lv == 4)
+		{
+			$scope.lvFourBT = new Array();
+			_cnt = lvFourArr.length;
+			for(var i = 1; i <= _cnt; i++)
+			{
+				$scope.lvFourBT.push(i);
+			}
+		}
+		else if(_lv == 5)
+		{
+			$scope.lvFiveBT = new Array();
+			_cnt = lvFiveArr.length;
+			for(var i = 1; i <= _cnt; i++)
+			{
+				$scope.lvFiveBT.push(i);
+			}
+		}
+		else if(_lv == 6)
+		{
+			$scope.lvSixBT = new Array();
+			_cnt = lvSixArr.length;
+			for(var i = 1; i <= _cnt; i++)
+			{
+				$scope.lvSixBT.push(i);
+			}
+		}
+	}
+	
+	$scope.gotoWordsLvPage = function(_p, _lv)
+	{
+		console.log("Page: " + _p + " Level: " + _lv);
+		currentLvPageArr[_lv-1] = _p;
+		if(_lv == 1)
+		{
+			currentLevelArr = lvOneArr;
+		}
+		else if(_lv == 2)
+		{
+			currentLevelArr = lvTwoArr;
+		}
+		else if(_lv == 3)
+		{
+			currentLevelArr = lvThreeArr;
+		}
+		else if(_lv == 4)
+		{
+			currentLevelArr = lvFourArr;
+		}
+		else if(_lvi == 5)
+		{
+			currentLevelArr = lvFiveArr;
+		}
+		else if(_lv == 6)
+		{
+			currentLevelArr = lvSixArr;
+		}
+		ShowWordByLevel(currentLevelArr, _lv);
+	}
+	//--------------------------
 
 	//--------- PurchasedHistory
 
