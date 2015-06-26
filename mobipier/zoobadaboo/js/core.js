@@ -1101,7 +1101,7 @@ function mainController($scope, $http, $log) {
 	}
 //----- Duplicate -----
 	var dupUIdArr;
-	 function FindAllSave()
+	function FindAllSave()
 	{
 		$log.log("FindAllSave");
 		 var query = new Parse.Query("Save");
@@ -1142,9 +1142,60 @@ function mainController($scope, $http, $log) {
 						$scope.isSearch = true;
 						$scope.$apply();
 						$log.log("searchInfo = " + uidArr.length);
+						//-- Find and Destroy --
+						//FindAllDuplicate(0);
 					}else
 					{
 						FindAllSave();
+					}
+					
+				  },
+				  error: function(error) {
+					$scope.message = "Can't search Save.";
+				  }
+			  });
+	}
+	
+	function FindAllDuplicate(index)
+	{
+		$log.log("FindAllDuplicate");
+		 var query = new Parse.Query("Save");
+		 query.descending("updatedAt");
+		 query.equalTo("uid", dupUIdArr[index]);
+		 query.limit(1000);
+		 query.find({
+				  success: function(objects) {
+					$log.log("object = " + objects.length);
+					var _cnt = objects.length-1;
+					for(var i = _cnt; i > 0; i--)
+					{
+						objects[i].destroy(null);
+						/*var updatetime = objects[i].updatedAt;
+						var updatetimeStr = updatetime.getDate() + "/" + 
+						                     (updatetime.getMonth()+1) + "/" + 
+						                     updatetime.getFullYear() +" " + 
+						                     SetIntToString(updatetime.getHours()) + ":" + 
+						                     SetIntToString(updatetime.getMinutes()) + ":" + 
+						                     SetIntToString(updatetime.getSeconds());
+						var _uid = objects[i].get("uid");
+						
+						$scope.dupUIdArr.push({id:_uid,
+											   update:updatetimeStr});*/
+						
+					}
+					index++;
+					if(dupUIdArr.length <= index)
+					{
+						console.log("DupID: " + $scope.dupUIdArr.length)
+						//$scope.dupUIdArr = new Array();
+						$scope.dupUIdArr.push({id:"Finished",
+											   update:"Finished"});
+						$scope.isSearch = true;
+						$scope.$apply();
+						$log.log("searchInfo = " + uidArr.length);
+					}else
+					{
+						FindAllDuplicate(index);
 					}
 					
 				  },

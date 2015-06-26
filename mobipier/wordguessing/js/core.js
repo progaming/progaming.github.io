@@ -363,9 +363,7 @@ function mainController($scope, $http, $log) {
 						createdAt:createdtimeStr,
 						updateAt:updatetimeStr,
 						highscore: objects[i].get("highscore"),
-						highscoreChar: objects[i].get("highscoreCharacter"),
 						score: objects[i].get("score"),
-						scoreChar: objects[i].get("scoreCharacter"),
 						count: objects[i].get("count"),
 						android: objects[i].get("Android"),
 						ios: objects[i].get("iOS")});
@@ -462,9 +460,7 @@ function mainController($scope, $http, $log) {
 						email:objects[i].get("email"), 
 						createdAt:createdtimeStr,
 						highscore: objects[i].get("highscore"),
-						highscoreChar: objects[i].get("highscoreCharacter"),
 						score: objects[i].get("score"),
-						scoreChar: objects[i].get("scoreCharacter"),
 						count: objects[i].get("count"),
 						android: objects[i].get("Android"),
 						ios: objects[i].get("iOS")});
