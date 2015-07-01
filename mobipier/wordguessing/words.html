@@ -81,7 +81,7 @@
                         <table class="table table-bordered">
                             <tr ng-repeat="word in wordsLvOne" >
                                 <td ng-repeat="y in word" >
-                                    {{ y.word }}
+                                    <a href="#" ng-click="selectWord(y)">{{ y.word }}</a>
                                 </td>
                             </tr>
                         </table>
@@ -104,7 +104,7 @@
                         <table class="table table-bordered">
                             <tr ng-repeat="word in wordsLvTwo" >
                                 <td ng-repeat="y in word" >
-                                    {{ y.word }}
+                                    <a href="#" ng-click="selectWord(y)">{{ y.word }}</a>
                                 </td>
                             </tr>
                         </table>
@@ -127,7 +127,7 @@
                         <table class="table table-bordered">
                             <tr ng-repeat="word in wordsLvThree" >
                                 <td ng-repeat="y in word" >
-                                    {{ y.word }}
+                                    <a href="#" ng-click="selectWord(y)">{{ y.word }}</a>
                                 </td>
                             </tr>
                         </table>
@@ -150,7 +150,7 @@
                         <table class="table table-bordered">
                             <tr ng-repeat="word in wordsLvFour" >
                                 <td ng-repeat="y in word" >
-                                    {{ y.word }}
+                                    <a href="#" ng-click="selectWord(y)">{{ y.word }}</a>
                                 </td>
                             </tr>
                         </table>
@@ -173,7 +173,7 @@
                         <table class="table table-bordered">
                             <tr ng-repeat="word in wordsLvFive" >
                                 <td ng-repeat="y in word" >
-                                    {{ y.word }}
+                                    <a href="#" ng-click="selectWord(y)">{{ y.word }}</a>
                                 </td>
                             </tr>
                         </table>
@@ -196,7 +196,7 @@
                         <table class="table table-bordered">
                             <tr ng-repeat="word in wordsLvSix" >
                                 <td ng-repeat="y in word" >
-                                    {{ y.word }}
+                                    <a href="#" ng-click="selectWord(y)">{{ y.word }}</a>
                                 </td>
                             </tr>
                         </table>
@@ -220,7 +220,23 @@
             <!-- end Tab -->
            
             <br />
-            
+            <div class="row" ng-show="isSelected == true">
+               
+                <div class="col-sm-offset-10">
+                    <div>
+                        <input id="changeWord" type="text" name="changeWord"ng-model="textsearch" />
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row" ng-show="isSelected == true">
+                <div  class="col-sm-offset-10">
+                    <button type="button" class="btn btn-primary" ng-click="SaveWord()">บันทึก</button>
+                    <div>
+                        <div ng-show="isLoading == true">กำลังอัพโหลดข้อมูล กรุณารอสักครู่...</div>
+                    </div>
+                </div>
+            </div>
             
         </div>
 	</body>

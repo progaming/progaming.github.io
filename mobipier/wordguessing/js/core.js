@@ -78,6 +78,9 @@ function mainController($scope, $http, $log) {
 		lvFiveArr = new Array();
 		lvSixArr = new Array();
 		currentLvPageArr = new Array();
+		$scope.isSelected = false;
+		wordParseObjArr = new Array();
+		$scope.isLoading = false;
 		for(var i = 0; i<6; i++)
 		{
 			currentLvPageArr.push(1);
@@ -533,6 +536,8 @@ function mainController($scope, $http, $log) {
 	var maxLvFiveWords = 1000;
 	var maxLvSixWords = 500;
 	var currentLvPageArr = new Array();
+	var currentWord;
+	var wordParseObjArr;
 	
 	function FindAllWords()
 	{
@@ -601,9 +606,12 @@ function mainController($scope, $http, $log) {
 							arr.push(subArr);
 							
 						}
-						
+						wordParseObjArr.push(objects[i]);
 						//console.log("Words: " +  objects[i].get("words"));
-						subArr.push({word:objects[i].get("words")});
+						subArr.push({word:objects[i].get("words"),
+									 id:objects[i].id,
+									 wClass: wordClassStr,
+									 index:wCnt});
 						//console.log("SubArrWord: " + subArr[subArr.length-1]);
 						lessThan = objects[i].updatedAt;
 						wCnt++;
@@ -625,8 +633,15 @@ function mainController($scope, $http, $log) {
 									subArr = new Array();
 									arr.push(subArr);
 								}
-								
-								subArr.push({word:"-"});
+								var WordParse = Parse.Object.extend( wordClassStr );
+								var	_parseObject = new WordParse();
+								wordParseObjArr.push(_parseObject);
+								subArr.push({word:"-",
+									 id:"null",
+									 wClass: wordClassStr,
+									 index:wCnt});
+									 
+								wCnt++;
 								//console.log(arr[arr.length-1]);
 							}
 							//console.log(wordClassStr + " After: " + arr.length);
@@ -879,6 +894,41 @@ function mainController($scope, $http, $log) {
 		}
 		ShowWordByLevel(currentLevelArr, _lv);
 	}
+	
+	$scope.selectWord = function(_word)
+	{
+		console.log("Word: " + _word["word"]);
+		currentWord = _word;
+		$scope.textsearch = _word["word"];
+		document.getElementById("changeWord").value = $scope.textsearch;
+		$scope.isSelected = true;
+		//$scope.$apply();
+	}
+	
+	$scope.SaveWord = function()
+	{
+		$scope.isLoading = true;
+		var WordParse = Parse.Object.extend( currentWord["wClass"] );
+		var	_parseObject = new WordParse();
+		_parseObject = wordParseObjArr[ currentWord["index"] ];
+		
+		if(_parseObject == undefined)
+		{
+			_parseObject = new WordParse();
+		}
+		
+		
+		console.log($scope.textsearch);
+		_parseObject.set("words", $scope.textsearch);
+		_parseObject.save().then(function(newsObj) {	
+					$scope.isLoading = false;
+					alert("ข้อมูลถูกบันทึกเรียบร้อยแล้ว");
+		            location.reload();
+				  }, function(error) {
+				  		$log.log("error: " + error);
+		});
+	}
+	
 	//--------------------------
 
 	//--------- PurchasedHistory
