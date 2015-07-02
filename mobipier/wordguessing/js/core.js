@@ -917,13 +917,15 @@ function mainController($scope, $http, $log) {
 			_parseObject = new WordParse();
 		}
 		
-		
+		currentWord["word"] = $scope.textsearch;
 		console.log($scope.textsearch);
 		_parseObject.set("words", $scope.textsearch);
 		_parseObject.save().then(function(newsObj) {	
 					$scope.isLoading = false;
-					alert("ข้อมูลถูกบันทึกเรียบร้อยแล้ว");
-		            location.reload();
+					$scope.finishShow = "บันทึกคำว่า " + $scope.textsearch + " แล้ว";
+					$scope.$apply();
+					//alert("ข้อมูลถูกบันทึกเรียบร้อยแล้ว");
+		            //location.reload();
 				  }, function(error) {
 				  		$log.log("error: " + error);
 		});
