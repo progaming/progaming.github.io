@@ -62,6 +62,10 @@
     	<div class="container">
             <div class="page-header"><h1>คำศัพท์</h1></div>
             
+            <div ng-show="isShow == false">
+                <span class="label label-info">Loading....</span>
+            </div>
+            
             <div class="row" ng-show="isSelected == true">
                 <div  class="col-sm-offset-10">
                     <div>
@@ -229,7 +233,6 @@
            
             <br />
             <div class="row" ng-show="isSelected == true">
-               
                 <div class="col-sm-offset-10">
                     <div>
                         <input id="changeWord" type="text" name="changeWord"ng-model="textsearch" />
