@@ -89,6 +89,11 @@
               <!-- Tab panes -->
               <div class="tab-content" ng-show="isShow == true">
                 <div role="tabpanel" class="tab-pane active" id="lv1">
+                    <div>
+                        <input type="text" name="search"ng-model="wordsearch" />
+                        <button class="btn btn-default btn-sm" ng-click="searchWordOnLv('1')">ค้นหา</button>
+                        <small class="text-info">{{ searchResult }}</small>
+                    </div>
                     <form >
                         <table class="table table-bordered">
                             <tr ng-repeat="word in wordsLvOne" >
@@ -112,6 +117,11 @@
                     </form>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="lv2">
+                    <div>
+                        <input type="text" name="search"ng-model="wordsearch" />
+                        <button class="btn btn-default btn-sm" ng-click="searchWordOnLv('2')">ค้นหา</button>
+                        <small class="text-info">{{ searchResult }}</small>
+                    </div>
                      <form>
                         <table class="table table-bordered">
                             <tr ng-repeat="word in wordsLvTwo" >
@@ -135,6 +145,11 @@
                     </form>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="lv3">
+                    <div>
+                        <input type="text" name="search"ng-model="wordsearch" />
+                        <button class="btn btn-default btn-sm" ng-click="searchWordOnLv('3')">ค้นหา</button>
+                        <small class="text-info">{{ searchResult }}</small>
+                    </div>
                      <form>
                         <table class="table table-bordered">
                             <tr ng-repeat="word in wordsLvThree" >
@@ -158,6 +173,11 @@
                     </form>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="lv4">
+                    <div>
+                        <input type="text" name="search"ng-model="wordsearch" />
+                        <button class="btn btn-default btn-sm" ng-click="searchWordOnLv('4')">ค้นหา</button>
+                        <small class="text-info">{{ searchResult }}</small>
+                    </div>
                      <form>
                         <table class="table table-bordered">
                             <tr ng-repeat="word in wordsLvFour" >
@@ -181,6 +201,11 @@
                     </form>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="lv5">
+                    <div>
+                        <input type="text" name="search"ng-model="wordsearch" />
+                        <button class="btn btn-default btn-sm" ng-click="searchWordOnLv('5')">ค้นหา</button>
+                        <small class="text-info">{{ searchResult }}</small>
+                    </div>
                      <form>
                         <table class="table table-bordered">
                             <tr ng-repeat="word in wordsLvFive" >
@@ -204,6 +229,11 @@
                     </form>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="lv6">
+                    <div>
+                        <input type="text" name="search"ng-model="wordsearch" />
+                        <button class="btn btn-default btn-sm" ng-click="searchWordOnLv('6')">ค้นหา</button>
+                        <small class="text-info">{{ searchResult }}</small>
+                    </div>
                      <form>
                         <table class="table table-bordered">
                             <tr ng-repeat="word in wordsLvSix" >

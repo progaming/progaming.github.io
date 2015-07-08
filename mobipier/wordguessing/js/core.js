@@ -897,6 +897,12 @@ function mainController($scope, $http, $log) {
 	
 	$scope.selectWord = function(_word)
 	{
+		if(_word == null)
+		{
+			currentWord = null;
+			document.getElementById("changeWord").value = "";
+			return;
+		}
 		console.log("Word: " + _word["word"]);
 		currentWord = _word;
 		$scope.textsearch = _word["word"];
@@ -907,6 +913,10 @@ function mainController($scope, $http, $log) {
 	
 	$scope.SaveWord = function()
 	{
+		if(currentWord == null)
+		{
+			return;
+		}
 		$scope.isLoading = true;
 		var WordParse = Parse.Object.extend( currentWord["wClass"] );
 		var	_parseObject = new WordParse();
@@ -929,6 +939,52 @@ function mainController($scope, $http, $log) {
 				  }, function(error) {
 				  		$log.log("error: " + error);
 		});
+	}
+	
+	$scope.searchWordOnLv = function(_lv)
+	{
+		$scope.searchResult = "กำลังค้นหา";
+		var arr = new Array();
+		if(_lv == 1)
+		{
+			arr = lvOneArr;
+		}
+		else if(_lv == 2)
+		{
+			arr = lvTwoArr;
+		}
+		else if(_lv == 3)
+		{
+			arr = lvThreeArr;
+		}
+		else if(_lv == 4)
+		{
+			arr = lvFourArr;
+		}
+		else if(_lv == 5)
+		{
+			arr = lvFiveArr;
+		}
+		else if(_lv == 6)
+		{
+			arr = lvSixArr;
+		}
+		for(var i = 0; i < arr.length; i++)
+		{
+			for(var j = 0; j < arr[i].length; j++)
+			{
+				if(arr[i][j]["word"] == $scope.wordsearch)
+				{
+					$scope.selectWord(arr[i][j]);
+					$scope.searchResult = "";
+					return;
+				}
+			}
+		}
+		
+		$scope.searchResult = "ไม่มีคำว่า " + $scope.wordsearch;
+		$scope.selectWord(null);
+		$scope.isSelected = false;
 	}
 	
 	//--------------------------
