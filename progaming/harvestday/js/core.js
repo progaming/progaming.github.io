@@ -64,7 +64,7 @@ app.controller("mainController",['$http', function ($http) {
 app.directive("navbarPanels", function(){
 	return{
 		restrict: 'E',
-		templateUrl: './navbar-panels.html'/*,
+		templateUrl: './navbar-panels.html',
 		controller:function(){
 			this.navbar = 1;
 			if(location.pathname.indexOf("home.html") != -1)
@@ -81,7 +81,7 @@ app.directive("navbarPanels", function(){
 				location.replace("index.html");	
 			}
 		},
-		controllerAs: 'navbar'*/
+		controllerAs: 'navbar'
 	}
 });
 
