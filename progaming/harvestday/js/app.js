@@ -36,53 +36,65 @@ app.controller("mainController",['$http', function ($http) {
 			}
 		});
 	}
-	
-	
-	
-	
 
 }]);
 
-/*app.controller("navbarController", function(){
-	this.navbar = 1;
-	if(location.pathname.indexOf("home.html") != -1)
-	{
-		this.navbar = 1;
-	}
-	//console.log(this.navbar);
-	this.isSelectNavbar = function(checkNB){
-		return this.navbar == checkNB;
-	}
+app.controller("SearchUserController", function($scope){
 	
-	this.logout = function() {
-		Parse.User.logOut();
-		location.replace("index.html");	
-	}
-	
-});*/
-
-
-
-app.directive("navbarPanels", function(){
-		return{
-			restrict: 'E',
-			templateUrl: './navbar-panels.html',
-			controller:function(){
-				this.navbar = 1;
-				if(location.pathname.indexOf("home.html") != -1)
+	var searchCtrl = this;
+	this.search = {};
+	this.searchInfo = {};
+ 	$scope.isSearchFinished = false;
+	 
+	this.searchSubmit = function(){
+	 	console.log("Submit fn: " + this.search.firstname + " ln: " + this.search.lastname);
+	 	var query1 = null;
+	 	var query2 = null;
+	 	if(this.search.firstname)
+	 	{
+		 	query1 = new Parse.Query("UserInfo");
+		 	query1.contains("first_name", this.search.firstname);
+	 	}
+	 	if(this.search.lastname)
+	 	{
+		 	query1 = new Parse.Query("UserInfo");
+		 	query1.contains("last_name", this.search.firstname);
+	 	}
+	 
+	 	var compoundQuery = null;
+	 	if(query1 && !query2)
+	 	{
+		 	compoundQuery = query1;
+	 	}
+	 	else if(query2 && !query1)
+	 	{
+		 	compoundQuery = query2;
+	 	}
+	 	else
+	 	{
+		 	compoundQuery = Parse.Query.or(query1, query2);
+	 	}
+	 
+	 	compoundQuery.find({
+			success:function(objects){
+				console.log("SearchResult: " + objects.length);
+				$scope.searchInfo = new Array();
+				for(var i = 0; i < objects.length; i++)
 				{
-					this.navbar = 1;
+					$scope.searchInfo.push({firstname: objects[i].get("first_name"),
+										  lastname: objects[i].get("lastname"),
+										  uid: objects[i].get("uid")});
 				}
-				//console.log(this.navbar);
-				this.isSelectNavbar = function(checkNB){
-					return this.navbar == checkNB;
-				}
-				
-				this.logout = function() {
-					Parse.User.logOut();
-					location.replace("index.html");	
-				}
+				console.log("Array: " + $scope.searchInfo.length);
+				searchCtrl.search = {};
+				$scope.isSearchFinished = true;
+				$scope.$apply(function(){console.log("Apply! isSearchFinished: " + $scope.isSearchFinished);});
 			},
-			controllerAs: 'navbar'
-		}
-	});
+			error: function(error) {
+				console.log( "Can't search User.");
+			}
+	 	});
+	 
+	 
+ 	};
+});
