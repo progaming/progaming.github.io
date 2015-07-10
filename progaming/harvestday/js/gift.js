@@ -44,8 +44,9 @@ app.controller('sendGiftController', function($scope, giftService){
 	
 	this.sendGift = function()
 	 {
-		console.log("SendGift"); 
+		console.log("SendGift uid: " + this.sendGiftData.uid +" payload: " + this.sendGiftData.payload); 
 		this.sending = true;
+		//return;
 		giftService.sendGift(this.sendGiftData.uid, this.sendGiftData.payload, this.successGift, this.failGift);
 	 };
 	 

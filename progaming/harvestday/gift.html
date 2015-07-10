@@ -46,8 +46,8 @@
 			
 			<div ng-controller="sendGiftController as sendGiftCtrl">
 				<form name="sendGiftForm" class="row form-group" ng-submit="sendGiftForm.$valid && sendGiftCtrl.sendGift()" novalidate>
-					<div class="col-md-4"><input ng-disabled="sendGiftCtrl.sending" class="form-control" type="text" ng-model="searchUserCtrl.sendGiftData.uid" placeholder="User ID" required/></div>
-					<div class="col-md-4"><input ng-disabled="sendGiftCtrl.sending" class="form-control" type="text" ng-model="searchUserCtrl.sendGiftData.payload" placeholder="Payload" required/></div>
+					<div class="col-md-4"><input ng-disabled="sendGiftCtrl.sending" class="form-control" type="text" ng-model="sendGiftCtrl.sendGiftData.uid" placeholder="User ID" required/></div>
+					<div class="col-md-4"><input ng-disabled="sendGiftCtrl.sending" class="form-control" type="text" ng-model="sendGiftCtrl.sendGiftData.payload" placeholder="Payload" required/></div>
 					<div class="col-md-2"><input ng-disabled="sendGiftCtrl.sending || !sendGiftForm.$valid" class="form-control" type="submit" value="Send"/></div>
 					<div class="col-md-2"><div class = "text-center">{{sendGiftCtrl.message}}</div></div>
 				</form>
