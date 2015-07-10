@@ -13,6 +13,7 @@
         <script src="./js/ui-bootstrap-tpls-0.9.0.min.js"></script>
         <script src="./js/core.js"></script>
         <script src="./js/navbar.js"></script>
+        <script src="./js/search.js"></script>
         <style>
 			/*table, th , td {
 			  border: 1px solid grey;
@@ -40,12 +41,12 @@
 	<body ng-controller="mainController">
         <navbar-panels></navbar-panels>
         
-    	<div class="container">
+    	<div class="container" ng-controller="searchController as searchCtrl">
             <div class="page-header"><h1>ค้นหา</h1></div>
             
             <div ng-show="isSearch == true">
                	<input type="text" name="search"ng-model="textsearch" />
-                <button class="btn btn-default btn-sm" ng-click="searchUser()">ค้นหา</button>
+                <button class="btn btn-default btn-sm" ng-click="searchCtrl.searchUser()">ค้นหา</button>
             </div>
             <div style="padding: 5px;"> </div>
             <div>
@@ -94,7 +95,7 @@
              <br />
             <div class="row">
                 <div class="col-sm-offset-10">
-                    <div ng-show="isSearch == true"> <button type="button" class="btn btn-primary" ng-click="ExportData()">Export</button></div>
+                    <div ng-show="isSearch == true"> <button type="button" class="btn btn-primary" ng-click="searchCtrl.ExportData()">Export</button></div>
                 </div>
             </div>
         </div>

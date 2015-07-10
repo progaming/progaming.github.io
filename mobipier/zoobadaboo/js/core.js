@@ -1,5 +1,4 @@
-var testloginsite = angular.module('testloginsite', ['ui.bootstrap', 'navbar']);
-var isLoadNews = false;
+var testloginsite = angular.module('testloginsite', ['ui.bootstrap', 'navbar', 'search']);
 function mainController($scope, $http, $log) {
 	$scope.message = "start";
 	var _0xae5b=["\x35\x51\x33\x76\x74\x50\x49\x5A\x6C\x4C\x55\x45\x32\x4B\x6B\x41\x34\x4D\x66\x69\x6A\x4C\x31\x38\x72\x57\x61\x6F\x39\x77\x4E\x47\x48\x69\x54\x45\x72\x4F\x49\x6E","\x6B\x57\x52\x72\x53\x41\x49\x4C\x5A\x41\x61\x55\x32\x7A\x33\x6D\x72\x71\x35\x79\x41\x6B\x45\x42\x4E\x55\x4D\x4C\x6D\x32\x68\x4F\x4C\x36\x4A\x4D\x32\x53\x30\x78","\x69\x6E\x69\x74\x69\x61\x6C\x69\x7A\x65"];Parse[_0xae5b[2]](_0xae5b[0],_0xae5b[1]);
@@ -13,26 +12,9 @@ function mainController($scope, $http, $log) {
 		{
 			location.replace("news.html");
 		}
-		if(!isLoadNews )
-		{
-			//loadnews();
-		}
-		if(location.pathname.indexOf("search.html") != -1 )//|| location.pathname.indexOf("duplicate.html") != -1)
-		{
-			uidArr = new Array();
-			dupUIdArr = new Array();
-			$scope.dupUIdArr = new Array();
-			allUserInfoArr = new Array();
-			lessThan = null;
-			allUserCnt = 0;
-			$scope.searchInfo = new Array();
-			userInfoArr = new Array();
-			FindAllUser();
-		}
 		if( location.pathname.indexOf("duplicate.html") != -1 )
 		{
 			//-- FindAllSave --
-			uidArr = new Array();
 			dupUIdArr = new Array();
 			$scope.dupUIdArr = new Array();
 			allUserInfoArr = new Array();
@@ -43,18 +25,7 @@ function mainController($scope, $http, $log) {
 			FindAllSave();
 			//-----------------
 		}
-		if(location.pathname.indexOf("missing.html") != -1)
-		{
-			uidArr = new Array();
-			dupUIdArr = new Array();
-			$scope.dupUIdArr = new Array();
-			allUserInfoArr = new Array();
-			lessThan = null;
-			allUserCnt = 0;
-			$scope.searchInfo = new Array();
-			userInfoArr = new Array();
-			FindAllUser();
-		}
+		
 		$log.log("buttonSaveDisabled = " + $scope.buttonSaveDisabled);
 	}else{
 		$scope.message = "not logged in";
@@ -301,219 +272,11 @@ function mainController($scope, $http, $log) {
 	    return true;
 	}
 	
-	var uidArr;
 	var allUserInfoArr;
 	var userInfoArr;
 	var topCurrentPage = 1;
 	var topMaxPage = 1;
 	var userShowPerPage = 100;
-	var lessThan = null;
-	var allUserCnt = 0;
-	function FindAllUser()
-	{
-		$log.log("FindAllUser");
-		 var query = new Parse.Query("UserInfo");
-		 query.descending("updatedAt");
-		 if(lessThan != null)
-		 	query.lessThan("updatedAt", lessThan);
-		 query.limit(1000);
-		 query.find({
-				  success: function(objects) {
-					$log.log("object = " + objects.length);
-					for(var i = 0; i < objects.length; i++)
-					{
-						var _uid = objects[i].get("uid");
-						if(uidArr.indexOf(_uid) == -1)
-						{
-							uidArr.push(_uid);
-						}
-						
-						//$log.log(""+objects[i].get("first_name"));
-						var createdtime = objects[i].createdAt;
-						var createdtimeStr = createdtime.getDate() + "/" + 
-						                     (createdtime.getMonth()+1) + "/" + 
-						                     createdtime.getFullYear() +" " + 
-						                     SetIntToString(createdtime.getHours()) + ":" + 
-						                     SetIntToString(createdtime.getMinutes()) + ":" + 
-						                     SetIntToString(createdtime.getSeconds());
-						var updatetime = objects[i].updatedAt;
-						var updatetimeStr = updatetime.getDate() + "/" + 
-						                     (updatetime.getMonth()+1) + "/" + 
-						                     updatetime.getFullYear() +" " + 
-						                     SetIntToString(updatetime.getHours()) + ":" + 
-						                     SetIntToString(updatetime.getMinutes()) + ":" + 
-						                     SetIntToString(updatetime.getSeconds());
-						allUserInfoArr.push({firstname:objects[i].get("first_name"), 
-						lastname:objects[i].get("last_name"), 
-						email:objects[i].get("email"), 
-						createdAt:createdtimeStr,
-						updateAt:updatetimeStr,
-						highscore: objects[i].get("highscore"),
-						highscoreChar: objects[i].get("highscoreCharacter"),
-						score: objects[i].get("score"),
-						scoreChar: objects[i].get("scoreCharacter"),
-						count: objects[i].get("count"),
-						android: objects[i].get("Android"),
-						ios: objects[i].get("iOS")});
-
-						userInfoArr.push(allUserInfoArr[allUserCnt]);
-						if(allUserCnt < userShowPerPage)
-						{
-							$scope.searchInfo.push(userInfoArr[allUserCnt]);
-						}
-						allUserCnt++;
-						
-						lessThan = objects[i].updatedAt;
-					}
-					
-					if(objects.length == 0)
-					{
-						
-						if(location.pathname.indexOf("missing.html") != -1)
-						{
-							lessThan = null;
-							FindMissing();
-						}
-						else
-						{
-							SetPage();
-							$scope.isSearch = true;
-							$scope.$apply();
-							$log.log("searchInfo = " + allUserInfoArr.length);
-						}
-						
-					}else
-					{
-						FindAllUser();
-					}
-					
-				  },
-				  error: function(error) {
-					$scope.message = "Can't search User.";
-				  }
-			  });
-	}
-
-	$scope.ExportData = function()
-	{
-		alasql("SELECT * INTO CSV('AllUser.csv') FROM ?",[allUserInfoArr]);
-	}
-
-	function SetPage()
-	{
-
-		$scope.userdataPageNum = new Array();
-		if(allUserInfoArr.length >= userShowPerPage)
-		{
-			$scope.needMorePage = true;
-			topMaxPage = parseInt((allUserInfoArr.length/userShowPerPage) +1);
-			topCurrentPage = 1;
-			for(var j = 1; j <= topMaxPage; j++)
-			{
-				$scope.userdataPageNum.push(j);
-			}
-		}
-		else
-		{
-			$scope.needMorePage = false;
-		}
-
-	}
-	
-	$scope.searchUser = function()
-	{
-		 var query1 = new Parse.Query("UserInfo");
-		 query1.contains("first_name", $scope.textsearch);
-		 
-		 var query2 = new Parse.Query("UserInfo");
-		 query2.contains("last_name", $scope.textsearch);
-		 
-		 var query3 = new Parse.Query("UserInfo");
-		 query3.contains("email", $scope.textsearch);
-		 
-		 var compoundQuery = Parse.Query.or(query1, query2, query3);
-			  compoundQuery.find({
-				  success: function(objects) {
-					$scope.searchInfo = new Array();
-					userInfoArr = new Array();
-					$log.log("object = " + objects.length);
-					for(var i = 0; i < objects.length; i++)
-					{
-						var createdtime = objects[i].createdAt;
-						var createdtimeStr = createdtime.getDate() + "/" + 
-						                     (createdtime.getMonth()+1) + "/" + 
-						                     createdtime.getFullYear() +" " + 
-						                     SetIntToString(createdtime.getHours()) + ":" + 
-						                     SetIntToString(createdtime.getMinutes()) + ":" + 
-						                     SetIntToString(createdtime.getSeconds());
-						var updatetime = objects[i].updatedAt;
-						var updatetimeStr = updatetime.getDate() + "/" + 
-						                     (updatetime.getMonth()+1) + "/" + 
-						                     updatetime.getFullYear() +" " + 
-						                     SetIntToString(updatetime.getHours()) + ":" + 
-						                     SetIntToString(updatetime.getMinutes()) + ":" + 
-						                     SetIntToString(updatetime.getSeconds());
-						userInfoArr.push({firstname:objects[i].get("first_name"), 
-						lastname:objects[i].get("last_name"), 
-						email:objects[i].get("email"), 
-						createdAt:createdtimeStr,
-						highscore: objects[i].get("highscore"),
-						highscoreChar: objects[i].get("highscoreCharacter"),
-						score: objects[i].get("score"),
-						scoreChar: objects[i].get("scoreCharacter"),
-						count: objects[i].get("count"),
-						android: objects[i].get("Android"),
-						ios: objects[i].get("iOS")});
-						if(i < userShowPerPage)
-						{
-							$scope.searchInfo.push({firstname:objects[i].get("first_name"), 
-							lastname:objects[i].get("last_name"), 
-							email:objects[i].get("email"), createdAt:createdtimeStr});
-						}
-					}
-					$scope.userdataPageNum = new Array();
-					if(objects.length >= userShowPerPage)
-					{
-						$scope.needMorePage = true;
-						topMaxPage = (objects.length/userShowPerPage) +1;
-						topCurrentPage = 1;
-						for(var j = 1; j <= topMaxPage; j++)
-						{
-							$scope.userdataPageNum.push(j);
-						}
-					}
-					else
-					{
-						$scope.needMorePage = false;
-					}
-					$scope.isSearch = true;
-					$scope.$apply();
-					$log.log("searchInfo = " + $scope.searchInfo.length);
-				  },
-				  error: function(error) {
-					$scope.message = "Can't search User.";
-				  }
-			  });
-	}
-	
-	$scope.gotoPage = function(x){
-		var lastPage = (x-1) * userShowPerPage;
-		var nextPage = (x)*userShowPerPage;
-		$scope.searchInfo = new Array();
-		for(var i = lastPage; i < nextPage; i++)
-		{
-			if(userInfoArr.length > i)
-			{
-				$scope.searchInfo.push(userInfoArr[i]);
-			}
-		}
-
-		$scope.isSearch = true;
-		if(!$scope.$$phase) {
-         	$scope.$apply();
-   		}
-		
-	}
 
 	//--------- PurchasedHistory
 
@@ -1079,6 +842,9 @@ function mainController($scope, $http, $log) {
 	}
 //----- Duplicate -----
 	var dupUIdArr;
+	var uidArr;
+	var allUserCnt = 0;
+	var lessThan = null;
 	function FindAllSave()
 	{
 		$log.log("FindAllSave");
@@ -1148,17 +914,6 @@ function mainController($scope, $http, $log) {
 					for(var i = _cnt; i > 0; i--)
 					{
 						objects[i].destroy(null);
-						/*var updatetime = objects[i].updatedAt;
-						var updatetimeStr = updatetime.getDate() + "/" + 
-						                     (updatetime.getMonth()+1) + "/" + 
-						                     updatetime.getFullYear() +" " + 
-						                     SetIntToString(updatetime.getHours()) + ":" + 
-						                     SetIntToString(updatetime.getMinutes()) + ":" + 
-						                     SetIntToString(updatetime.getSeconds());
-						var _uid = objects[i].get("uid");
-						
-						$scope.dupUIdArr.push({id:_uid,
-											   update:updatetimeStr});*/
 						
 					}
 					index++;
@@ -1183,57 +938,6 @@ function mainController($scope, $http, $log) {
 			  });
 	}
 // -----------------------------------
-// ------ Missing -------
-	function FindMissing()
-	{
-		//doing here
-		//dupUIdArr = new Array();
-		//$scope.dupUIdArr = new Array();
-		var query = new Parse.Query("Save");
-		 query.descending("updatedAt");
-		 if(lessThan != null)
-		 	query.lessThan("updatedAt", lessThan);
-		 query.limit(1000);
-		 query.find({
-				  success: function(objects) {
-					$log.log("object = " + objects.length);
-					for(var i = 0; i < objects.length; i++)
-					{
-						var _uid = objects[i].get("uid");
-						if(uidArr.indexOf(_uid) == -1)
-						{
-							if(dupUIdArr.indexOf(_uid) == -1)
-							{
-								dupUIdArr.push(_uid);
-								$scope.dupUIdArr.push({id:_uid});
-								//console.log(_uid);
-							}
-							
-						}
-						
-						allUserCnt++;
-						
-						lessThan = objects[i].updatedAt;
-					}
-					
-					if(objects.length == 0)
-					{
-						console.log("DupID: " + $scope.dupUIdArr.length)
-						$scope.isSearch = true;
-						$scope.$apply();
-						$log.log("searchInfo = " + uidArr.length);
-					}else
-					{
-						FindMissing();
-					}
-					
-				  },
-				  error: function(error) {
-					$scope.message = "Can't search Save.";
-				  }
-		});
-	}
-//------------------------
 
 }
 
