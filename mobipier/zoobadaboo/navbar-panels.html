@@ -1,0 +1,22 @@
+<div class="navbar navbar-default">
+   <div class="container">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand text-muted" href="#">ZooBaDaBoo</a>
+      <div class="collapse navbar-collapse">
+         <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{active: navbar.isSelectNavbar(1)}"><a ng-click="navbar.gotoNews()" href="#">ข่าว</a></li>
+            <li ng-class="{active: navbar.isSelectNavbar(2)}"><a ng-click="navbar.gotouserpage()" href="#">ค้นหา</a></li>
+            <li ng-class="{active: navbar.isSelectNavbar(3)}"><a ng-click="navbar.gotoTopPage()" href="#">ผู้เล่นยอดเยี่ยม</a></li>
+            <li ng-class="{active: navbar.isSelectNavbar(4)}"><a ng-click="navbar.gotoPurchasedHistoryPage()" href="#">ประวัติการซื้อเพชร</a></li>
+            <li ng-class="{active: navbar.isSelectNavbar(5)}"><a ng-click="navbar.gotoDailyMissionPage()" href="#">ภารกิจประจำวัน</a></li>
+            <li ng-class="{active: navbar.isSelectNavbar(6)}"><a ng-click="navbar.gotoPeriodMissionPage()" href="#">ภารกิจ</a></li>
+            <li ng-class="{active: navbar.isSelectNavbar(7)}"><a ng-click="navbar.gotoSettingPage()" href="#">ตั้งค่า</a></li>
+            <li><a ng-click="navbar.logout()" href="#">ออกจากระบบ</a></li>
+         </ul>
+      </div>
+   </div>
+</div>

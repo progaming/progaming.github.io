@@ -1,4 +1,4 @@
-var testloginsite = angular.module('testloginsite', ['ui.bootstrap']);
+var testloginsite = angular.module('testloginsite', ['ui.bootstrap', 'navbar']);
 var isLoadNews = false;
 function mainController($scope, $http, $log) {
 	$scope.message = "start";
@@ -299,35 +299,6 @@ function mainController($scope, $http, $log) {
 	        return false;
 	    }
 	    return true;
-	}
-	
-	$scope.gotouserpage = function()
-	{
-		location.replace("search.html");
-	}
-	$scope.gotoNews = function()
-	{
-		location.replace("news.html");
-	}
-	$scope.gotoTopPage = function()
-	{
-		location.replace("top.html");
-	}
-	$scope.gotoPurchasedHistoryPage = function()
-	{
-		location.replace("purchasehistory.html");
-	}
-	$scope.gotoDailyMissionPage = function()
-	{
-		location.replace("dailymission.html");
-	}
-	$scope.gotoPeriodMissionPage = function()
-	{
-		location.replace("periodmission.html");
-	}
-	$scope.gotoSettingPage = function()
-	{
-		location.replace("setting.html");
 	}
 	
 	var uidArr;
