@@ -12,34 +12,46 @@
         <script src="./js/ui-bootstrap-tpls-0.9.0.min.js"></script>
         <script src="./js/app.js"></script>
         <script src="./js/navbar.js"></script>
+		<script src="./js/gift.js"></script>
 		
 	</head>
 
 	<body ng-controller="mainController as mainCtrl">
 		<navbar-panels></navbar-panels>
 		<div class="container">
-			<h3>Gift</h3>
-			<form name="searchUser" class="row form-group" ng-controller="SearchUserController as searchUserCtrl"
-														   ng-submit="searchUserCtrl.searchSubmit()">
-	    		<div class="col-md-4"><input class="form-control" type="text" ng-model="searchUserCtrl.search.firstname" placeholder="First Name"/></div>
-				<div class="col-md-4"><input class="form-control" type="text" ng-model="searchUserCtrl.search.lastname" placeholder="Last Name"/></div>
-				<div class="col-md-2"><input class="form-control" type="submit" value="Search"/></div>
-			</form>
 			
-			<form ng-show="isSearchFinished">
-				<table class="table table-bordered">
-					<tr>
-						<th class="text-center">UserID</th>
-						<th class="text-center">First Name</th>
-						<th class="text-center">Last Name</th>
-					</tr>
-					<tr ng-repeat="info in searchInfo">
-						<td class="text-center">info.uid</td>
-						<td class="text-center">info.firstname</td>
-						<td class="text-center">info.lastname</td>
-					</tr>
-				</table>
-			</form>
+			<h3>Gift</h3>
+			<div ng-controller="SearchUserController as searchUserCtrl">
+				<form name="searchUser" class="row form-group" ng-submit="searchUserCtrl.searchSubmit()">
+		    		<div class="col-md-4"><input ng-disabled="searchUserCtrl.searching" class="form-control" type="text" ng-model="searchUserCtrl.search.firstname" placeholder="First Name"/></div>
+					<div class="col-md-4"><input ng-disabled="searchUserCtrl.searching" class="form-control" type="text" ng-model="searchUserCtrl.search.lastname" placeholder="Last Name"/></div>
+					<div class="col-md-2"><input ng-disabled="searchUserCtrl.searching" class="form-control" type="submit" value="Search"/></div>
+				</form>
+				
+				<form ng-show="isSearchFinished">
+					<table class="table table-bordered">
+						<tr>
+							<th class="text-center">UserID</th>
+							<th class="text-center">First Name</th>
+							<th class="text-center">Last Name</th>
+						</tr>
+						<tr ng-repeat="info in searchInfo">
+							<td class="text-center">{{info.uid}}</td>
+							<td class="text-center">{{info.firstname}}</td>
+							<td class="text-center">{{info.lastname}}</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			
+			<div ng-controller="sendGiftController as sendGiftCtrl">
+				<form name="sendGiftForm" class="row form-group" ng-submit="sendGiftForm.$valid && sendGiftCtrl.sendGift()" novalidate>
+					<div class="col-md-4"><input ng-disabled="sendGiftCtrl.sending" class="form-control" type="text" ng-model="searchUserCtrl.sendGiftData.uid" placeholder="User ID" required/></div>
+					<div class="col-md-4"><input ng-disabled="sendGiftCtrl.sending" class="form-control" type="text" ng-model="searchUserCtrl.sendGiftData.payload" placeholder="Payload" required/></div>
+					<div class="col-md-2"><input ng-disabled="sendGiftCtrl.sending || !sendGiftForm.$valid" class="form-control" type="submit" value="Send"/></div>
+					<div class="col-md-2"><div class = "text-center">{{sendGiftCtrl.message}}</div></div>
+				</form>
+			</div>
 			
 		</div>
 	</body>

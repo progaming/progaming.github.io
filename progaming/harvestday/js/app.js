@@ -1,4 +1,4 @@
-var app = angular.module('main', ['ui.bootstrap', 'navbar']);
+var app = angular.module('main', ['ui.bootstrap', 'navbar', 'gift']);
 
 app.controller("mainController",['$http', function ($http) {
 	
@@ -44,11 +44,13 @@ app.controller("SearchUserController", function($scope){
 	var searchCtrl = this;
 	this.search = {};
 	this.searchInfo = {};
+	this.searching = false;
  	$scope.isSearchFinished = false;
 	 
 	this.searchSubmit = function(){
 	 	console.log("Submit fn: " + this.search.firstname + " ln: " + this.search.lastname);
-	 	var query1 = null;
+	 	$scope.searching = true;
+		 var query1 = null;
 	 	var query2 = null;
 	 	if(this.search.firstname)
 	 	{
@@ -82,12 +84,13 @@ app.controller("SearchUserController", function($scope){
 				for(var i = 0; i < objects.length; i++)
 				{
 					$scope.searchInfo.push({firstname: objects[i].get("first_name"),
-										  lastname: objects[i].get("lastname"),
+										  lastname: objects[i].get("last_name"),
 										  uid: objects[i].get("uid")});
 				}
 				console.log("Array: " + $scope.searchInfo.length);
 				searchCtrl.search = {};
 				$scope.isSearchFinished = true;
+				searchCtrl.searching = false;
 				$scope.$apply(function(){console.log("Apply! isSearchFinished: " + $scope.isSearchFinished);});
 			},
 			error: function(error) {
@@ -97,4 +100,5 @@ app.controller("SearchUserController", function($scope){
 	 
 	 
  	};
+	 
 });
