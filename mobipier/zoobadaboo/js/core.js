@@ -1,6 +1,6 @@
 var testloginsite = angular.module('testloginsite', ['ui.bootstrap', 'navbar', 
 													 'search', 'news', 'top',
-													 'purchasehistory']);
+													 'purchasehistory', 'dailymission']);
 function mainController($scope, $http, $log) {
 	$scope.message = "start";
 	var _0xae5b=["\x35\x51\x33\x76\x74\x50\x49\x5A\x6C\x4C\x55\x45\x32\x4B\x6B\x41\x34\x4D\x66\x69\x6A\x4C\x31\x38\x72\x57\x61\x6F\x39\x77\x4E\x47\x48\x69\x54\x45\x72\x4F\x49\x6E","\x6B\x57\x52\x72\x53\x41\x49\x4C\x5A\x41\x61\x55\x32\x7A\x33\x6D\x72\x71\x35\x79\x41\x6B\x45\x42\x4E\x55\x4D\x4C\x6D\x32\x68\x4F\x4C\x36\x4A\x4D\x32\x53\x30\x78","\x69\x6E\x69\x74\x69\x61\x6C\x69\x7A\x65"];Parse[_0xae5b[2]](_0xae5b[0],_0xae5b[1]);
@@ -38,11 +38,7 @@ function mainController($scope, $http, $log) {
 		}
 	}
 	
-	if(location.pathname.indexOf("dailymission.html") != -1)
-	{
-		loadDailyMission();
-	}
-	else if(location.pathname.indexOf("periodmission.html") != -1)
+	if(location.pathname.indexOf("periodmission.html") != -1)
 	{
 		loadPeriodMission();
 	}
@@ -79,130 +75,7 @@ function mainController($scope, $http, $log) {
 	var userInfoArr;
 
 	
-	//------- DailyMission --------
-	var dailyMissionObjects;
-	function loadDailyMission() {
-		$log.log("loadDailyMission");
-		dailyMissionObjects = new Array();
-		var query = new Parse.Query("DailyMission");
-			  query.find({
-				  success: function(objects) {
-				  	for(var i = 0; i < objects.length; i++)
-				  	{
-						dailyMissionObjects.push(objects[i]);
-						document.getElementById("dmc" + (i+1)).value = objects[i].get("Condition");
-						document.getElementById("dmt" + (i+1)).value = objects[i].get("Target");
-						document.getElementById("dmr" + (i+1)).value = objects[i].get("Reward");
-						document.getElementById("dma" + (i+1)).value = objects[i].get("RewardAmount");
-						
-					}
-					if(objects.length < 6)
-					{
-						var blankParseObj = Parse.Object.extend("DailyMission");
-						for(var i = objects.length; i < 6; i++)
-						{
-							var parseObj = new blankParseObj();
-							dailyMissionObjects.push(parseObj);
-						}
-					}
-					$scope.UpdateDM();
-					$scope.$apply()
-				  },
-				  error: function(error) {
-					$scope.message = "Can't Load DailyMission";
-				  }
-			  });
-
-	}
-
-	$scope.UpdateDM = function()
-	{
-		$log.log("UpdateDM");
-		for(var num = 1; num <= 6; num++)
-		{
-			var conditionStr = document.getElementById("dmc" + num).value;
-			$log.log("num: " + num + " conditionStr: " + conditionStr);
-			if(conditionStr.toLowerCase() == "levelup" || 
-				conditionStr.toLowerCase() == "overtake" ||
-				conditionStr == "")
-			{
-				if(num == 1)
-					$scope.dmt1 = true;
-				else if(num == 2)
-					$scope.dmt2 = true;
-				else if(num == 3)
-					$scope.dmt3 = true;
-				else if(num == 4)
-					$scope.dmt4 = true;
-				else if(num == 5)
-					$scope.dmt5 = true;
-				else if(num == 6)
-					$scope.dmt6 = true;
-			}
-			else
-			{
-				if(num == 1)
-					$scope.dmt1 = false;
-				else if(num == 2)
-					$scope.dmt2 = false;
-				else if(num == 3)
-					$scope.dmt3 = false;
-				else if(num == 4)
-					$scope.dmt4 = false;
-				else if(num == 5)
-					$scope.dmt5 = false;
-				else if(num == 6)
-					$scope.dmt6 = false;
-			}
-		}
-
-	}
-
-	$scope.uploaddmbutton = function() {
-		$scope.buttonDMSaveDisabled = true;
-		$log.log("dailyMissionObjects.length = " + dailyMissionObjects.length)
-		for(var i = 0; i < dailyMissionObjects.length; i ++)
-		{
-			$log.log("i: " + i);
-			dailyMissionObjects[i].set("Condition", document.getElementById("dmc" + (i+1)).value);
-			if(document.getElementById("dmt" + (i+1)).value == "")
-			{
-				document.getElementById("dmt" + (i+1)).value = 0;
-			}
-			dailyMissionObjects[i].set("Target", parseInt(document.getElementById("dmt" + (i+1)).value));
-			if(document.getElementById("dma" + (i+1)).value == "" || document.getElementById("dma" + (i+1)).value == null)
-			{
-				document.getElementById("dma" + (i+1)).value = 0;
-			}
-			dailyMissionObjects[i].set("Reward", document.getElementById("dmr" + (i+1)).value);
-			dailyMissionObjects[i].set("RewardAmount", parseInt(document.getElementById("dma" + (i+1)).value));
-			$log.log(dailyMissionObjects[i]);
-			/*dailyMissionObjects[i].save().then(function(newsObj) {
-					
-									
-				}, function(error) {
-					$scope.meesage = "DMObject could not be saved to parse";
-				});*/
-		}
-		$log.log("Save All");
-		Parse.Object.saveAll(dailyMissionObjects, {
-	        success: function(objs) {
-	        	$log.log("finished");
-	            alert("ข้อมูลถูกบันทึกเรียบร้อยแล้ว");
-	            $scope.message = "Finished Update Alldata";
-	            $scope.buttonDMSaveDisabled = false;
-	            location.reload();
-	            //$scope.apply();
-	        },
-	        error: function(error) { 
-	            // an error occurred...
-	            $log.log("DailyMission SaveAll Error: ");
-	            $log.log(error)
-	        }
-    	});
-	}
-
-	//-----------------------------
+	
 	//------- PeriodMission --------
 	var periodMissionObjects;
 	function loadPeriodMission() {

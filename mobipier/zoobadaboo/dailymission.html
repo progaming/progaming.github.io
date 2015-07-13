@@ -16,6 +16,7 @@
         <script src="./js/news.js"></script>
         <script src="./js/top.js"></script>
         <script src="./js/purchasehistory.js"></script>
+        <script src="./js/dailymission.js"></script>
         
         <style>
         a.disabled {
@@ -32,7 +33,7 @@
 	<body ng-controller="mainController">
         <navbar-panels></navbar-panels>
 
-    	<div class="container">
+    	<div class="container" ng-controller="dailymissionController">
             
             <div class="page-header"><h1>ภารกิจประจำวัน</h1></div>
             <div class="row">
