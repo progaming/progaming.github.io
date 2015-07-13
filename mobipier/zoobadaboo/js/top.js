@@ -1,14 +1,78 @@
 (function(){
 	var app = angular.module('top', []);
 	app.controller("topController", function($scope){
-		
+		var topCtrl = this;
 		var numberSessionPerPage = 10;
 		var currentSessionBT = 1;
 		var maxSessionPage = 1;
 		var sessionArr;
+		var lessThan = null;
+		topCtrl.vipIdArr = new Array();
 		
 		$scope.isShowTop = false;
-		LoadCurrentSessionToShowWeek();
+		//LoadCurrentSessionToShowWeek();
+		LoadVipId();
+		
+		function LoadVipId()
+		{
+			var query = new Parse.Query("VIP");
+		 	query.descending("updatedAt");
+		 	if(lessThan != null)
+		 		query.lessThan("updatedAt", lessThan);
+		 	query.limit(1000);
+			query.find({
+				  success: function(objects) {
+					console.log("object = " + objects.length);
+					for(var i = 0; i < objects.length; i++)
+					{
+						var _active = objects[i].get("active");
+						var uid = objects[i].get("uid");
+						if(objects[i].has("active") && _active == true)
+						{
+							if(objects[i].has("uid"))
+							{
+								//console.log("add id" + uid);
+								topCtrl.vipIdArr.push(uid);
+							}
+						}
+						else
+						{
+							if(objects[i].has("EndDate"))
+							{
+								var _endDate = objects[i].get("EndDate");
+								var _date = new Date();
+								if( _endDate > _date )
+								{
+									//console.log("add id" + uid + " _date: " + _date.toString() + " _endDate: " + _endDate.toString());
+									if(objects[i].has("uid"))
+									{
+										topCtrl.vipIdArr.push(uid);
+									}	
+								}
+								else
+								{
+									//console.log("don't add id" + uid + " _date: " + _date.toString() + " _endDate: " + _endDate.toString());
+								}
+							}
+						}
+						
+						lessThan = objects[i].updatedAt;
+					}
+					
+					if(objects.length == 0)
+					{
+						LoadCurrentSessionToShowWeek();
+					}else
+					{
+						LoadVipId();
+					}
+					
+				  },
+				  error: function(error) {
+					$scope.message = "Can't search User.";
+				  }
+			  });
+		}
 		
 		function LoadCurrentSessionToShowWeek()
 		{
@@ -136,6 +200,7 @@
 			session--;
 			 var query = new Parse.Query("Score");
 			 query.equalTo("Session", session);
+			 query.containedIn("uid", topCtrl.vipIdArr);
 			 query.descending("score");
 			 query.find({
 					  success: function(objects) {
