@@ -1,4 +1,5 @@
-var testloginsite = angular.module('testloginsite', ['ui.bootstrap', 'navbar', 'search']);
+var testloginsite = angular.module('testloginsite', ['ui.bootstrap', 'navbar', 
+													 'search', 'news']);
 function mainController($scope, $http, $log) {
 	$scope.message = "start";
 	var _0xae5b=["\x35\x51\x33\x76\x74\x50\x49\x5A\x6C\x4C\x55\x45\x32\x4B\x6B\x41\x34\x4D\x66\x69\x6A\x4C\x31\x38\x72\x57\x61\x6F\x39\x77\x4E\x47\x48\x69\x54\x45\x72\x4F\x49\x6E","\x6B\x57\x52\x72\x53\x41\x49\x4C\x5A\x41\x61\x55\x32\x7A\x33\x6D\x72\x71\x35\x79\x41\x6B\x45\x42\x4E\x55\x4D\x4C\x6D\x32\x68\x4F\x4C\x36\x4A\x4D\x32\x53\x30\x78","\x69\x6E\x69\x74\x69\x61\x6C\x69\x7A\x65"];Parse[_0xae5b[2]](_0xae5b[0],_0xae5b[1]);
@@ -35,15 +36,7 @@ function mainController($scope, $http, $log) {
 			location.replace("index.html");
 		}
 	}
-	if(location.pathname.indexOf("news.html") != -1)
-	{
-		loadnews();
-	}
-	if(location.pathname.indexOf("search.html") != -1)
-	{
-		$scope.isSearch = false;
-	}
-	else if(location.pathname.indexOf("top.html") != -1)
+	if(location.pathname.indexOf("top.html") != -1)
 	{
 		$scope.isShowTop = false;
 		LoadCurrentSessionToShowWeek();
@@ -71,12 +64,7 @@ function mainController($scope, $http, $log) {
 		loadShowBTVIP();
 	}
 	
-	var newsObjects;
-	var newsImg;
-	var files = [null, null, null, null];
-
-	$scope.isOn = [false, false, false, false];
-	$scope.priority = [0, 0, 0, 0];
+	
 	
 	$scope.login = function(form) {
 		$scope.message = "Logging In...";
@@ -94,182 +82,10 @@ function mainController($scope, $http, $log) {
 		});
 	}
 	
-	function loadnews() {
-		isLoadNews = true;
-		$log.log("loadnews");
-		$scope.imgurls = new Array();
-		$scope.isOn = new Array();
-		$scope.priority = new Array();
-		$scope.newstext = new Array();
-		newsObjects = new Array();
-		var query = new Parse.Query("News");
-			  query.find({
-				  success: function(objects) {
-				  	for(var i = 0; i < objects.length; i++)
-				  	{
-						newsObjects.push(objects[i]);
-						$scope.newstext.push(objects[i].get("text"));
-						var imgobj = angular.fromJson(objects[i].get("image"));
-						$scope.imgurls.push(imgobj._url);
-						$scope.isOn.push(objects[i].get("on"));
-						if(document.getElementById("checkbox" + (i+1)) != null)
-						{
-							document.getElementById("checkbox" + (i+1)).checked = objects[i].get("on");
-							$scope.isOn[i] = objects[i].get("on");
-							//$scope.priority.push(objects[i].get("priority"));
-							$scope.priority[i] = objects[i].get("priority");
-							document.getElementById("priority" + (i+1)).value = objects[i].get("priority");
-							globalDatepickerData['sdt'+ (i+1)] = objects[i].get("startDay");
-							globalDatepickerData['edt' + (i+1)] = objects[i].get("endDay");
-						}
-					}
-					$log.log(globalDatepickerData['sdt1']);
-					$log.log("loadfinish");
-					$scope.$broadcast('setDatepicker');//$emit('setDatepicker', null);
-					$scope.$apply()
-				  },
-				  error: function(error) {
-					$scope.message = "Can't Load News";
-				  }
-			  });
-
-	}
-	
 	$scope.logout = function() {
 		Parse.User.logOut();
 		location.replace("index.html");
 		
-	}
-	
-	// Set an event listener on the Choose File field.
-    $('#fileselect').bind("change", function(e) {
-      var _files = e.target.files || e.dataTransfer.files;
-      // Our file var now holds the selected file
-      $log.log(_files[0]);
-      files[0] = _files[0];
-    });
-
-    $('#fileselect2').bind("change", function(e) {
-      var _files = e.target.files || e.dataTransfer.files;
-      // Our file var now holds the selected file
-       $log.log(_files[0]);
-      files[1] = _files[0];
-    });
-
-    $('#fileselect3').bind("change", function(e) {
-      var _files = e.target.files || e.dataTransfer.files;
-      // Our file var now holds the selected file
-      files[2] = _files[0];
-    });
-
-    $('#fileselect4').bind("change", function(e) {
-      var _files = e.target.files || e.dataTransfer.files;
-      // Our file var now holds the selected file
-      files[3] = _files[0];
-    });
-	
-	$('#fileselect5').bind("change", function(e) {
-      var _files = e.target.files || e.dataTransfer.files;
-      // Our file var now holds the selected file
-      files[4] = _files[0];
-    });
-	
-	$('#fileselect6').bind("change", function(e) {
-      var _files = e.target.files || e.dataTransfer.files;
-      // Our file var now holds the selected file
-      files[5] = _files[0];
-    });
-	
-	$('#fileselect7').bind("change", function(e) {
-      var _files = e.target.files || e.dataTransfer.files;
-      // Our file var now holds the selected file
-      files[6] = _files[0];
-    });
-	
-    $scope.uploadbutton = function() {
-		$scope.buttonSaveDisabled = true;
-		$log.log("newsObjects.length = " + newsObjects.length)
-		SaveNewsData(0);
-		
-    }
-
-    function SaveNewsData(_index)
-    {
-    	$log.log("SaveNewsData: " + _index);
-    	if(_index >= newsObjects.length)
-    	{
-    		Parse.Object.saveAll(newsObjects, {
-		        success: function(objs) {
-		            alert("ข้อมูลถูกบันทึกเรียบร้อยแล้ว");
-		            $scope.message = "Finished Update Alldata";
-		            $scope.buttonSaveDisabled = false;
-		            location.reload();
-		            return;
-		        },
-		        error: function(error) { 
-		            // an error occurred...
-		        }
-	    	});
-    	}
-    	else
-    	{
-    		$log.log("files: " + files[_index]);
-    		if(files[_index] == null)
-			{
-				var _textNews = document.getElementById("textNewsArea" + _index).value;
-				newsObjects[_index].set("text", _textNews);
-				newsObjects[_index].set("startDay", globalDatepickerData['sdt' + (_index+1)]);
-				newsObjects[_index].set("endDay", globalDatepickerData['edt' + (_index+1)]);
-				newsObjects[_index].set("on", $scope.isOn[_index]);
-				newsObjects[_index].set("priority", $scope.priority[_index]);
-				newsObjects[_index].save().then(function(newsObj) {
-					SaveNewsData(++_index);
-									
-				}, function(error) {
-					$scope.meesage = "NewsObject could not be saved to parse";
-				});
-			}
-			else
-			{
-				$log.log("files name: " + files[_index].name);
-				var parseFile = new Parse.File(files[_index].name, files[_index]);
-				$log.log("before save : " + parseFile);
-				parseFile.save().then(function() {
-				  // The file has been saved to Parse.
-				  $log.log("File has been saved to Parse");
-				  $scope.message = "File has been saved to Parse";
-				  var _textNews = document.getElementById("textNewsArea" + _index).value;
-				  newsObjects[_index].set("text", _textNews);
-				  newsObjects[_index].set("image", parseFile);
-				  $log.log("globalDatepickerData" + globalDatepickerData['sdt' + (_index+1)]);
-				  newsObjects[_index].set("startDay", globalDatepickerData['sdt' + (_index+1)]);
-				  newsObjects[_index].set("endDay", globalDatepickerData['edt' + (_index+1)]);
-				  newsObjects[_index].set("on", $scope.isOn[_index]);
-				  newsObjects[_index].set("priority", $scope.priority[_index]);
-				  $log.log("Before Save News");
-				  newsObjects[_index].save().then(function(newsObj) {	
-						SaveNewsData(++_index);		
-				  }, function(error) {
-				  		$log.log("error: " + error);
-						$scope.meesage = "NewsObject could not be saved to parse";
-				  });
-				}, function(error) {
-					$scope.meesage = "File could not be saved to parse";
-				  // The file either could not be read, or could not be saved to Parse.
-				});
-			}
-    	}
-    	
-    }
-
-    function isNumberKey(evt){
-	    var charCode = (evt.which) ? evt.which : event.keyCode
-	    if (charCode > 31 && (charCode < 48 || charCode > 57))
-	    {
-	    	evt.preventDefault();
-	        return false;
-	    }
-	    return true;
 	}
 	
 	var allUserInfoArr;
@@ -941,6 +757,9 @@ function mainController($scope, $http, $log) {
 
 }
 
+
+//------- datepick ---------
+
 var globalDatepickerData = [{'sdt1':null}, {'edt1':null}, 
 							{'sdt2': null}, {'edt2':null},
 							{'sdt3': null}, {'edt3':null},
@@ -1063,6 +882,7 @@ function DatepickerDemoCtrl($scope, $log) {
 
   $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
   $scope.format = $scope.formats[0];
-
-
+  
 }
+
+//---------------------------

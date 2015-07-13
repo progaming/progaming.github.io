@@ -13,6 +13,7 @@
         <script src="./js/core.js"></script>
         <script src="./js/navbar.js"></script>
         <script src="./js/search.js"></script>
+        <script src="./js/news.js"></script>
         
         <style>
         a.disabled {
@@ -29,7 +30,7 @@
 	<body ng-controller="mainController">
         <navbar-panels></navbar-panels>
 
-    	<div class="container">
+    	<div class="container" ng-controller="newsController as newsCtrl">
             <div class="page-header"><h1>ข่าว</h1></div>
             <div class="row">
                 <!-- News1 -->
@@ -42,7 +43,7 @@
                             <label for="textNewsArea">ข้อความ</label>
                             <div><TextArea cols="40" rows="5" id="textNewsArea0">{{newstext[0]}}</TextArea></div>
 
-                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                            <div style="padding:5px">
                                 <div class="row">
                                     <!-- StartDate -->
                                     <div class="col-sm-12">
@@ -92,7 +93,7 @@
                             <label for="textNewsArea">ข้อความ</label>
                             <div><TextArea cols="40" rows="5" id="textNewsArea1">{{newstext[1]}}</TextArea></div>
 
-                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                            <div style="padding:5px">
                                 <div class="row">
                                     <!-- StartDate -->
                                     <div class="col-sm-12">
@@ -134,7 +135,7 @@
                             <label for="textNewsArea">ข้อความ</label>
                             <div><TextArea cols="40" rows="5" id="textNewsArea2">{{newstext[2]}}</TextArea></div>
 
-                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                            <div style="padding:5px">
                                 <div class="row">
                                     <!-- StartDate -->
                                     <div class="col-sm-12">
@@ -187,7 +188,7 @@
                             <label for="textNewsArea">ข้อความ</label>
                             <div><TextArea cols="40" rows="5" id="textNewsArea3">{{newstext[3]}}</TextArea></div>
 
-                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                            <div style="padding:5px">
                                 <div class="row">
                                     <!-- StartDate -->
                                     <div class="col-sm-12">
@@ -238,7 +239,7 @@
                             <label for="textNewsArea">ข้อความ</label>
                             <div><TextArea cols="40" rows="5" id="textNewsArea4">{{newstext[4]}}</TextArea></div>
 
-                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                            <div style="padding:5px">
                                 <div class="row">
                                     <!-- StartDate -->
                                     <div class="col-sm-12">
@@ -289,7 +290,7 @@
                             <label for="textNewsArea">ข้อความ</label>
                             <div><TextArea cols="40" rows="5" id="textNewsArea5">{{newstext[5]}}</TextArea></div>
 
-                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                            <div style="padding:5px">
                                 <div class="row">
                                     <!-- StartDate -->
                                     <div class="col-sm-12">
@@ -342,7 +343,7 @@
                             <label for="textNewsArea">ข้อความ</label>
                             <div><TextArea cols="40" rows="5" id="textNewsArea6">{{newstext[6]}}</TextArea></div>
 
-                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                            <div style="padding:5px">
                                 <div class="row">
                                     <!-- StartDate -->
                                     <div class="col-sm-12">

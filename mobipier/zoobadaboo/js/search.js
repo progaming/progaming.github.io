@@ -3,6 +3,7 @@
 	app.controller("searchController", function($scope){
 		//set Start
 		var searchCtrl = this;
+		$scope.isSearch = false;
 		searchCtrl.uidArr = new Array();
 		searchCtrl.allUserInfoArr = new Array();
 		searchCtrl.lessThan = null;
