@@ -19,6 +19,7 @@ function mainController($scope, $http, $log) {
 		if( location.pathname.indexOf("duplicate.html") != -1 )
 		{
 			//-- FindAllSave --
+			uidArr = new Array();
 			dupUIdArr = new Array();
 			$scope.dupUIdArr = new Array();
 			allUserInfoArr = new Array();
@@ -70,7 +71,7 @@ function mainController($scope, $http, $log) {
 	
 //----- Duplicate -----
 	var dupUIdArr;
-	var uidArr;
+	var uidArr = new Array();
 	var allUserCnt = 0;
 	var lessThan = null;
 	function FindAllSave()
@@ -83,9 +84,10 @@ function mainController($scope, $http, $log) {
 		 query.limit(1000);
 		 query.find({
 				  success: function(objects) {
-					$log.log("object = " + objects.length);
+					$log.log("objects = " + objects.length);
 					for(var i = 0; i < objects.length; i++)
 					{
+						//console.log("Objects: " + i);
 						var _uid = objects[i].get("uid");
 						if(uidArr.indexOf(_uid) != -1)
 						{
@@ -107,10 +109,11 @@ function mainController($scope, $http, $log) {
 						
 						lessThan = objects[i].updatedAt;
 					}
-					
+					$log.log("Finish Find all save");
 					if(objects.length == 0)
 					{
 						console.log("DupID: " + $scope.dupUIdArr.length)
+						console.log($scope.dupUIdArr[0]);
 						$scope.isSearch = true;
 						$scope.$apply();
 						$log.log("searchInfo = " + uidArr.length);
@@ -118,6 +121,7 @@ function mainController($scope, $http, $log) {
 						//FindAllDuplicate(0);
 					}else
 					{
+						console.log("Find next");
 						FindAllSave();
 					}
 					
