@@ -1,5 +1,5 @@
 var testloginsite = angular.module('testloginsite', ['ui.bootstrap', 'navbar', 
-													 'search', 'news']);
+													 'search', 'news', 'top']);
 function mainController($scope, $http, $log) {
 	$scope.message = "start";
 	var _0xae5b=["\x35\x51\x33\x76\x74\x50\x49\x5A\x6C\x4C\x55\x45\x32\x4B\x6B\x41\x34\x4D\x66\x69\x6A\x4C\x31\x38\x72\x57\x61\x6F\x39\x77\x4E\x47\x48\x69\x54\x45\x72\x4F\x49\x6E","\x6B\x57\x52\x72\x53\x41\x49\x4C\x5A\x41\x61\x55\x32\x7A\x33\x6D\x72\x71\x35\x79\x41\x6B\x45\x42\x4E\x55\x4D\x4C\x6D\x32\x68\x4F\x4C\x36\x4A\x4D\x32\x53\x30\x78","\x69\x6E\x69\x74\x69\x61\x6C\x69\x7A\x65"];Parse[_0xae5b[2]](_0xae5b[0],_0xae5b[1]);
@@ -36,12 +36,8 @@ function mainController($scope, $http, $log) {
 			location.replace("index.html");
 		}
 	}
-	if(location.pathname.indexOf("top.html") != -1)
-	{
-		$scope.isShowTop = false;
-		LoadCurrentSessionToShowWeek();
-	}
-	else if(location.pathname.indexOf("purchasehistory.html") != -1)
+	
+	if(location.pathname.indexOf("purchasehistory.html") != -1)
 	{
 		$scope.isShowPurchasedInfo = false;
 		phCurrentPage = 0;
@@ -90,9 +86,6 @@ function mainController($scope, $http, $log) {
 	
 	var allUserInfoArr;
 	var userInfoArr;
-	var topCurrentPage = 1;
-	var topMaxPage = 1;
-	var userShowPerPage = 100;
 
 	//--------- PurchasedHistory
 
@@ -122,8 +115,6 @@ function mainController($scope, $http, $log) {
 				}
 				for(var i = 0; i < objects.length; i++)
 				{
-					//if(i > 4)
-					//	break;
 					var purchasedTime = objects[i].get("PurchaseTime");
 					var purchasedTimeStr = purchasedTime.getDate() + "/" + (purchasedTime.getMonth() + 1) + "/" + purchasedTime.getFullYear() +" " + SetIntToString(purchasedTime.getHours()) + ":" + SetIntToString(purchasedTime.getMinutes()) + ":" + SetIntToString(purchasedTime.getSeconds());
 					phArr.push({uid:objects[i].get("uid"), 
@@ -163,7 +154,7 @@ function mainController($scope, $http, $log) {
 		if(phArr.length >= phShowPerPage)
 		{
 			$scope.needMorePage = true;
-			phMaxPage = parseInt((phArr.length/phShowPerPage) +1);
+			phMaxPage = Math.floor((phArr.length/phShowPerPage) +1);
 			phCurrentPage = 1;
 			for(var j = 1; j <= phMaxPage; j++)
 			{
@@ -497,165 +488,7 @@ function mainController($scope, $http, $log) {
 
 	//-----------------------------
 	
-	var numberSessionPerPage = 10;
-	var currentSessionBT = 1;
-	var maxSessionPage = 1;
-	var sessionArr;
-	function LoadCurrentSessionToShowWeek()
-	{
-		Parse.Cloud.run('getSession', {}, {
-		  success: function(result) {
-			$log.log(result);
-			var session = parseInt(result);
-			$scope.topWeekBT = new Array();
-			sessionArr = new Array();
-			for(var i = session; i > 0; i--)
-			{
-				sessionArr.push(i);
-				if(session >= numberSessionPerPage)
-				{
-					if((i) > numberSessionPerPage)
-					{
-						$scope.topWeekBT.push(i);
-					}
-				}
-				else
-				{
-					$scope.topWeekBT.push(i);
-				}
-			}
-			if(session >= numberSessionPerPage)
-			{
-				currentSessionBT = 1;
-				maxSessionPage = parseInt((session/numberSessionPerPage) +1);
-				$scope.isShowPrevTopWeek = true;
-			}
-			else
-			{
-				$scope.isShowPrevTopWeek = false;
-			}
-			$scope.isShowNextTopWeek = false;
-			$log.log("Topweek Length: " + $scope.topWeekBT.length);
-			$scope.isShowTop = true;
-			$scope.$apply();
-			$scope.gotoWeek(session);
-		  },
-		  error: function(error) {
-		  }
-		});
-	}
 	
-	$scope.nextTopWeekBT = function()
-	{
-		currentSessionBT--;
-		var lastPage = (currentSessionBT-1) * numberSessionPerPage;
-		var nextPage = (currentSessionBT) * numberSessionPerPage;
-		if(lastPage < 0)
-		{
-			lastPage = 0;
-		}
-		$scope.topWeekBT = new Array();
-		for(var i = lastPage; i < nextPage; i++)
-		{
-			if( i < sessionArr.length)
-			{
-				$scope.topWeekBT.push(sessionArr[i]);
-			}
-		}
-		
-		CheckTopWeekBT();
-		
-		if(!$scope.$$phase) {
-         	$scope.$apply();
-   		}
-	}
-	
-	function CheckTopWeekBT()
-	{
-		
-		if(currentSessionBT == 1)
-		{
-			$scope.isShowNextTopWeek = false;
-		}
-		else
-		{
-			$scope.isShowNextTopWeek = true;
-		}
-		
-		if(currentSessionBT == maxSessionPage)
-		{
-			$scope.isShowPrevTopWeek = false;
-		}
-		else
-		{
-			$scope.isShowPrevTopWeek = true;
-		}
-		
-	}
-	
-	$scope.prevTopWeekBT = function()
-	{
-		currentSessionBT++;
-		var lastPage = (currentSessionBT-1) * numberSessionPerPage;
-		var nextPage = (currentSessionBT) * numberSessionPerPage;
-		if(lastPage == 0)
-		{
-			lastPage = 0;
-		}
-		$scope.topWeekBT = new Array();
-		for(var i = lastPage; i < nextPage; i++)
-		{
-			if( i < sessionArr.length)
-			{
-				$scope.topWeekBT.push(sessionArr[i]);
-			}
-		}
-		
-		CheckTopWeekBT();
-		
-		
-		if(!$scope.$$phase) {
-         	$scope.$apply();
-   		}
-	}
-	
-	$scope.gotoWeek = function(session)
-	{
-		$scope.isShowTopWeek = false;
-		$scope.$apply();
-		$log.log("session = " + session);
-		session--;
-		 var query = new Parse.Query("Score");
-		 query.equalTo("Session", session);
-		 query.descending("score");
-		 query.find({
-				  success: function(objects) {
-					$scope.topWeekInfo = new Array();
-					$log.log("object = " + objects.length);
-					if(objects.length == 0)
-					{
-						$scope.topWeekInfo.push({firstname:'No Data', 
-						lastname:'', 
-						score:'0'})	
-					}
-					for(var i = 0; i < objects.length; i++)
-					{
-						if(i > 4)
-							break;
-						$scope.topWeekInfo.push({firstname:objects[i].get("first_name"), 
-							lastname:objects[i].get("last_name"), 
-							score:objects[i].get("score")});
-					}
-					
-					$scope.isShowTopWeek = true;
-					$scope.$apply();
-				  },
-				  error: function(error) {
-					$scope.message = "Can't search User.";
-				  }
-		});
-		 
-	}
 //----- Duplicate -----
 	var dupUIdArr;
 	var uidArr;

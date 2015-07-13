@@ -14,6 +14,7 @@
         <script src="./js/navbar.js"></script>
         <script src="./js/search.js"></script>
         <script src="./js/news.js"></script>
+        <script src="./js/top.js"></script>
         <style>
 			table, th , td {
 			  border: 1px solid grey;
@@ -40,7 +41,7 @@
 	<body ng-controller="mainController">
         <navbar-panels></navbar-panels>
         
-    	<div class="container">
+    	<div class="container" ng-controller="topController as topCtrl">
             <div class="page-header"><h1>ผู้เล่นยอดเยี่ยม</h1></div>
             
             <form ng-show="isShowTopWeek == true">
