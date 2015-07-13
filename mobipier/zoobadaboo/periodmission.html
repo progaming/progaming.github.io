@@ -17,6 +17,7 @@
         <script src="./js/top.js"></script>
         <script src="./js/purchasehistory.js"></script>
         <script src="./js/dailymission.js"></script>
+        <script src="./js/periodmission.js"></script>
         
         <style>
         a.disabled {
@@ -33,7 +34,7 @@
 	<body ng-controller="mainController">
         <navbar-panels></navbar-panels>
 
-    	<div class="container">
+    	<div class="container" ng-controller="periodmissionController as pmCtrl">
             
             <div class="page-header"><h1>ภารกิจ</h1></div>
             <div class="row">
@@ -65,7 +66,7 @@
                                 จำนวน: <input type="number" id="pma1" class="form-control input-normal" size="1" />
                             </div>
 
-                           <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                           <div style="padding:5px">
                                 <div class="row">
                                     <!-- StartDate -->
                                     <div class="col-sm-12">
@@ -121,7 +122,7 @@
                                 จำนวน: <input type="number" id="pma2" class="form-control input-normal" size="1" />
                             </div>
 
-                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                            <div style="padding:5px">
                                 <div class="row">
                                     <!-- StartDate -->
                                     <div class="col-sm-12">
@@ -178,7 +179,7 @@
                                 จำนวน: <input type="number" id="pma3" class="form-control input-normal" size="1" />
                             </div>
 
-                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                            <div style="padding:5px">
                                 <div class="row">
                                     <!-- StartDate -->
                                     <div class="col-sm-12">
@@ -234,7 +235,7 @@
                                 จำนวน: <input type="number" id="pma4" class="form-control input-normal" size="1" />
                             </div>
 
-                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                            <div style="padding:5px">
                                 <div class="row">
                                     <!-- StartDate -->
                                     <div class="col-sm-12">
@@ -290,7 +291,7 @@
                                 จำนวน: <input type="number" id="pma5" class="form-control input-normal" size="1" />
                             </div>
 
-                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                            <div style="padding:5px">
                                 <div class="row">
                                     <!-- StartDate -->
                                     <div class="col-sm-12">
@@ -346,7 +347,7 @@
                                 จำนวน: <input type="number" id="pma6" class="form-control input-normal" size="1" />
                             </div>
 
-                            <div style="padding:5px" ng-controller="DatepickerDemoCtrl">
+                            <div style="padding:5px">
                                 <div class="row">
                                     <!-- StartDate -->
                                     <div class="col-sm-12">

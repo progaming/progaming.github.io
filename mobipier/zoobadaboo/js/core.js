@@ -1,6 +1,8 @@
 var testloginsite = angular.module('testloginsite', ['ui.bootstrap', 'navbar', 
 													 'search', 'news', 'top',
-													 'purchasehistory', 'dailymission']);
+													 'purchasehistory', 
+													 'dailymission', 
+													 'periodmission']);
 function mainController($scope, $http, $log) {
 	$scope.message = "start";
 	var _0xae5b=["\x35\x51\x33\x76\x74\x50\x49\x5A\x6C\x4C\x55\x45\x32\x4B\x6B\x41\x34\x4D\x66\x69\x6A\x4C\x31\x38\x72\x57\x61\x6F\x39\x77\x4E\x47\x48\x69\x54\x45\x72\x4F\x49\x6E","\x6B\x57\x52\x72\x53\x41\x49\x4C\x5A\x41\x61\x55\x32\x7A\x33\x6D\x72\x71\x35\x79\x41\x6B\x45\x42\x4E\x55\x4D\x4C\x6D\x32\x68\x4F\x4C\x36\x4A\x4D\x32\x53\x30\x78","\x69\x6E\x69\x74\x69\x61\x6C\x69\x7A\x65"];Parse[_0xae5b[2]](_0xae5b[0],_0xae5b[1]);
@@ -38,11 +40,7 @@ function mainController($scope, $http, $log) {
 		}
 	}
 	
-	if(location.pathname.indexOf("periodmission.html") != -1)
-	{
-		loadPeriodMission();
-	}
-	else if(location.pathname.indexOf("setting.html") != -1)
+	if(location.pathname.indexOf("setting.html") != -1)
 	{
 		loadShowBTVIP();
 	}
@@ -76,134 +74,7 @@ function mainController($scope, $http, $log) {
 
 	
 	
-	//------- PeriodMission --------
-	var periodMissionObjects;
-	function loadPeriodMission() {
-		$log.log("loadPeriodMission");
-		periodMissionObjects = new Array();
-		var query = new Parse.Query("PeriodMission");
-			  query.find({
-				  success: function(objects) {
-				  	for(var i = 0; i < objects.length; i++)
-				  	{
-						periodMissionObjects.push(objects[i]);
-						document.getElementById("pmc" + (i+1)).value = objects[i].get("Condition");
-						document.getElementById("pmt" + (i+1)).value = objects[i].get("Target");
-						document.getElementById("pmr" + (i+1)).value = objects[i].get("Reward");
-						document.getElementById("pma" + (i+1)).value = objects[i].get("RewardAmount");
-						globalDatepickerData['sdt'+ (i+2)] = objects[i].get("StartTime");
-						globalDatepickerData['edt' + (i+2)] = objects[i].get("EndTime");
-					}
-					if(objects.length < 6)
-					{
-						var blankParseObj = Parse.Object.extend("PeriodMission");
-						for(var i = objects.length; i < 6; i++)
-						{
-							var parseObj = new blankParseObj();
-							periodMissionObjects.push(parseObj);
-						}
-					}
-					$scope.$broadcast('setDatepicker');
-					$scope.UpdatePM();
-					$scope.$apply()
-				  },
-				  error: function(error) {
-					$scope.message = "Can't Load PeriodMission";
-				  }
-			  });
-
-	}
-
-	$scope.UpdatePM = function()
-	{
-		$log.log("UpdatePM");
-		for(var num = 1; num <= 6; num++)
-		{
-			var conditionStr = document.getElementById("pmc" + num).value;
-			$log.log("num: " + num + " conditionStr: " + conditionStr);
-			if(conditionStr.toLowerCase() == "levelup" || 
-				conditionStr.toLowerCase() == "overtake" ||
-				conditionStr == "")
-			{
-				if(num == 1)
-					$scope.pmt1 = true;
-				else if(num == 2)
-					$scope.pmt2 = true;
-				else if(num == 3)
-					$scope.pmt3 = true;
-				else if(num == 4)
-					$scope.pmt4 = true;
-				else if(num == 5)
-					$scope.pmt5 = true;
-				else if(num == 6)
-					$scope.pmt6 = true;
-			}
-			else
-			{
-				if(num == 1)
-					$scope.pmt1 = false;
-				else if(num == 2)
-					$scope.pmt2 = false;
-				else if(num == 3)
-					$scope.pmt3 = false;
-				else if(num == 4)
-					$scope.pmt4 = false;
-				else if(num == 5)
-					$scope.pmt5 = false;
-				else if(num == 6)
-					$scope.pmt6 = false;
-			}
-		}
-
-	}
-
-	$scope.uploadpmbutton = function() {
-		$scope.buttonPMSaveDisabled = true;
-		$log.log("periodMissionObjects.length = " + periodMissionObjects.length)
-		for(var i = 0; i < periodMissionObjects.length; i ++)
-		{
-			$log.log("i: " + i);
-			periodMissionObjects[i].set("Condition", document.getElementById("pmc" + (i+1)).value);
-			if(document.getElementById("pmt" + (i+1)).value == "")
-			{
-				document.getElementById("pmt" + (i+1)).value = 0;
-			}
-			periodMissionObjects[i].set("Target", parseInt(document.getElementById("pmt" + (i+1)).value));
-			periodMissionObjects[i].set("Reward", document.getElementById("pmr" + (i+1)).value);
-			if(document.getElementById("pma" + (i+1)).value == "" || document.getElementById("pma" + (i+1)).value == null)
-			{
-				document.getElementById("pma" + (i+1)).value = 0;
-			}
-			periodMissionObjects[i].set("RewardAmount", parseInt(document.getElementById("pma" + (i+1)).value));
-			periodMissionObjects[i].set("StartTime", globalDatepickerData['sdt' + (i+2)]);
-			periodMissionObjects[i].set("EndTime", globalDatepickerData['edt' + (i+2)]);
-			$log.log(periodMissionObjects[i]);
-			/*dailyMissionObjects[i].save().then(function(newsObj) {
-					
-									
-				}, function(error) {
-					$scope.meesage = "DMObject could not be saved to parse";
-				});*/
-		}
-		$log.log("Save All");
-		Parse.Object.saveAll(periodMissionObjects, {
-	        success: function(objs) {
-	        	$log.log("finished");
-	            alert("ข้อมูลถูกบันทึกเรียบร้อยแล้ว");
-	            $scope.message = "Finished Update Alldata";
-	            $scope.buttonPMSaveDisabled = false;
-	            location.reload();
-	            //$scope.apply();
-	        },
-	        error: function(error) { 
-	            // an error occurred...
-	            $log.log("PeriodMission SaveAll Error: ");
-	            $log.log(error)
-	        }
-    	});
-	}
-
-	//-----------------------------
+	
 	//------- Setting --------
 	var appObject;
 	function loadShowBTVIP() {
@@ -348,7 +219,7 @@ function mainController($scope, $http, $log) {
 
 //------- datepick ---------
 
-var globalDatepickerData = [{'sdt1':null}, {'edt1':null}, 
+/*var globalDatepickerData = [{'sdt1':null}, {'edt1':null}, 
 							{'sdt2': null}, {'edt2':null},
 							{'sdt3': null}, {'edt3':null},
 							{'sdt4': null}, {'edt4':null},
@@ -471,6 +342,6 @@ function DatepickerDemoCtrl($scope, $log) {
   $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
   $scope.format = $scope.formats[0];
   
-}
+}*/
 
 //---------------------------
