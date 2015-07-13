@@ -19,6 +19,7 @@
         <script src="./js/purchasehistory.js"></script>
         <script src="./js/dailymission.js"></script>
         <script src="./js/periodmission.js"></script>
+        <script src="./js/setting.js"></script>
         
         <style>
 			 a.disabled {
@@ -36,7 +37,7 @@
 	<body ng-controller="mainController">
         <navbar-panels></navbar-panels>
         
-    	<div class="container">
+    	<div class="container" ng-controller="settingController">
             <div class="page-header"><h1>ตั้งค่า</h1></div>
             
             <div ng-show="isShowBT == true">

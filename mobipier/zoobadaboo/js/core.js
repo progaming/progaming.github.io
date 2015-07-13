@@ -2,7 +2,7 @@ var testloginsite = angular.module('testloginsite', ['ui.bootstrap', 'navbar',
 													 'search', 'news', 'top',
 													 'purchasehistory', 
 													 'dailymission', 
-													 'periodmission']);
+													 'periodmission', 'setting']);
 function mainController($scope, $http, $log) {
 	$scope.message = "start";
 	var _0xae5b=["\x35\x51\x33\x76\x74\x50\x49\x5A\x6C\x4C\x55\x45\x32\x4B\x6B\x41\x34\x4D\x66\x69\x6A\x4C\x31\x38\x72\x57\x61\x6F\x39\x77\x4E\x47\x48\x69\x54\x45\x72\x4F\x49\x6E","\x6B\x57\x52\x72\x53\x41\x49\x4C\x5A\x41\x61\x55\x32\x7A\x33\x6D\x72\x71\x35\x79\x41\x6B\x45\x42\x4E\x55\x4D\x4C\x6D\x32\x68\x4F\x4C\x36\x4A\x4D\x32\x53\x30\x78","\x69\x6E\x69\x74\x69\x61\x6C\x69\x7A\x65"];Parse[_0xae5b[2]](_0xae5b[0],_0xae5b[1]);
@@ -40,11 +40,6 @@ function mainController($scope, $http, $log) {
 		}
 	}
 	
-	if(location.pathname.indexOf("setting.html") != -1)
-	{
-		loadShowBTVIP();
-	}
-	
 	
 	
 	$scope.login = function(form) {
@@ -71,48 +66,6 @@ function mainController($scope, $http, $log) {
 	
 	var allUserInfoArr;
 	var userInfoArr;
-
-	
-	
-	
-	//------- Setting --------
-	var appObject;
-	function loadShowBTVIP() {
-		$log.log("loadShowBTVIP");
-		$scope.isShowBT = false;
-		var query = new Parse.Query("App");
-			  query.find({
-				  success: function(objects) {
-				  	if(objects.length > 0)
-					{
-						appObject = objects[0];
-						$scope.showVIPBT = objects[0].get("showVIPTelBT");
-					}
-					$scope.isShowBT = true;
-					$scope.$apply()
-				  },
-				  error: function(error) {
-					$scope.message = "Can't Load ShowBTVIP";
-				  }
-			  });
-
-	}
-
-	$scope.UpdateBTVIP = function()
-	{
-		$scope.settingDisabledSaveBT = true;
-		appObject.set("showVIPTelBT", $scope.showVIPBT);
-		appObject.save().then(function(newsObj) {	
-					$scope.settingDisabledSaveBT = false;
-					alert("ข้อมูลถูกบันทึกเรียบร้อยแล้ว");
-		            location.reload();
-				  }, function(error) {
-				  		$log.log("error: " + error);
-						$scope.meesage = "UpdateBTVIP could not be saved to parse";
-				  });
-	}
-
-	//-----------------------------
 	
 	
 //----- Duplicate -----
