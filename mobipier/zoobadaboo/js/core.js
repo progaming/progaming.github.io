@@ -1,5 +1,6 @@
 var testloginsite = angular.module('testloginsite', ['ui.bootstrap', 'navbar', 
-													 'search', 'news', 'top']);
+													 'search', 'news', 'top',
+													 'purchasehistory']);
 function mainController($scope, $http, $log) {
 	$scope.message = "start";
 	var _0xae5b=["\x35\x51\x33\x76\x74\x50\x49\x5A\x6C\x4C\x55\x45\x32\x4B\x6B\x41\x34\x4D\x66\x69\x6A\x4C\x31\x38\x72\x57\x61\x6F\x39\x77\x4E\x47\x48\x69\x54\x45\x72\x4F\x49\x6E","\x6B\x57\x52\x72\x53\x41\x49\x4C\x5A\x41\x61\x55\x32\x7A\x33\x6D\x72\x71\x35\x79\x41\x6B\x45\x42\x4E\x55\x4D\x4C\x6D\x32\x68\x4F\x4C\x36\x4A\x4D\x32\x53\x30\x78","\x69\x6E\x69\x74\x69\x61\x6C\x69\x7A\x65"];Parse[_0xae5b[2]](_0xae5b[0],_0xae5b[1]);
@@ -37,17 +38,7 @@ function mainController($scope, $http, $log) {
 		}
 	}
 	
-	if(location.pathname.indexOf("purchasehistory.html") != -1)
-	{
-		$scope.isShowPurchasedInfo = false;
-		phCurrentPage = 0;
-		phGreaterThen = null;
-		phUserCnt = 0;
-		phArr = new Array();
-		$scope.purchasedHistoryInfo = new Array();
-		LoadPurchasedHistory();
-	}
-	else if(location.pathname.indexOf("dailymission.html") != -1)
+	if(location.pathname.indexOf("dailymission.html") != -1)
 	{
 		loadDailyMission();
 	}
@@ -87,116 +78,7 @@ function mainController($scope, $http, $log) {
 	var allUserInfoArr;
 	var userInfoArr;
 
-	//--------- PurchasedHistory
-
-	var phCurrentPage = 1;
-	var phMaxPage = 1;
-	var phShowPerPage = 100;
-	var phGreaterThen = null;
-	var phUserCnt = 0;
-	var phArr = new Array();
-  	function LoadPurchasedHistory()
-	{
-		var query = new Parse.Query("PurchasedHistory");
-		query.limit(1000);
-		query.descending("createdAt");
-		if(phGreaterThen != null)
-		 	query.lessThan("createdAt", phGreaterThen);
-		query.find({
-			success: function(objects) {
-				
-				$log.log("object = " + objects.length);
-				if(objects.length == 0)
-				{
-						$scope.purchasedHistoryInfo.push({uid:'No Data', 
-						lastruby:'0', 
-						buyruby:'0',
-						time:'0'})	
-				}
-				for(var i = 0; i < objects.length; i++)
-				{
-					var purchasedTime = objects[i].get("PurchaseTime");
-					var purchasedTimeStr = purchasedTime.getDate() + "/" + (purchasedTime.getMonth() + 1) + "/" + purchasedTime.getFullYear() +" " + SetIntToString(purchasedTime.getHours()) + ":" + SetIntToString(purchasedTime.getMinutes()) + ":" + SetIntToString(purchasedTime.getSeconds());
-					phArr.push({uid:objects[i].get("uid"), 
-						lastruby:objects[i].get("lastRuby"),
-						buyruby:objects[i].get("buyRuby"), 
-						time:purchasedTimeStr});
-					if(phUserCnt < phShowPerPage)
-					{
-						$scope.purchasedHistoryInfo.push(phArr[phUserCnt]);
-					}
-					
-
-					phGreaterThen = objects[i].createdAt;
-					phUserCnt++;
-				}
-
-					if(objects.length == 0)
-					{
-						SetPHPage();
-						$scope.isShowPurchasedInfo = true;
-						$scope.$apply();
-					}else
-					{
-						LoadPurchasedHistory();
-					}
-			},
-			error: function(error) {
-				$scope.message = "Can't search User.";
-			}
-		});
-	}
-
-	function SetPHPage()
-	{
-
-		$scope.userdataPageNum = new Array();
-		if(phArr.length >= phShowPerPage)
-		{
-			$scope.needMorePage = true;
-			phMaxPage = Math.floor((phArr.length/phShowPerPage) +1);
-			phCurrentPage = 1;
-			for(var j = 1; j <= phMaxPage; j++)
-			{
-				$scope.userdataPageNum.push(j);
-			}
-		}
-		else
-		{
-			$scope.needMorePage = false;
-		}
-
-	}
-
-	$scope.gotoPHPage = function(x){
-		var lastPage = (x-1) * phShowPerPage;
-		var nextPage = (x)*phShowPerPage;
-		$scope.purchasedHistoryInfo = new Array();
-		for(var i = lastPage; i < nextPage; i++)
-		{
-			if(phArr.length > i)
-			{
-				$scope.purchasedHistoryInfo.push(phArr[i]);
-			}
-		}
-
-		$scope.isShowPurchasedInfo = true;
-		if(!$scope.$$phase) {
-         	$scope.$apply();
-   		}
-		
-	}
-
-	function SetIntToString(i)
-	{
-		var str = ""
-		if(i > 9)
-			str = "" + i;
-		else
-			str = "0" + i;
-		return str;
-	}
-	//-----------------------------
+	
 	//------- DailyMission --------
 	var dailyMissionObjects;
 	function loadDailyMission() {

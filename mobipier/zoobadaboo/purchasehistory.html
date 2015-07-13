@@ -15,6 +15,7 @@
         <script src="./js/search.js"></script>
         <script src="./js/news.js"></script>
         <script src="./js/top.js"></script>
+        <script src="./js/purchasehistory.js"></script>
         <style>
 			table, th , td {
 			  border: 1px solid grey;
@@ -41,7 +42,7 @@
 	<body ng-controller="mainController">
         <navbar-panels></navbar-panels>
         
-    	<div class="container">
+    	<div class="container" ng-controller="purchasehistoryController">
             <div class="page-header"><h1>ประวัติการซื้อเพชร</h1></div>
             
             <form ng-show="isShowPurchasedInfo == true">
