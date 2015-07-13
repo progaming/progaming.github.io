@@ -10,8 +10,14 @@
 		topCtrl.vipIdArr = new Array();
 		
 		$scope.isShowTop = false;
-		//LoadCurrentSessionToShowWeek();
-		LoadVipId();
+		if(location.pathname.indexOf("top.html") != -1)
+		{
+			LoadCurrentSessionToShowWeek();
+		}
+		else if(location.pathname.indexOf("topvip.html") != -1)
+		{
+			LoadVipId();
+		}
 		
 		function LoadVipId()
 		{
@@ -200,7 +206,10 @@
 			session--;
 			 var query = new Parse.Query("Score");
 			 query.equalTo("Session", session);
-			 query.containedIn("uid", topCtrl.vipIdArr);
+			 if(topCtrl.vipIdArr.length > 0)
+			 {
+				 query.containedIn("uid", topCtrl.vipIdArr);
+			 }
 			 query.descending("score");
 			 query.find({
 					  success: function(objects) {

@@ -34,6 +34,10 @@
 				{
 					this.navbar = 7;
 				}
+				else if(location.pathname.indexOf("topvip.html") != -1)
+				{
+					this.navbar = 8;
+				}
 				//console.log(this.navbar);
 				this.isSelectNavbar = function(checkNB){
 					return this.navbar == checkNB;
@@ -55,6 +59,10 @@
 				this.gotoTopPage = function()
 				{
 					location.replace("top.html");
+				}
+				this.gotoTopVIPPage = function()
+				{
+					location.replace("topvip.html");
 				}
 				this.gotoPurchasedHistoryPage = function()
 				{
