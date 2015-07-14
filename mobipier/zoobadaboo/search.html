@@ -43,6 +43,7 @@
             <div ng-show="isSearch == true">
                	<input type="text" name="search"ng-model="textsearch" />
                 <button class="btn btn-default btn-sm" ng-click="searchCtrl.searchUser()">ค้นหา</button>
+                <label><input type="checkbox" ng-model="searchCtrl.isFindVip"/>ผู้เล่น VIP</label>
             </div>
             <div style="padding: 5px;"> </div>
             <div>
@@ -61,6 +62,7 @@
                             <th class="text-center">รอบการเล่น</th>
                             <th class="text-center">Android</th>
                             <th class="text-center">iOS</th>
+                            <th class="text-center">VIP</th>
                         </tr>
                         <tr ng-repeat="x in searchInfo">
                             <td class="text-center">{{ x.firstname }}</td>
@@ -75,6 +77,7 @@
                             <td class="text-center">{{ x.count }}</td>
                             <td class="text-center">{{ x.android}}</td>
                             <td class="text-center">{{ x.ios }}</td>
+                            <td class="text-center">{{ x.vip }}</td>
                         </tr>
                     </table>
                     <br />
