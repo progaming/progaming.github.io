@@ -52,6 +52,7 @@ app.controller("SearchUserController", function($scope){
 	 	$scope.searching = true;
 		 var query1 = null;
 	 	var query2 = null;
+		 console.log("firstname: " + this.search.firstname);
 	 	if(this.search.firstname)
 	 	{
 		 	query1 = new Parse.Query("UserInfo");
@@ -59,10 +60,11 @@ app.controller("SearchUserController", function($scope){
 	 	}
 	 	if(this.search.lastname)
 	 	{
-		 	query1 = new Parse.Query("UserInfo");
-		 	query1.contains("last_name", this.search.firstname);
+			console.log("lastName: " + this.search.lastname);
+		 	query2 = new Parse.Query("UserInfo");
+		 	query2.contains("last_name", this.search.lastname);
 	 	}
-	 
+	 	console.log("q1: " + query1 + " q2: " + query2);
 	 	var compoundQuery = null;
 	 	if(query1 && !query2)
 	 	{
@@ -76,7 +78,7 @@ app.controller("SearchUserController", function($scope){
 	 	{
 		 	compoundQuery = Parse.Query.or(query1, query2);
 	 	}
-	 
+	 	console.log("Find");
 	 	compoundQuery.find({
 			success:function(objects){
 				console.log("SearchResult: " + objects.length);
