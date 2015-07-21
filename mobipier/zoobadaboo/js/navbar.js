@@ -38,6 +38,10 @@
 				{
 					this.navbar = 8;
 				}
+				else if(location.pathname.indexOf("offerwall.html") != -1)
+				{
+					this.navebar = 9;
+				}
 				//console.log(this.navbar);
 				this.isSelectNavbar = function(checkNB){
 					return this.navbar == checkNB;
@@ -79,6 +83,10 @@
 				this.gotoSettingPage = function()
 				{
 					location.replace("setting.html");
+				}
+				this.gotoOfferwallPage = function()
+				{
+					location.replace("offerwall.html");
 				}
 			},
 			controllerAs: 'navbar'
