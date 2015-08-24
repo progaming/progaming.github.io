@@ -13,7 +13,9 @@
 		searchCtrl.userShowPerPage = 100;
 		searchCtrl.vipIdArr = new Array();
 		searchCtrl.isFindVip = false;
+		searchCtrl.total = 0;
 		var lessThan = null;
+		var isNeedAllUser = false;
 		//FindAllUser();
 		LoadVipId();
 		//------------
@@ -66,7 +68,8 @@
 					
 					if(objects.length == 0)
 					{
-						FindAllUser();
+						GetCount();
+						//FindAllUser();
 					}else
 					{
 						LoadVipId();
@@ -77,6 +80,23 @@
 					$scope.message = "Can't search User.";
 				  }
 			  });
+		}
+		
+		function GetCount()
+		{
+			var UserInfo = Parse.Object.extend("UserInfo");
+			var query = new Parse.Query(UserInfo);
+			query.count({
+			success: function(count) {
+				// The count request succeeded. Show the count
+				//alert("Sean has played " + count + " games");
+				searchCtrl.total = count;
+				FindAllUser();
+			},
+			error: function(error) {
+				// The request failed
+			}
+			});
 		}
 		
 		function FindAllUser(){
@@ -132,7 +152,7 @@
 						searchCtrl.lessThan = objects[i].updatedAt;
 					}
 					
-					if(objects.length == 0)
+					if(objects.length == 0 || !isNeedAllUser)
 					{
 						
 						SetPage();
@@ -162,7 +182,7 @@
 				$scope.needMorePage = true;
 				searchCtrl.topMaxPage = Math.floor((searchCtrl.allUserInfoArr.length/searchCtrl.userShowPerPage) +1);
 				searchCtrl.topCurrentPage = 1;
-				for(var j = 1; j <= searchCtrl.topMaxPage; j++)
+				for(var j = 1; j < searchCtrl.topMaxPage; j++)
 				{
 					$scope.userdataPageNum.push(j);
 				}
