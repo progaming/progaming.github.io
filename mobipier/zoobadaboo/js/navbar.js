@@ -40,9 +40,13 @@
 				}
 				else if(location.pathname.indexOf("offerwall.html") != -1)
 				{
-					this.navebar = 9;
+					this.navbar = 9;
 				}
-				//console.log(this.navbar);
+				else if(location.pathname.indexOf("searchvip.html") != -1)
+				{
+					this.navbar = 10;
+				}
+				//console.log("navbar" + this.navbar);
 				this.isSelectNavbar = function(checkNB){
 					return this.navbar == checkNB;
 				}
@@ -87,6 +91,10 @@
 				this.gotoOfferwallPage = function()
 				{
 					location.replace("offerwall.html");
+				}
+				this.gotoFindVIPPage = function()
+				{
+					location.replace("searchvip.html");
 				}
 			},
 			controllerAs: 'navbar'

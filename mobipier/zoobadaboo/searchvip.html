@@ -39,14 +39,14 @@
 	<body ng-controller="mainController">
         <navbar-panels></navbar-panels>
         
-    	<div class="container" ng-controller="searchController as searchCtrl">
-            <div class="page-header"><h1>ค้นหา</h1></div>
+    	<div class="container" ng-controller="searchvipController as searchCtrl">
+            <div class="page-header"><h1>ค้นหาVIP</h1></div>
             
-            <div ng-show="isSearch == true">
+           <!-- <div ng-show="isSearch == true">
                	<input type="text" name="search"ng-model="textsearch" />
                 <button class="btn btn-default btn-sm" ng-click="searchCtrl.searchUser()">ค้นหา</button>
                 <label><input type="checkbox" ng-model="searchCtrl.isFindVip"/>ผู้เล่น VIP</label>
-            </div>
+            </div> -->
             <div style="padding: 5px;"> </div>
             <div>
                 <form ng-show="isSearch == true">
@@ -54,32 +54,16 @@
                         <tr>
                         	<th class="text-center">ชื่อ</th>
                             <th class="text-center">นามสกุล</th>
-                            <th class="text-center">อีเมล์</th>
-                            <th class="text-center">สร้างเมื่อ</th>
-                            <th class="text-center">เล่นครั้งล่าสุด</th>
-                            <th class="text-center">คะแนนสูงสุด</th>
-                            <th class="text-center">ตัวละครที่ใช้ในคะแนนสูงสุด</th>
-                            <th class="text-center">คะแนนล่าสุด</th>
-                            <th class="text-center">ตัวละครที่ใช้ในคะแนนล่าสุด</th>
-                            <th class="text-center">รอบการเล่น</th>
-                            <th class="text-center">Android</th>
-                            <th class="text-center">iOS</th>
-                            <th class="text-center">VIP</th>
+                            <th class="text-center">SMS</th>
+                            <th class="text-center">VISA</th>
+                            <th class="text-center">Tel</th>
                         </tr>
                         <tr ng-repeat="x in searchInfo">
                             <td class="text-center">{{ x.firstname }}</td>
                             <td class="text-center">{{ x.lastname }}</td>
-                            <td class="text-center">{{ x.email }}</td>
-                            <td class="text-center">{{ x.createdAt }}</td>
-                            <td class="text-center">{{ x.updateAt }}</td>
-                            <td class="text-center">{{ x.highscore}}</td>
-                            <td class="text-center">{{ x.highscoreChar}}</td>
-                            <td class="text-center">{{ x.score}}</td>
-                            <td class="text-center">{{ x.scoreChar}}</td>
-                            <td class="text-center">{{ x.count }}</td>
-                            <td class="text-center">{{ x.android}}</td>
-                            <td class="text-center">{{ x.ios }}</td>
-                            <td class="text-center">{{ x.vip }}</td>
+                            <td class="text-center">{{ x.sms }}</td>
+                            <td class="text-center">{{ x.visa }}</td>
+                            <td class="text-center">{{ x.tel }}</td>
                         </tr>
                     </table>
                     <br />
