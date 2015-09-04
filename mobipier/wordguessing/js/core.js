@@ -1,4 +1,4 @@
-var testloginsite = angular.module('testloginsite', ['ui.bootstrap']);
+var testloginsite = angular.module('testloginsite', ['ui.bootstrap', 'searchvip']);
 var isLoadNews = false;
 function mainController($scope, $http, $log) {
 	$scope.message = "start";
@@ -295,6 +295,10 @@ function mainController($scope, $http, $log) {
 	$scope.gotouserpage = function()
 	{
 		location.replace("search.html");
+	}
+	$scope.gotoSearchVIPpage = function()
+	{
+		location.replace("searchvip.html");
 	}
 	$scope.gotoNews = function()
 	{

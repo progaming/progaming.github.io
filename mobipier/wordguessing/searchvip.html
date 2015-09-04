@@ -15,17 +15,6 @@
         <script src="./js/searchvip.js"></script>
         
         <style>
-			/*table, th , td {
-			  border: 1px solid grey;
-			  border-collapse: collapse;
-			  padding: 5px;
-			}
-			table tr:nth-child(odd) {
-			  background-color: #f1f1f1;
-			}
-			table tr:nth-child(even) {
-			  background-color: #ffffff;
-			}*/
 			 a.disabled {
 			   pointer-events: none;
 			   cursor: default;
@@ -50,8 +39,8 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a ng-click="gotoNews()" href="#">ข่าว</a></li>
-                        <li class="active"><a href="#">ค้นหา</a></li>
-                        <li><a ng-click="gotoSearchVIPpage()" href="#">ค้นหาVIP</a></li>
+                        <li><a ng-click="gotouserpage()" href="#">ค้นหา</a></li>
+                        <li class="active"><a href="#">ค้นหาVIP</a></li>
                         <li><a ng-click="gotoTopPage()" href="#">ผู้เล่นยอดเยี่ยม</a></li>
                        <!-- <li><a ng-click="gotoPurchasedHistoryPage()" href="#">ประวัติการซื้อเพชร</a></li>
                         <li><a ng-click="gotoDailyMissionPage()" href="#">ภารกิจประจำวัน</a></li>
@@ -63,13 +52,15 @@
                 </div>
             </div>
         </div>
-    	<div class="container">
-            <div class="page-header"><h1>ค้นหา</h1></div>
+        
+    	<div class="container" ng-controller="searchvipController as searchCtrl">
+            <div class="page-header"><h1>ค้นหาVIP</h1></div>
             
-            <div ng-show="isSearch == true">
+           <!-- <div ng-show="isSearch == true">
                	<input type="text" name="search"ng-model="textsearch" />
-                <button class="btn btn-default btn-sm" ng-click="searchUser()">ค้นหา</button>
-            </div>
+                <button class="btn btn-default btn-sm" ng-click="searchCtrl.searchUser()">ค้นหา</button>
+                <label><input type="checkbox" ng-model="searchCtrl.isFindVip"/>ผู้เล่น VIP</label>
+            </div> -->
             <div style="padding: 5px;"> </div>
             <div>
                 <form ng-show="isSearch == true">
@@ -77,26 +68,16 @@
                         <tr>
                         	<th class="text-center">ชื่อ</th>
                             <th class="text-center">นามสกุล</th>
-                            <th class="text-center">อีเมล์</th>
-                            <th class="text-center">สร้างเมื่อ</th>
-                            <th class="text-center">เล่นครั้งล่าสุด</th>
-                            <th class="text-center">คะแนนสูงสุด</th>
-                            <th class="text-center">คะแนนล่าสุด</th>
-                            <th class="text-center">รอบการเล่น</th>
-                            <th class="text-center">Android</th>
-                            <th class="text-center">iOS</th>
+                            <th class="text-center">SMS</th>
+                            <th class="text-center">VISA</th>
+                            <th class="text-center">Tel</th>
                         </tr>
                         <tr ng-repeat="x in searchInfo">
                             <td class="text-center">{{ x.firstname }}</td>
                             <td class="text-center">{{ x.lastname }}</td>
-                            <td class="text-center">{{ x.email }}</td>
-                            <td class="text-center">{{ x.createdAt }}</td>
-                            <td class="text-center">{{ x.updateAt }}</td>
-                            <td class="text-center">{{ x.highscore}}</td>
-                            <td class="text-center">{{ x.score}}</td>
-                            <td class="text-center">{{ x.count }}</td>
-                            <td class="text-center">{{ x.android}}</td>
-                            <td class="text-center">{{ x.ios }}</td>
+                            <td class="text-center">{{ x.sms }}</td>
+                            <td class="text-center">{{ x.visa }}</td>
+                            <td class="text-center">{{ x.tel }}</td>
                         </tr>
                     </table>
                     <br />
@@ -104,16 +85,17 @@
                     	<div>หน้าที่ :</div> 
                         <ul class="pagination">
                         	<li ng-repeat="x in userdataPageNum">
-                            	<a href="#" ng-click="gotoPage(x)">{{ x }}</a>
+                            	<a href="#" ng-click="searchCtrl.gotoPage(x)">{{ x }}</a>
                             </li>
                         </ul>
+                        <p>Total: {{ searchCtrl.total }}</p>
                     </div>
                 </form>
             </div>
              <br />
             <div class="row">
                 <div class="col-sm-offset-10">
-                    <div ng-show="isSearch == true"> <button type="button" class="btn btn-primary" ng-click="ExportData()">Export</button></div>
+                    <div ng-show="isSearch == true"> <button type="button" class="btn btn-primary" ng-click="searchCtrl.ExportData()">Export</button></div>
                 </div>
             </div>
         </div>
