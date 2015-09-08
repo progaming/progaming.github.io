@@ -372,8 +372,8 @@ function mainController($scope, $http, $log) {
 						highscore: objects[i].get("highscore"),
 						score: objects[i].get("score"),
 						count: objects[i].get("count"),
-						android: objects[i].get("Android"),
-						ios: objects[i].get("iOS")});
+						android: objects[i].get("onAndroid"),
+						ios: objects[i].get("onIos")});
 
 						userInfoArr.push(allUserInfoArr[allUserCnt]);
 						if(allUserCnt < userShowPerPage)
