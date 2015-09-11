@@ -338,6 +338,7 @@ function mainController($scope, $http, $log) {
 	var allUserCnt = 0;
 	function FindAllUser()
 	{
+		var _idArr = new Array();
 		$log.log("FindAllUser");
 		 var query = new Parse.Query("UserInfo");
 		 query.descending("updatedAt");
@@ -373,9 +374,12 @@ function mainController($scope, $http, $log) {
 						score: objects[i].get("score"),
 						count: objects[i].get("count"),
 						android: objects[i].get("onAndroid"),
-						ios: objects[i].get("onIos")});
+						ios: objects[i].get("onIos"),
+						uid: objects[i].get("uid"),
+						weekscore:0});
 
 						userInfoArr.push(allUserInfoArr[allUserCnt]);
+						_idArr.push(objects[i].get("uid"));
 						if(allUserCnt < userShowPerPage)
 						{
 							$scope.searchInfo.push(userInfoArr[allUserCnt]);
@@ -393,7 +397,8 @@ function mainController($scope, $http, $log) {
 						$log.log("searchInfo = " + allUserInfoArr.length);
 					}else
 					{
-						FindAllUser();
+						GetTopScore(_idArr);
+						//FindAllUser();
 					}
 					
 				  },
@@ -401,6 +406,47 @@ function mainController($scope, $http, $log) {
 					$scope.message = "Can't search User.";
 				  }
 			  });
+	}
+	
+	function GetTopScore(idArr)
+	{
+		console.log("GetTopScore");
+		Parse.Cloud.run('getSession', {}, {
+		  success: function(result) {
+			$log.log(result);
+			var session = parseInt(result);
+			//---
+			
+			var query = new Parse.Query("Score");
+			query.equalTo("Session", session);
+			query.containedIn("uid", idArr);
+			query.limit(1000);
+			query.find({
+					success: function(objects) {
+						console.log(objects.length);
+						for(var i = 0; i< objects.length;i++)
+						{
+							var _uid = objects[i].get("uid");
+							for(var j=0; j < allUserInfoArr.length; j++)
+							{
+								if(_uid == allUserInfoArr[j].uid)
+								{
+									allUserInfoArr[j].weekscore = objects[i].get("score");
+								}
+							}
+						}
+						
+						FindAllUser();
+					},error: function(error) {
+						$scope.message = "Can't search User.";
+					}
+			});
+			
+			//---
+		  },
+		  error: function(error) {
+		  }
+		});
 	}
 
 	$scope.ExportData = function()
