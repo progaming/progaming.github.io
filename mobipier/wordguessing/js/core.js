@@ -21,7 +21,9 @@ function mainController($scope, $http, $log) {
 			allUserCnt = 0;
 			$scope.searchInfo = new Array();
 			userInfoArr = new Array();
-			FindAllUser();
+			vipIdArr = new Array();
+			LoadVipId();
+			//FindAllUser();
 		}
 		$log.log("buttonSaveDisabled = " + $scope.buttonSaveDisabled);
 	}else{
@@ -329,6 +331,69 @@ function mainController($scope, $http, $log) {
 		location.replace("words.html");
 	}
 	
+	var vipIdArr;
+	function LoadVipId()
+	{
+		var query = new Parse.Query("VIP");
+	 	query.descending("updatedAt");
+	 	if(lessThan != null)
+	 		query.lessThan("updatedAt", lessThan);
+		 	query.limit(1000);
+			query.find({
+			  success: function(objects) {
+				console.log("object = " + objects.length);
+				for(var i = 0; i < objects.length; i++)
+				{
+					var _active = objects[i].get("active");
+					var uid = objects[i].get("uid");
+					if(objects[i].has("active") && _active == true)
+					{
+						if(objects[i].has("uid"))
+						{
+							//console.log("add id" + uid);
+							vipIdArr.push(uid);
+						}
+					}
+					else
+					{
+						if(objects[i].has("EndDate"))
+						{
+							var _endDate = objects[i].get("EndDate");
+							var _date = new Date();
+							if( _endDate > _date )
+							{
+								//console.log("add id" + uid + " _date: " + _date.toString() + " _endDate: " + _endDate.toString());
+								if(objects[i].has("uid"))
+								{
+									vipIdArr.push(uid);
+								}	
+							}
+							else
+							{
+								//console.log("don't add id" + uid + " _date: " + _date.toString() + " _endDate: " + _endDate.toString());
+							}
+						}
+					}
+					
+					lessThan = objects[i].updatedAt;
+				}
+					
+				if(objects.length == 0)
+				{
+					lessThan = null;
+					FindAllUser();
+				}else
+				{
+					LoadVipId();
+				}
+				
+			  },
+			  error: function(error) {
+				$scope.message = "Can't search User.";
+			  }
+		  });
+	}
+	
 	var allUserInfoArr;
 	var userInfoArr;
 	var topCurrentPage = 1;
@@ -350,6 +415,12 @@ function mainController($scope, $http, $log) {
 					$log.log("object = " + objects.length);
 					for(var i = 0; i < objects.length; i++)
 					{
+						var _uid = objects[i].get("uid");
+						var _isVip = "No";
+						if(vipIdArr.indexOf(_uid) != -1)
+						{
+							_isVip = "Yes";
+						}
 						//$log.log(""+objects[i].get("first_name"));
 						var createdtime = objects[i].createdAt;
 						var createdtimeStr = createdtime.getDate() + "/" + 
@@ -375,8 +446,9 @@ function mainController($scope, $http, $log) {
 						count: objects[i].get("count"),
 						android: objects[i].get("onAndroid"),
 						ios: objects[i].get("onIos"),
-						uid: objects[i].get("uid"),
-						weekscore:0});
+						uid: _uid,
+						weekscore:0,
+						vip:_isVip});
 
 						userInfoArr.push(allUserInfoArr[allUserCnt]);
 						_idArr.push(objects[i].get("uid"));
