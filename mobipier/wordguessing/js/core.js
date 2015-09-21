@@ -469,7 +469,7 @@ function mainController($scope, $http, $log) {
 						$log.log("searchInfo = " + allUserInfoArr.length);
 					}else
 					{
-						GetTopScore(_idArr);
+						GetTopScore(_idArr, true);
 						//FindAllUser();
 					}
 					
@@ -480,7 +480,7 @@ function mainController($scope, $http, $log) {
 			  });
 	}
 	
-	function GetTopScore(idArr)
+	function GetTopScore(idArr, isFindAllUser)
 	{
 		console.log("GetTopScore");
 		Parse.Cloud.run('getSession', {}, {
@@ -495,20 +495,49 @@ function mainController($scope, $http, $log) {
 			query.limit(1000);
 			query.find({
 					success: function(objects) {
+						var _uid;
 						console.log(objects.length);
-						for(var i = 0; i< objects.length;i++)
+						
+						if(isFindAllUser)
 						{
-							var _uid = objects[i].get("uid");
-							for(var j=0; j < allUserInfoArr.length; j++)
+							for(var i = 0; i< objects.length;i++)
 							{
-								if(_uid == allUserInfoArr[j].uid)
+								_uid = objects[i].get("uid");
+								for(var j=0; j < allUserInfoArr.length; j++)
 								{
-									allUserInfoArr[j].weekscore = objects[i].get("score");
+									if(_uid == allUserInfoArr[j].uid)
+									{
+										allUserInfoArr[j].weekscore = objects[i].get("score");
+									}
 								}
 							}
+							FindAllUser();
+						}
+						else
+						{
+							
+							for(var i = 0; i< objects.length;i++)
+							{
+								_uid = objects[i].get("uid");
+								for(var j=0; j < userInfoArr.length; j++)
+								{
+									if(_uid == userInfoArr[j].uid)
+									{
+										userInfoArr[j].weekscore = objects[i].get("score");
+									}
+								}
+								for(var k=0; k < $scope.searchInfo.length; k++)
+								{
+									if(_uid == $scope.searchInfo[k].uid)
+									{
+										$scope.searchInfo[k].weekscore = objects[i].get("score");
+									}
+								}
+							}
+							$scope.isSearch = true;
+							$scope.$apply();
 						}
 						
-						FindAllUser();
 					},error: function(error) {
 						$scope.message = "Can't search User.";
 					}
@@ -563,9 +592,17 @@ function mainController($scope, $http, $log) {
 				  success: function(objects) {
 					$scope.searchInfo = new Array();
 					userInfoArr = new Array();
+					var _idArr = new Array();
 					$log.log("object = " + objects.length);
 					for(var i = 0; i < objects.length; i++)
 					{
+						var _uid = objects[i].get("uid");
+						_idArr.push(_uid);
+						var _isVip = "No";
+						if(vipIdArr.indexOf(_uid) != -1)
+						{
+							_isVip = "Yes";
+						}
 						var createdtime = objects[i].createdAt;
 						var createdtimeStr = createdtime.getDate() + "/" + 
 						                     (createdtime.getMonth()+1) + "/" + 
@@ -584,16 +621,18 @@ function mainController($scope, $http, $log) {
 						lastname:objects[i].get("last_name"), 
 						email:objects[i].get("email"), 
 						createdAt:createdtimeStr,
+						updateAt:updatetimeStr,
 						highscore: objects[i].get("highscore"),
 						score: objects[i].get("score"),
 						count: objects[i].get("count"),
-						android: objects[i].get("Android"),
-						ios: objects[i].get("iOS")});
+						android: objects[i].get("onAndroid"),
+						ios: objects[i].get("onIos"),
+						uid: _uid,
+						vip: _isVip});
+						
 						if(i < userShowPerPage)
 						{
-							$scope.searchInfo.push({firstname:objects[i].get("first_name"), 
-							lastname:objects[i].get("last_name"), 
-							email:objects[i].get("email"), createdAt:createdtimeStr});
+							$scope.searchInfo.push(userInfoArr[i]);
 						}
 					}
 					$scope.userdataPageNum = new Array();
@@ -611,9 +650,10 @@ function mainController($scope, $http, $log) {
 					{
 						$scope.needMorePage = false;
 					}
-					$scope.isSearch = true;
+					GetTopScore(_idArr, false);
+					/*$scope.isSearch = true;
 					$scope.$apply();
-					$log.log("searchInfo = " + $scope.searchInfo.length);
+					$log.log("searchInfo = " + $scope.searchInfo.length);*/
 				  },
 				  error: function(error) {
 					$scope.message = "Can't search User.";
