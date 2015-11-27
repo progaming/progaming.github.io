@@ -12,6 +12,7 @@
 		searchCtrl.userInfoArr = new Array();
 		searchCtrl.userShowPerPage = 100;
 		searchCtrl.total = 0;
+		searchCtrl.dayArr;
 		var lessThan = null;
 		var isNeedAllUser = false;
 		//FindAllUser();
@@ -64,7 +65,7 @@
 						createdAt:createdtimeStr,
 						updateAt:updatetimeStr,
 						score: objects[i].get("score"),
-						uid:"www.facebook.com/" + objects[i].get("uid")});
+						uid:objects[i].get("uid")});
 
 						searchCtrl.userInfoArr.push(searchCtrl.allUserInfoArr[searchCtrl.allUserCnt]);
 						if(searchCtrl.allUserCnt < searchCtrl.userShowPerPage)
@@ -99,7 +100,6 @@
 		
 		function SetPage()
 		{
-	
 			$scope.userdataPageNum = new Array();
 			if(searchCtrl.allUserInfoArr.length >= searchCtrl.userShowPerPage)
 			{
@@ -154,7 +154,7 @@
 							createdAt:createdtimeStr,
 							updateAt:updatetimeStr,
 							score: objects[i].get("score"),
-							uid:"www.facebook.com/" + objects[i].get("uid")});
+							uid:objects[i].get("uid")});
 							if(i < searchCtrl.userShowPerPage)
 							{
 								$scope.searchInfo.push(searchCtrl.userInfoArr[i]);
@@ -223,5 +223,10 @@
 			str = "0" + i;
 		return str;
 	}
+	
+	/*function SetDateArray()
+	{
+		searchCtrl.dayArr = new Array();
+	}*/
 	
 })();
