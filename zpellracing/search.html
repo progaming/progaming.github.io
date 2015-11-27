@@ -68,6 +68,15 @@
                 </form>
             </div>
              <br />
+             <div>
+                    	<div>วันที่ :</div> 
+                        <ul class="pagination">
+                        	<li ng-repeat="x in searchCtrl.dayArr">
+                            	<a href="#" ng-click="searchCtrl.gotoPage(x.realDate)">{{ x.showDate }}</a>
+                            </li>
+                        </ul>
+                        <p>Total: {{ searchCtrl.total }}</p>
+             </div>
             <!--<div class="row">
                 <div class="col-sm-offset-10">
                     <div ng-show="isSearch == true"> <button type="button" class="btn btn-primary" ng-click="searchCtrl.ExportData()">Export</button></div>
