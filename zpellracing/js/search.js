@@ -277,6 +277,7 @@
 				query.find({
 					success: function(objects) {
 						console.log("object = " + objects.length);
+						$scope.searchInfo = new Array();
 						for(var i = 0; i < objects.length; i++)
 						{
 							var _uid = objects[i].get("uid");
