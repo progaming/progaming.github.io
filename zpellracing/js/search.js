@@ -267,6 +267,7 @@
 			   {
 				   classStr = GetScoreClass(date);
 			   }
+			   console.log("classStr: " + classStr);
 				var query = new Parse.Query(classStr);
 				query.descending("updatedAt");
 				if(searchCtrl.lessThan != null)
