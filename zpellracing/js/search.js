@@ -264,9 +264,6 @@
 			   }
 			   console.log("classStr: " + classStr);
 				var query = new Parse.Query(classStr);
-				query.descending("updatedAt");
-				if(searchCtrl.lessThan != null)
-					query.lessThan("updatedAt", searchCtrl.lessThan);
 				query.descending("score");
 				query.limit(1000);
 				query.find({
