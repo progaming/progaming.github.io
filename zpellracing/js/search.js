@@ -283,19 +283,16 @@
 							var updatetime = objects[i].updatedAt;
 							var updatetimeStr = GetTimeString(updatetime);
 							
-							searchCtrl.allUserInfoArr.push({firstname:objects[i].get("first_name"), 
+							searchCtrl.userInfoArr.push({firstname:objects[i].get("first_name"), 
 							lastname:objects[i].get("last_name"), 
 							createdAt:createdtimeStr,
 							updateAt:updatetimeStr,
 							score: objects[i].get("score"),
 							uid:objects[i].get("uid")});
-	
-							searchCtrl.userInfoArr.push(searchCtrl.allUserInfoArr[searchCtrl.allUserCnt]);
-							if(searchCtrl.allUserCnt < searchCtrl.userShowPerPage)
+							if(i < searchCtrl.userShowPerPage)
 							{
-								$scope.searchInfo.push(searchCtrl.userInfoArr[searchCtrl.allUserCnt]);
+								$scope.searchInfo.push(searchCtrl.userInfoArr[i]);
 							}
-							searchCtrl.allUserCnt++;
 							
 							searchCtrl.lessThan = objects[i].updatedAt;
 						}
@@ -303,7 +300,7 @@
 						SetPage();
 						$scope.isSearch = true;
 						$scope.$apply();
-						console.log("searchInfo = " + searchCtrl.allUserInfoArr.length);
+						console.log("searchInfo = " + searchCtrl.userInfoArr.length);
 						
 					},
 					error: function(error) {
