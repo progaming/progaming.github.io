@@ -4,7 +4,6 @@
 		//set Start
 		var searchCtrl = this;
 		$scope.isSearch = false;
-		searchCtrl.uidArr = new Array();
 		searchCtrl.allUserInfoArr = new Array();
 		searchCtrl.lessThan = null;
 		searchCtrl.allUserCnt = 0;
@@ -51,10 +50,6 @@
 					for(var i = 0; i < objects.length; i++)
 					{
 						var _uid = objects[i].get("uid");
-						if(searchCtrl.uidArr.indexOf(_uid) == -1)
-						{
-							searchCtrl.uidArr.push(_uid);
-						}
 						
 						var createdtime = objects[i].createdAt;
 						var createdtimeStr = GetTimeString(createdtime);
@@ -254,7 +249,7 @@
 		
 		this.gotoDate = function(date)
 		{
-			console.log("gotoDate");
+			console.log("gotoDate " + formatDate(date));
 			var classStr;
 			var d = new Date(date);
 			var today = new Date();
@@ -278,13 +273,10 @@
 					success: function(objects) {
 						console.log("object = " + objects.length);
 						$scope.searchInfo = new Array();
+						searchCtrl.userInfoArr = new Array();
 						for(var i = 0; i < objects.length; i++)
 						{
 							var _uid = objects[i].get("uid");
-							if(searchCtrl.uidArr.indexOf(_uid) == -1)
-							{
-								searchCtrl.uidArr.push(_uid);
-							}
 							
 							var createdtime = objects[i].createdAt;
 							var createdtimeStr = GetTimeString(createdtime);
