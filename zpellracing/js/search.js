@@ -64,7 +64,7 @@
 						createdAt:createdtimeStr,
 						updateAt:updatetimeStr,
 						score: objects[i].get("score"),
-						uid:objects[i].get("uid")});
+						uid:"www.facebook.com/" + objects[i].get("uid")});
 
 						searchCtrl.userInfoArr.push(searchCtrl.allUserInfoArr[searchCtrl.allUserCnt]);
 						if(searchCtrl.allUserCnt < searchCtrl.userShowPerPage)
@@ -154,7 +154,7 @@
 							createdAt:createdtimeStr,
 							updateAt:updatetimeStr,
 							score: objects[i].get("score"),
-							uid:objects[i].get("uid")});
+							uid:"www.facebook.com/" + objects[i].get("uid")});
 							if(i < searchCtrl.userShowPerPage)
 							{
 								$scope.searchInfo.push(searchCtrl.userInfoArr[i]);

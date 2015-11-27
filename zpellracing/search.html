@@ -49,7 +49,7 @@
                             <th class="text-center">คะแนนสูงสุด</th>
                         </tr>
                         <tr ng-repeat="x in searchInfo">
-                            <td class="text-center">{{ x.uid }}</td>
+                            <td class="text-center"><a href="http://{{x.uid}}" target="_blank">{{ x.uid }}</a></td>
                             <td class="text-center">{{ x.firstname }}</td>
                             <td class="text-center">{{ x.lastname }}</td>
                             <td class="text-center">{{ x.score}}</td>
