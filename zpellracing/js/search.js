@@ -204,17 +204,20 @@
 		{
 			searchCtrl.dayArr = new Array();
 			var date = new Date();
-			var startDate = new Date(2015,11,27);
+			var startDate = new Date(2015,10,27);
 			var cnt = 0;
-			while(date.getDate() == startDate.getDate() && date.getMonth() == startDate.getMonth() &&
-				date.getFullYear() == startDate.getFullYear())
+			var testd = date.getDate() >= startDate.getDate();
+			var testm = date.getMonth() >= startDate.getMonth();
+			var testy = date.getFullYear() >= startDate.getFullYear();
+			console.log("SetDateArray: " + testd + " m: " + testm + " y: " + testy);
+			while(date.getDate() >= startDate.getDate() && date.getMonth() >= startDate.getMonth() &&
+				date.getFullYear() >= startDate.getFullYear())
 				{
-					date = new Date();
-					date.setDate(date.getDate()+ cnt);
 					searchCtrl.dayArr.push({showDate: formatDate(date),
 											realDate: date});
 					cnt--;
-					
+					date = new Date();
+					date.setDate(date.getDate()+ cnt);
 				}
 			if(searchCtrl.dayArr.length == 0)
 			{
