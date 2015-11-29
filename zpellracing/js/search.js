@@ -210,8 +210,13 @@
 			var testm = date.getMonth() >= startDate.getMonth();
 			var testy = date.getFullYear() >= startDate.getFullYear();
 			console.log("SetDateArray: " + testd + " m: " + testm + " y: " + testy);
-			while(date.getDate() >= startDate.getDate() && date.getMonth() >= startDate.getMonth() &&
-				date.getFullYear() >= startDate.getFullYear())
+			date.setHours(0,0,0,0);
+			startDate.setHours(0,0,0,0);
+			/*date.getDate() >= startDate.getDate() && date.getMonth() >= startDate.getMonth() && date.getFullYear() >= startDate.getFullYear()*/
+			/*while(date.getUTCFullYear() >= startDate.getUTCFullYear() || 
+			   date.getUTCDate() == startDate.getUTCDate() || 
+			   date.getUTCMonth() >= startDate.getUTCMonth())*/
+			   while(date >= startDate)
 				{
 					searchCtrl.dayArr.push({showDate: formatDate(date),
 											realDate: date});
@@ -258,6 +263,8 @@
 			var classStr;
 			var d = new Date(date);
 			var today = new Date();
+			d.setHours(0,0,0,0);
+			today.setHours(0,0,0,0);
 			if(d.getUTCDate() == today.getUTCDate() && d.getUTCMonth() == today.getUTCMonth() &&
 			   d.getUTCFullYear() == today.getUTCFullYear())
 			   {
