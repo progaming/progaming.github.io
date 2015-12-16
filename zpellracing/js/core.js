@@ -1,5 +1,5 @@
 var testloginsite = angular.module('testloginsite', ['ui.bootstrap', 'navbar', 
-													 'search']);
+													 'search', 'carads', 'trackads']);
 function mainController($scope, $http, $log) {
 	$scope.message = "start";
 	//ZpellRacing

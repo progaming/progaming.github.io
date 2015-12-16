@@ -6,7 +6,7 @@
 			templateUrl: './navbar-panels.html',
 			controller:function(){
 				this.navbar = 1;
-				if(location.pathname.indexOf("news.html") != -1)
+				if(location.pathname.indexOf("carads.html") != -1)
 				{
 					this.navbar = 1;
 				}
@@ -42,7 +42,7 @@
 				{
 					this.navbar = 9;
 				}
-				else if(location.pathname.indexOf("searchvip.html") != -1)
+				else if(location.pathname.indexOf("trackads.html") != -1)
 				{
 					this.navbar = 10;
 				}
@@ -60,9 +60,13 @@
 				{
 					location.replace("search.html");
 				}
-				this.gotoNews = function()
+				this.gotocarads = function()
 				{
-					location.replace("news.html");
+					location.replace("carads.html");
+				}
+				this.gototrackads = function()
+				{
+					location.replace("trackads.html");
 				}
 				this.gotoTopPage = function()
 				{
@@ -92,10 +96,7 @@
 				{
 					location.replace("offerwall.html");
 				}
-				this.gotoFindVIPPage = function()
-				{
-					location.replace("searchvip.html");
-				}
+				
 			},
 			controllerAs: 'navbar'
 		}
