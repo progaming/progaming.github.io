@@ -36,15 +36,18 @@
             <hr/>
             <div class="panel panel-primary">
                 <div class="panel-heading">สนามที่1</div>
+                <div class="row text-center" style="margin-top:10px;margin-bottom:10px;">
+                    <img ng-src="./image/track1.jpg" alt="Track1" width="537" height="300">
+                </div>
                 <div ng-repeat="x in rowOneArr">
                     <div class="row text-center" >
                         <div ng-repeat="y in x.columArr">
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
                                     <div class="form-group">
-                                        <label>รูปภาพ (16 : 9)</label>
+                                        <label>รูปที่ {{y.index}} (16 : 9)</label>
                                         <div style="margin-bottom:2px;"><img ng-src="{{y.imgurl}}" alt="Ads Image" width="200" height="113"></div>
-                                        <div style="margin-bottom:10px;margin-left:60px;"><input type="file" name="fileselect" id="fileselect" ng-click="click(y)" onchange="angular.element(this).scope().uploadImage(this)"></input></div>
+                                        <div style="margin-bottom:10px;margin-left:15px;"><input type="file" name="fileselect" id="fileselect" ng-click="click(y)" onchange="angular.element(this).scope().uploadImage(this)"></input></div>
         
                                         <div><button class="btn btn-default" ng-disabled="buttonSaveDisabled" ng-click="trackadsCtrl.uploadbutton(y)">บันทึก</button></div>
                                     </div>
@@ -58,15 +61,18 @@
             <hr/>
             <div class="panel panel-primary">
                 <div class="panel-heading">สนามที่2</div>
+                <div class="row text-center" style="margin-top:10px;margin-bottom:10px;">
+                    <img ng-src="./image/track2.jpg" alt="Track1" width="537" height="300">
+                </div>
                 <div ng-repeat="x in rowTwoArr">
                     <div class="row text-center" >
                         <div ng-repeat="y in x.columArr">
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
                                     <div class="form-group">
-                                        <label>รูปภาพ (16 : 9)</label>
+                                        <label>รูปที่ {{y.index}} (16 : 9)</label>
                                         <div style="margin-bottom:2px;"><img ng-src="{{y.imgurl}}" alt="Ads Image" width="200" height="113"></div>
-                                        <div style="margin-bottom:10px;margin-left:60px;"><input type="file" name="fileselect" id="fileselect" ng-click="click(y)" onchange="angular.element(this).scope().uploadImage(this)"></input></div>
+                                        <div style="margin-bottom:10px;margin-left:15px;"><input type="file" name="fileselect" id="fileselect" ng-click="click(y)" onchange="angular.element(this).scope().uploadImage(this)"></input></div>
         
                                         <div><button class="btn btn-default" ng-disabled="buttonSaveDisabled" ng-click="trackadsCtrl.uploadbutton(y)">บันทึก</button></div>
                                     </div>
@@ -80,15 +86,18 @@
             <hr/>
             <div class="panel panel-primary">
                 <div class="panel-heading">สนามที่3</div>
+                <div class="row text-center" style="margin-top:10px;margin-bottom:10px;">
+                    <img ng-src="./image/track3.jpg" alt="Track1" width="537" height="300">
+                </div>
                 <div ng-repeat="x in rowThreeArr">
                     <div class="row text-center" >
                         <div ng-repeat="y in x.columArr">
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
                                     <div class="form-group">
-                                        <label>รูปภาพ (16 : 9)</label>
+                                        <label>รูปที่ {{y.index}} (16 : 9)</label>
                                         <div style="margin-bottom:2px;"><img ng-src="{{y.imgurl}}" alt="Ads Image" width="200" height="113"></div>
-                                        <div style="margin-bottom:10px;margin-left:60px;"><input type="file" name="fileselect" id="fileselect" ng-click="click(y)" onchange="angular.element(this).scope().uploadImage(this)"></input></div>
+                                        <div style="margin-bottom:10px;margin-left:15px;"><input type="file" name="fileselect" id="fileselect" ng-click="click(y)" onchange="angular.element(this).scope().uploadImage(this)"></input></div>
         
                                         <div><button class="btn btn-default" ng-disabled="buttonSaveDisabled" ng-click="trackadsCtrl.uploadbutton(y)">บันทึก</button></div>
                                     </div>
