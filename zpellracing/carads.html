@@ -30,9 +30,12 @@
 
 	<body ng-controller="mainController">
         <navbar-panels></navbar-panels>
-
+        
     	<div class="container" ng-controller="caradsController as caradsCtrl">
             <div class="page-header"><h1>โฆษณาบนรถ</h1></div>
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                ภาพโฆษณาจะถูกนำไปวางบนรถโดยการสุ่ม
+            </div>
             <div ng-repeat="x in rowArr">
                 <div class="row" >
                     <div ng-repeat="y in x.columArr">
