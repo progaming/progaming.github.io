@@ -19,7 +19,9 @@
 					  	{
 							adsObjects.push(objects[i]);
 							var imgobj = angular.fromJson(objects[i].get("image"));
-							columArr.push({imgurl:imgobj._url, count:cnt});
+                            var imgurl = "";
+                            if(imgobj != null) { imgurl = imgobj._url; }
+							columArr.push({imgurl:imgurl, count:cnt});
 							if(columArr.length == 3)
 							{
 								$scope.rowArr.push({columArr: columArr});
