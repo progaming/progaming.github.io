@@ -1,9 +1,13 @@
 (function(){
 	var app = angular.module('carads', []);
-	app.controller("caradsController", function($scope){
+	app.controller("caradsController", function($scope, $sce){
 		var adsCtrl = this;
 		var adsObjects;
 		$scope.buttonSaveDisabled = false;
+        $scope.carImgSrc = "./image/c01.jpg";
+        var carImgIndex = 1;
+        var carImgMax = 18;
+        setUrlCarImg();
 		loadads();
 		
 		function loadads() {
@@ -109,6 +113,30 @@
 		
 		
     	
+    }
+    
+    this.nextCarImg = function(){
+        carImgIndex++;
+        if(carImgIndex > carImgMax){carImgIndex = 1;}
+       setUrlCarImg();
+    }
+    
+    this.prevCarImg = function(){
+        carImgIndex--;
+        if(carImgIndex < 1){ carImgIndex = carImgMax; }
+        setUrlCarImg();
+    }
+    
+    function setUrlCarImg()
+    {
+        var imgName = "c";
+        if(carImgIndex <= 9)
+        {
+            imgName += "0";
+        }
+        imgName += carImgIndex;
+        imgName = './image/' + imgName + '.jpg';
+        $scope.carImgSrc = $sce.trustAsResourceUrl(imgName);
     }
 		
 	});//end controller

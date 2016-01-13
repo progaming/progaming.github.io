@@ -36,13 +36,21 @@
             <div class="alert alert-warning alert-dismissible" role="alert">
                 ภาพโฆษณาจะถูกนำไปวางบนรถโดยการสุ่ม
             </div>
+            <div class="panel panel-default"><div class="row text-center" style="margin-top:10px;margin-bottom:10px;">
+                <img ng-src="{{carImgSrc}}" alt="Track1" >
+            </div></div>
+            <div class="row text-center" style="margin-top:10px;margin-bottom:50px;">
+                <button class="btn btn-default" ng-click="caradsCtrl.prevCarImg()">Prev</button>
+                <button class="btn btn-default" ng-click="caradsCtrl.nextCarImg()">Next</button>
+            </div>
+            <hr/>
             <div ng-repeat="x in rowArr">
                 <div class="row" >
                     <div ng-repeat="y in x.columArr">
                         <div class="col-sm-4">
                             <form id="fileupload" name="fileupload" enctype="multipart/form-data" method="post">
                                 <div class="form-group">
-                                    <label>รูปภาพ (16 : 9)</label>
+                                    <label>รูปภาพ (480 x 270)</label>
                                     <div style="margin-bottom:2px;"><img ng-src="{{y.imgurl}}" alt="Ads Image" width="200" height="113"></div>
                                     <div style="margin-bottom:10px;"><input type="file" name="fileselect" id="fileselect" ng-click="click(y)" onchange="angular.element(this).scope().uploadImage(this)"></input></div>
        
